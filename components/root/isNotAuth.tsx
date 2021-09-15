@@ -1,27 +1,19 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useAuth } from '@/context/auth';
 import 'react-toastify/dist/ReactToastify.css';
-import firebase from '@/context/firebase';
 
 import classes from './isNotAuth.module.scss';
-import { useAuth } from '@/context/auth';
 
 export default function IsNotAuth() {
-  const { setFireUser } = useAuth();
+  const { errorToast, setErrorToast, signInHandler } = useAuth();
 
-  const signInHandler = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        const { user } = result;
-        setFireUser(user);
-      })
-      .catch(() => {
-        toast('Error while authenticating!');
-      });
-  };
+  React.useEffect(() => {
+    if (errorToast) {
+      toast('Error white authenticating!');
+      setErrorToast(false);
+    }
+  }, [errorToast]);
 
   return (
     <div
@@ -31,10 +23,22 @@ export default function IsNotAuth() {
         'd-flex flex-column align-items-center justify-content-center',
       ].join(' ')}
     >
-      <div className={[classes.project_name, 'text-uppercase'].join(' ')}>
+      <div
+        className={[
+          classes.project_name,
+          'text-uppercase',
+          'user-select-none',
+        ].join(' ')}
+      >
         Evader
       </div>
-      <div className={[classes.project_slogan, 'text-capitalize'].join(' ')}>
+      <div
+        className={[
+          classes.project_slogan,
+          'text-capitalize',
+          'user-select-none',
+        ].join(' ')}
+      >
         the all in one events management platform
       </div>
       <div className={['mt-4'].join(' ')}>
