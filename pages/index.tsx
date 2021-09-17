@@ -4,9 +4,9 @@ import IsAuth from '../components/root/isAuth';
 import IsNotAuth from '../components/root/isNotAuth';
 
 const Home = () => {
-  const { fireUser } = useAuth();
+  const { token } = useAuth();
 
-  if (fireUser) {
+  if (token) {
     return <IsAuth />;
   }
   return <IsNotAuth />;
