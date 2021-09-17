@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "beee76fe8e8eeba6b1afb436dd2e677a783cccd5d8767064a8841343f851ad0e"
+            "sha256": "624cdf918ddb18e0daee9524488d1097211d54a17c1df1b5b252a2349aa73bda"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -113,6 +113,14 @@
             "index": "pypi",
             "version": "==3.2.7"
         },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:425c20ceffa42b9ac11b02611eece4ae6c5fef2ff0f039c14c1df20e00c80df8",
+                "sha256:4b8e13bf8d3df50ac4b986bd87085c3073dd56402ede109222ea34a774f9ec1b"
+            ],
+            "index": "pypi",
+            "version": "==3.8.0"
+        },
         "djangorestframework": {
             "hashes": [
                 "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf",
@@ -181,11 +189,11 @@
         },
         "google-cloud-storage": {
             "hashes": [
-                "sha256:b37ec5b0cd69aacb09270674c4c14873898cbc77624d17fef41ec0cb08004866",
-                "sha256:b701c1bbfa14d3e2bb6417908f456d7147ca201a8953347eea9c2327f1be4719"
+                "sha256:3483174fa3915e9026c8c51c341a1e251063fa3879b9e6706fcece2e2188fcf3",
+                "sha256:b9d1b7f6af6eac4d7694fb5e39555ff9ccef3d784501599e7a5e9cd76b79d95d"
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
-            "version": "==1.42.1"
+            "version": "==1.42.2"
         },
         "google-crc32c": {
             "hashes": [
@@ -375,6 +383,7 @@
                 "sha256:f6138462643adce0ed6e49007a63b7fd7dc4fda1ef4e15a70fcebe76c1407a71",
                 "sha256:f7c8193ec805324ff6024242b00f64a24b94d56b895f62bf28a9d72a228d4fca"
             ],
+            "markers": "python_version >= '3.6'",
             "version": "==3.18.0"
         },
         "pyasn1": {

@@ -1,15 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+# Create your models here.
+
 
 class User(AbstractUser):
-    name = models.CharField()
-    uid = models.CharField(unique=True, primary_key=True)
-    email = models.EmailField(unique=True)
-    photoUrl = models.URLField(default='')
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=255, unique=True)
+    uid = models.CharField(max_length=64, primary_key=True)
+    photoUrl = models.URLField(max_length=255, default='')
 
     USERNAME_FIELD = 'uid'
-    REQUIRED_FIELDS = ['username', 'name', 'email']
+    REQUIRED_FIELDS = ['email', 'username', ]
 
     def __str__(self):
-      return f'{self.uid} + {self.name}'
+        return f'{self.email}'
