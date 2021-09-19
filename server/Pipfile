@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 firebase-admin = "*"
 django-cors-headers = "*"
+google-auth = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

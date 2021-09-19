@@ -1,29 +1,38 @@
 import React, { PropsWithChildren } from 'react';
 import firebase, { User } from './firebase';
-import axiosInstance from './axios';
+import axios from './axios';
+import { userProfileType } from '@/types/types';
+import authLoginService from '@/services/auth-login-service';
 
 export const AuthContext = React.createContext<{
   fireUser: User | null;
   errorToast: boolean;
   token: string | null;
+  backendUser: userProfileType;
   signInHandler: () => void;
   setFireUser: React.Dispatch<React.SetStateAction<User | null>>;
   setErrorToast: React.Dispatch<React.SetStateAction<boolean>>;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
+  setBackendUser: React.Dispatch<React.SetStateAction<userProfileType>>;
 }>({
   fireUser: null,
   errorToast: false,
   token: null,
+  backendUser: {} as userProfileType,
   signInHandler: () => {},
   setFireUser: () => {},
   setErrorToast: () => {},
   setToken: () => {},
+  setBackendUser: () => {},
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [fireUser, setFireUser] = React.useState<User | null>(null);
   const [errorToast, setErrorToast] = React.useState<boolean>(false);
   const [token, setToken] = React.useState<string | null>(null);
+  const [backendUser, setBackendUser] = React.useState<userProfileType>(
+    {} as userProfileType
+  );
 
   React.useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -32,12 +41,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
         user
           .getIdToken(true)
           .then((idToken) => {
-            axiosInstance
+            axios
               .post<{ token: string }>('auth/login/', {
                 id_token: idToken,
               })
               .then((response) => {
-                console.log(response.data);
                 setToken(response.data.token);
               })
               .catch(() => {
@@ -53,10 +61,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   }, [fireUser]);
 
   const signInHandler = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
+    authLoginService()
       .then((result) => {
         const { user } = result;
         setFireUser(user);
@@ -72,10 +77,12 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
         fireUser,
         errorToast,
         token,
+        backendUser,
         signInHandler,
         setFireUser,
         setErrorToast,
         setToken,
+        setBackendUser,
       }}
     >
       {children}
