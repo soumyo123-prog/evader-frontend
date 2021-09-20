@@ -1,5 +1,5 @@
-import axios from '@/context/axios';
-import { userProfileType } from '@/types/types';
+import axios from '../context/axios';
+import { userProfileType } from '../types/types';
 
 export default function useFetchProfileData(token: string) {
   return axios.get<{ user: userProfileType }>('auth/profile/', {

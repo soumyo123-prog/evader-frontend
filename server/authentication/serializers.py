@@ -17,17 +17,15 @@ class LoginSerializer(serializers.Serializer):
         current_user = None
         jwt = self.validate_access_token(id_token)
         uid = jwt['uid']
-        profile = User.objects.filter(uid=uid)
 
-        if profile:
-            current_user = profile[0]
+        if User.objects.filter(uid=uid).exists():
+            current_user = User.objects.filter(uid=uid)[0]
         else:
             email = FirebaseAPI.get_email(jwt)
             name = FirebaseAPI.get_name(jwt)
             # We keep username=uid untill user explicitly provides it from frontend.
-            profile = User.objects.create(
+            current_user = User.objects.create(
                 uid=uid, name=name, email=email, username=uid)
-            current_user = profile
 
         data['user'] = current_user
         return data

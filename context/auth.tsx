@@ -1,8 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import firebase, { User } from './firebase';
 import axios from './axios';
-import { userProfileType } from '@/types/types';
-import authLoginService from '@/services/auth-login-service';
+import { userProfileType } from '../types/types';
+import authLoginService from '../services/auth-login-service';
+import authLogoutService from '../services/auth-logout-service';
 
 export const AuthContext = React.createContext<{
   fireUser: User | null;
@@ -10,6 +11,7 @@ export const AuthContext = React.createContext<{
   token: string | null;
   backendUser: userProfileType;
   signInHandler: () => void;
+  signOutHandler: () => void;
   setFireUser: React.Dispatch<React.SetStateAction<User | null>>;
   setErrorToast: React.Dispatch<React.SetStateAction<boolean>>;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
@@ -20,6 +22,7 @@ export const AuthContext = React.createContext<{
   token: null,
   backendUser: {} as userProfileType,
   signInHandler: () => {},
+  signOutHandler: () => {},
   setFireUser: () => {},
   setErrorToast: () => {},
   setToken: () => {},
@@ -71,6 +74,14 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       });
   };
 
+  const signOutHandler = () => {
+    authLogoutService().then(() => {
+      setBackendUser({} as userProfileType);
+      setFireUser(null);
+      setToken(null);
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -79,6 +90,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
         token,
         backendUser,
         signInHandler,
+        signOutHandler,
         setFireUser,
         setErrorToast,
         setToken,

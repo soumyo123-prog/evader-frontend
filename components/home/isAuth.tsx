@@ -1,7 +1,9 @@
 import React from 'react';
-import fetchProfileData from '@/services/fetch-profile-data-service';
+import fetchProfileData from '../../services/fetch-profile-data-service';
 
-import { useAuth } from '@/context/auth';
+import { useAuth } from '../../context/auth';
+import Navbar from '../navbar/navbar';
+import Sidebar from '../sidebar/sidebar';
 
 export default function IsAuth() {
   const { token, setBackendUser } = useAuth();
@@ -14,5 +16,10 @@ export default function IsAuth() {
       .catch(() => {});
   }, []);
 
-  return <div>I am authenticated</div>;
+  return (
+    <>
+      <Navbar />
+      <Sidebar />
+    </>
+  );
 }

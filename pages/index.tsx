@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAuth } from '@/context/auth';
-import IsAuth from '../components/root/isAuth';
-import IsNotAuth from '../components/root/isNotAuth';
+import { useAuth } from '../context/auth';
+import IsAuth from '../components/home/isAuth';
+import IsNotAuth from '../components/home/isNotAuth';
 
 const Home = () => {
   const { token } = useAuth();

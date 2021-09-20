@@ -1,4 +1,4 @@
-import firebase from '@/context/firebase';
+import firebase from '../context/firebase';
 
 export default function authLoginService() {
   const provider = new firebase.auth.GoogleAuthProvider();

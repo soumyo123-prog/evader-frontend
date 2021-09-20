@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { useAuth } from '@/context/auth';
+import { useAuth } from '../../context/auth';
 import 'react-toastify/dist/ReactToastify.css';
 
 import classes from './isNotAuth.module.scss';
