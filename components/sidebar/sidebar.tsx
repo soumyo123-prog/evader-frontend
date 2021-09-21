@@ -12,7 +12,7 @@ import classes from './sidebar.module.scss';
 import { useAuth } from '../../context/auth';
 
 export default function Sidebar() {
-  const { expand, active, setActive } = useSidebar();
+  const { expand, active } = useSidebar();
   const { signOutHandler } = useAuth();
 
   const sidebarContainerClasses = [classes.sidebar_container];
@@ -43,18 +43,22 @@ export default function Sidebar() {
               className={[
                 'd-flex align-items-center',
                 classes.sidebar_link,
-                `${active === 'home' ? classes.sidebar_link_active : null}`,
+                `${
+                  active === 'home'
+                    ? classes.sidebar_link_active
+                    : 'evader-dummy'
+                }`,
               ].join(' ')}
-              onClick={() => setActive('home')}
             >
-              <div
-                className={[
-                  'd-flex justify-content-center align-items-center',
-                ].join(' ')}
-                style={{ height: '50px', width: '80px' }}
-              >
-                <FaHome size="1.5rem" />{' '}
-              </div>
+              <FaHome
+                size="1.5rem"
+                style={{
+                  marginLeft: '28px',
+                  marginRight: '28px',
+                  marginTop: '13px',
+                  marginBottom: '13px',
+                }}
+              />
               {expand ? 'Home' : ''}
             </a>
           </Link>
@@ -66,23 +70,27 @@ export default function Sidebar() {
             classes.sidebar_list_item,
           ].join(' ')}
         >
-          <Link href="/">
+          <Link href="/events/">
             <a
               className={[
                 'd-flex align-items-center',
                 classes.sidebar_link,
-                `${active === 'events' ? classes.sidebar_link_active : null}`,
+                `${
+                  active === 'events'
+                    ? classes.sidebar_link_active
+                    : 'evader-dummy'
+                }`,
               ].join(' ')}
-              onClick={() => setActive('events')}
             >
-              <div
-                className={[
-                  'd-flex justify-content-center align-items-center',
-                ].join(' ')}
-                style={{ height: '50px', width: '80px' }}
-              >
-                <MdEventNote size="1.5rem" />
-              </div>
+              <MdEventNote
+                size="1.5rem"
+                style={{
+                  marginLeft: '28px',
+                  marginRight: '28px',
+                  marginTop: '13px',
+                  marginBottom: '13px',
+                }}
+              />
               {expand ? 'Events' : ''}
             </a>
           </Link>
@@ -99,18 +107,22 @@ export default function Sidebar() {
               className={[
                 'd-flex align-items-center',
                 classes.sidebar_link,
-                `${active === 'profile' ? classes.sidebar_link_active : null}`,
+                `${
+                  active === 'profile'
+                    ? classes.sidebar_link_active
+                    : 'evader-dummy'
+                }`,
               ].join(' ')}
-              onClick={() => setActive('profile')}
             >
-              <div
-                className={[
-                  'd-flex justify-content-center align-items-center',
-                ].join(' ')}
-                style={{ height: '50px', width: '80px' }}
-              >
-                <IoPerson size="1.5rem" />
-              </div>
+              <IoPerson
+                size="1.5rem"
+                style={{
+                  marginLeft: '28px',
+                  marginRight: '28px',
+                  marginTop: '13px',
+                  marginBottom: '13px',
+                }}
+              />
               {expand ? 'Profile' : ''}
             </a>
           </Link>
@@ -127,18 +139,22 @@ export default function Sidebar() {
               className={[
                 'd-flex align-items-center',
                 classes.sidebar_link,
-                `${active === 'settings' ? classes.sidebar_link_active : null}`,
+                `${
+                  active === 'settings'
+                    ? classes.sidebar_link_active
+                    : 'evader-dummy'
+                }`,
               ].join(' ')}
-              onClick={() => setActive('settings')}
             >
-              <div
-                className={[
-                  'd-flex justify-content-center align-items-center',
-                ].join(' ')}
-                style={{ height: '50px', width: '80px' }}
-              >
-                <IoIosSettings size="1.5rem" />
-              </div>
+              <IoIosSettings
+                size="1.5rem"
+                style={{
+                  marginLeft: '28px',
+                  marginRight: '28px',
+                  marginTop: '13px',
+                  marginBottom: '13px',
+                }}
+              />
               {expand ? 'Settings' : ''}
             </a>
           </Link>
@@ -159,14 +175,15 @@ export default function Sidebar() {
             type="button"
             onClick={signOutHandler}
           >
-            <div
-              className={[
-                'd-flex justify-content-center align-items-center',
-              ].join(' ')}
-              style={{ height: '50px', width: '80px' }}
-            >
-              <BiLogOut size="1.5rem" />
-            </div>
+            <BiLogOut
+              size="1.5rem"
+              style={{
+                marginLeft: '28px',
+                marginRight: '28px',
+                marginTop: '13px',
+                marginBottom: '13px',
+              }}
+            />
             {expand ? 'Logout' : ''}
           </button>
         </li>

@@ -4,6 +4,7 @@ import fetchProfileData from '../../services/fetch-profile-data-service';
 import { useAuth } from '../../context/auth';
 import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebar';
+import Wrapper from '../../utils/sidebar-content-wrapper';
 
 export default function IsAuth() {
   const { token, setBackendUser } = useAuth();
@@ -19,7 +20,9 @@ export default function IsAuth() {
   return (
     <>
       <Navbar />
-      <Sidebar />
+      <Wrapper>
+        <Sidebar />
+      </Wrapper>
     </>
   );
 }

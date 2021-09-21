@@ -1,0 +1,13 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+@import '../../sass/fonts';
+
+.backdrop {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(black, 0.8);
+}

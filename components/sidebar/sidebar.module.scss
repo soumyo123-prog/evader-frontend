@@ -3,8 +3,9 @@
 @import '../../sass/fonts';
 
 .sidebar_container {
-  height: calc(100% - 55px);
-  overflow: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: white;
   background-color: $bg-dark;
 

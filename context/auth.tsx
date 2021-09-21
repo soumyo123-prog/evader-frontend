@@ -50,9 +50,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
               })
               .then((response) => {
                 setToken(response.data.token);
+                localStorage.setItem('token', response.data.token);
               })
               .catch(() => {
                 setToken(null);
+                localStorage.removeItem('token');
                 setErrorToast(true);
               });
           })
@@ -79,6 +81,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       setBackendUser({} as userProfileType);
       setFireUser(null);
       setToken(null);
+      localStorage.removeItem('token');
     });
   };
 
