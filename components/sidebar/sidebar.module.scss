@@ -20,6 +20,12 @@
   width: 80px;
 }
 
+@media (max-width: 767px) {
+  .sidebar_collapse {
+    width: 0px;
+  }
+}
+
 .sidebar_list {
   margin: 0;
   padding: 0;

@@ -3,12 +3,35 @@
 @import '../../sass/fonts';
 
 .add_event_form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 120;
-  transform: translate(-50%, -50%);
-  padding: 20px 50px 20px 50px;
-  background: white;
-  border-radius: 10px;
+  position: relative;
+  min-height: 100%;
+  padding: 20px;
+  transform-origin: right;
+  background: linear-gradient(
+      rgba(56, 199, 115, 0.932),
+      rgba(114, 207, 130, 0.918)
+    ),
+    url('/form-background.jpg') no-repeat center center fixed;
+  transition: all 0.2s ease-in-out;
+
+  input,
+  textarea {
+    width: 300px;
+  }
+
+  textarea {
+    height: 100px;
+  }
+}
+
+.invalid_input {
+  background-color: $invalid_input;
+}
+
+.open {
+  transform: scaleX(1);
+}
+
+.close {
+  transform: scaleX(0);
 }

@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/router';
 import firebase, { User } from './firebase';
 import axios from './axios';
 import { userProfileType } from '../types/types';
@@ -36,6 +37,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [backendUser, setBackendUser] = React.useState<userProfileType>(
     {} as userProfileType
   );
+  const router = useRouter();
 
   React.useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -82,6 +84,8 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       setFireUser(null);
       setToken(null);
       localStorage.removeItem('token');
+      router.replace('/');
+      router.reload();
     });
   };
 

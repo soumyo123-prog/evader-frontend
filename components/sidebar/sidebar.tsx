@@ -70,7 +70,7 @@ export default function Sidebar() {
             classes.sidebar_list_item,
           ].join(' ')}
         >
-          <Link href="/events/">
+          <Link href="/events">
             <a
               className={[
                 'd-flex align-items-center',

@@ -3,10 +3,8 @@ import Navbar from '../navbar/navbar';
 import Wrapper from '../../utils/sidebar-content-wrapper';
 import Sidebar from '../sidebar/sidebar';
 
-import classes from './events.module.scss';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import AddEvent from '../addButton/addButton';
-import Backdrop from '../backdrop/backdrop';
 import AddEventForm from '../addEventForm/addEventForm';
 
 export default function Events() {
@@ -22,11 +20,10 @@ export default function Events() {
       <Wrapper>
         <Sidebar />
         <MainContentWrapper>
-          <AddEvent clickHandler={addClickHandler} />
+          <AddEventForm show={show} />
+          <AddEvent clickHandler={addClickHandler} open={show} />
         </MainContentWrapper>
       </Wrapper>
-      <Backdrop show={show} clickHandler={addClickHandler} />
-      <AddEventForm show={show} />
     </>
   );
 }
