@@ -4,6 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import classes from './addEventForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import Validate from '../../utils/form-validator';
+import AddEventService from '../../services/add-event-service';
+import { useAuth } from '../../context/auth';
 
 export default function AddEventForm({
   show,
@@ -14,6 +16,15 @@ export default function AddEventForm({
   const [venue, setVenue] = React.useState<string>('');
   const [date, setDate] = React.useState<string>('');
   const [time, setTime] = React.useState<string>('');
+  const { token } = useAuth();
+
+  const reset = () => {
+    setName('');
+    setDescription('');
+    setVenue('');
+    setDate('');
+    setTime('');
+  };
 
   const changeNameHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputName: string = e.target.value;
@@ -70,8 +81,33 @@ export default function AddEventForm({
     setTime(inputTime);
   };
 
-  const createEventHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const createEventHandler: React.FormEventHandler<HTMLFormElement> = async (
+    e
+  ) => {
     e.preventDefault();
+
+    const eventName = name;
+    const eventDescription = description;
+    const eventVenue = venue;
+    const eventDateTime = new Date(date);
+    eventDateTime.setHours(
+      Number(time.split(':')[0]),
+      Number(time.split(':')[1]),
+      0
+    );
+    const eventPhotoUrl = 'https://www.w3.org/Provider/Style/dummy.html';
+    const res = await AddEventService(
+      eventName,
+      eventDescription,
+      eventVenue,
+      eventDateTime.toISOString(),
+      eventPhotoUrl,
+      token!
+    ).catch((error) => {
+      toast(error.message);
+    });
+    toast('Event added successfully!');
+    reset();
   };
 
   React.useEffect(() => {
