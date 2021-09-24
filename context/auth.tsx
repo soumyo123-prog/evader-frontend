@@ -85,7 +85,6 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       setToken(null);
       localStorage.removeItem('token');
       router.replace('/');
-      router.reload();
     });
   };
 

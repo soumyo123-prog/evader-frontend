@@ -7,6 +7,7 @@ export default function Spinner() {
       className={[
         'h-100 w-100',
         'd-flex flex-column  justify-content-center align-items-center',
+        classes.spinner_container,
       ].join(' ')}
     >
       <div className={[classes.project_name].join(' ')}>Evader</div>

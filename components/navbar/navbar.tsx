@@ -1,15 +1,18 @@
 import React from 'react';
-import Link from 'next/link';
+import loadable from '@loadable/component';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import classes from './navbar.module.scss';
-import { useSidebar } from '../../context/sidebar';
+import { useAuth } from '../../context/auth';
+
+const NavbarHamburger = loadable(() => import('./navbar-hamburger'));
+const NavbarBrand = loadable(() => import('./navbar-brand'));
 
 export default function Navbar() {
-  const { setExpand } = useSidebar();
-
+  const { token } = useAuth();
   return (
     <nav
       className={[
+        `${!token ? 'd-none' : 'evader-dummy'}`,
         'navbar navbar-dark bg-primary',
         classes.navbar_container,
       ].join(' ')}
@@ -24,13 +27,9 @@ export default function Navbar() {
             classes.navbar_list_hamburger_container,
           ].join(' ')}
         >
-          <button
-            className={[classes.navbar_hamburger_button].join(' ')}
-            type="button"
-            onClick={() => setExpand((prev) => !prev)}
-          >
-            <GiHamburgerMenu color="white" size="1.5rem" />
-          </button>
+          <NavbarHamburger
+            fallback={<GiHamburgerMenu color="white" size="1.5rem" />}
+          />
         </li>
         <li
           className={[
@@ -38,9 +37,7 @@ export default function Navbar() {
             classes.navbar_list_item,
           ].join(' ')}
         >
-          <Link href="/">
-            <a className={[classes.navbar_brand].join(' ')}>Evader</a>
-          </Link>
+          <NavbarBrand fallback={<div> Evader </div>} />
         </li>
       </ul>
     </nav>

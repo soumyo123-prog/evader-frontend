@@ -7,11 +7,7 @@
   min-height: 100%;
   padding: 20px;
   transform-origin: right;
-  background: linear-gradient(
-      rgba(56, 199, 115, 0.932),
-      rgba(114, 207, 130, 0.918)
-    ),
-    url('/form-background.jpg') no-repeat center center fixed;
+  background: #35dc9b;
   transition: all 0.2s ease-in-out;
 
   input,

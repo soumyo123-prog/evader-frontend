@@ -21,6 +21,13 @@
 }
 
 @media (max-width: 767px) {
+  .sidebar_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 120;
+  }
+
   .sidebar_collapse {
     width: 0px;
   }
