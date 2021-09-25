@@ -3,7 +3,10 @@
 @import '../../sass/fonts';
 
 .add_event_form {
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
   min-height: 100%;
   padding: 20px;
   transform-origin: right;

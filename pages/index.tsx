@@ -5,9 +5,10 @@ import { useSidebar } from '../context/sidebar';
 import fetchProfileData from '../services/fetch-profile-data-service';
 import Wrapper from '../utils/sidebar-content-wrapper';
 import Sidebar from '../components/sidebar/sidebar';
+import Spinner from '../components/spinner/spinner';
 
 const Home = () => {
-  const { token, setBackendUser } = useAuth();
+  const { loading, token, setBackendUser } = useAuth();
   const { setActive } = useSidebar();
 
   React.useEffect(() => {
@@ -24,7 +25,11 @@ const Home = () => {
     setActive('home');
   }, []);
 
-  let content = <IsNotAuth />;
+  let content = loading ? (
+    <Spinner text="Trying to log you in..." />
+  ) : (
+    <IsNotAuth />
+  );
   if (token) {
     content = (
       <>

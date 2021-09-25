@@ -6,6 +6,7 @@ import { useSidebar } from '../../context/sidebar';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
+import EventNavbar from '../../components/eventNavbar/eventNavbar';
 
 const AddEventForm = loadable(
   () => import('../../components/addEventForm/addEventForm')
@@ -34,6 +35,7 @@ const EventsPage = () => {
         <Wrapper>
           <Sidebar />
           <MainContentWrapper>
+            <EventNavbar />
             <AddEventForm show={show} />
             <AddEventButton clickHandler={addClickHandler} open={show} />
           </MainContentWrapper>

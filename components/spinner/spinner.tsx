@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import classes from './spinner.module.scss';
 
-export default function Spinner() {
+export default function Spinner({ text }: PropsWithChildren<{ text: string }>) {
   return (
     <div
       className={[
@@ -12,6 +12,7 @@ export default function Spinner() {
     >
       <div className={[classes.project_name].join(' ')}>Evader</div>
       <div className={[classes.spinner].join(' ')} />
+      <div className={[classes.spinner_text].join(' ')}>{text}</div>
     </div>
   );
 }

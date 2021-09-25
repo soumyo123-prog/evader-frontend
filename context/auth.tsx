@@ -9,6 +9,7 @@ import authLogoutService from '../services/auth-logout-service';
 export const AuthContext = React.createContext<{
   fireUser: User | null;
   errorToast: boolean;
+  loading: boolean;
   token: string | null;
   backendUser: userProfileType;
   signInHandler: () => void;
@@ -20,6 +21,7 @@ export const AuthContext = React.createContext<{
 }>({
   fireUser: null,
   errorToast: false,
+  loading: false,
   token: null,
   backendUser: {} as userProfileType,
   signInHandler: () => {},
@@ -37,9 +39,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [backendUser, setBackendUser] = React.useState<userProfileType>(
     {} as userProfileType
   );
+  const [loading, setLoading] = React.useState<boolean>(false);
   const router = useRouter();
 
   React.useEffect(() => {
+    setLoading(true);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setFireUser(user);
@@ -51,18 +55,21 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
                 id_token: idToken,
               })
               .then((response) => {
+                setLoading(false);
                 setToken(response.data.token);
-                localStorage.setItem('token', response.data.token);
               })
               .catch(() => {
+                setLoading(false);
                 setToken(null);
-                localStorage.removeItem('token');
                 setErrorToast(true);
               });
           })
           .catch(() => {
+            setLoading(false);
             setErrorToast(true);
           });
+      } else {
+        setLoading(false);
       }
     });
   }, [fireUser]);
@@ -83,7 +90,6 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       setBackendUser({} as userProfileType);
       setFireUser(null);
       setToken(null);
-      localStorage.removeItem('token');
       router.replace('/');
     });
   };
@@ -93,6 +99,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       value={{
         fireUser,
         errorToast,
+        loading,
         token,
         backendUser,
         signInHandler,
