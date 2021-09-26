@@ -5,14 +5,14 @@ from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
 from .models import Event, Services, Products, People
-from .serializers import EventSerializer
+from .serializers import EventSerializer, EventsSerializer
 
 from datetime import datetime, timedelta
 
 # Create your views here.
 
 
-class EventView(GenericAPIView):
+class CreateEventView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -25,7 +25,19 @@ class EventView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             event = serializer.save()
-            return Response(data={'id': event.id}, status=status.HTTP_200_OK)
+            eventDict = EventsSerializer(event)
+            return Response(data=eventDict.data, status=status.HTTP_200_OK)
+        return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(serializer.errors)
-        return Response(data={})
+
+class FetchEventView(RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = EventsSerializer
+    queryset = Event.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        events = Event.objects.filter(creator=request.user)
+        if events:
+            serializer = self.get_serializer(events, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=[], status=status.HTTP_200_OK)

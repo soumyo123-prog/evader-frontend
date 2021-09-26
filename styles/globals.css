@@ -22,3 +22,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: lightgrey;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 100%;
+  background: grey;
+}

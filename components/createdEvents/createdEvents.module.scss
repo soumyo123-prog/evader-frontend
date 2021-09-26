@@ -1,0 +1,15 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+@import '../../sass/fonts';
+
+.event_card_container {
+  padding: 10px;
+  a {
+    height: 100%;
+  }
+}
+
+.event_card_link {
+  @include link(black);
+  color: black;
+}

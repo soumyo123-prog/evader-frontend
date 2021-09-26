@@ -14,11 +14,19 @@ const AddEventForm = loadable(
 const AddEventButton = loadable(
   () => import('../../components/addButton/addButton')
 );
+const CreatedEvents = loadable(
+  () => import('../../components/createdEvents/createdEvents')
+);
 
 const EventsPage = () => {
   const [show, setShow] = React.useState<boolean>(false);
+  const [choosen, setChoosen] = React.useState<string>('Created');
   const { setActive } = useSidebar();
   const { token } = useAuth();
+
+  const navItemClickHandler = (button: string) => {
+    setChoosen(button);
+  };
 
   const addClickHandler = () => {
     setShow((prev) => !prev);
@@ -35,7 +43,8 @@ const EventsPage = () => {
         <Wrapper>
           <Sidebar />
           <MainContentWrapper>
-            <EventNavbar />
+            <EventNavbar choosen={choosen} clickHandler={navItemClickHandler} />
+            {choosen === 'Created' ? <CreatedEvents /> : null}
             <AddEventForm show={show} />
             <AddEventButton clickHandler={addClickHandler} open={show} />
           </MainContentWrapper>

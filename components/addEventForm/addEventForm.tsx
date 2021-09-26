@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Validate from '../../utils/form-validator';
 import AddEventService from '../../services/add-event-service';
 import { useAuth } from '../../context/auth';
+import trigger from '../../utils/trigger-event';
 
 export default function AddEventForm({
   show,
@@ -95,18 +96,23 @@ export default function AddEventForm({
       Number(time.split(':')[1]),
       0
     );
-    const eventPhotoUrl = 'https://www.w3.org/Provider/Style/dummy.html';
-    const res = await AddEventService(
-      eventName,
-      eventDescription,
-      eventVenue,
-      eventDateTime.toISOString(),
-      eventPhotoUrl,
-      token!
-    ).catch((error) => {
+    const eventPhotoUrl =
+      'https://images.shiksha.com/mediadata/images/articles/1583747992phpzaxKKK.jpeg';
+
+    try {
+      const res = await AddEventService(
+        eventName,
+        eventDescription,
+        eventVenue,
+        eventDateTime.toISOString(),
+        eventPhotoUrl,
+        token!
+      );
+      trigger(res.data, 'newEventAdded');
+      toast('Event added successfully!');
+    } catch (error: any) {
       toast(error.message);
-    });
-    toast('Event added successfully!');
+    }
     reset();
   };
 

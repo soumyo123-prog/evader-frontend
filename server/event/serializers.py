@@ -33,3 +33,9 @@ class EventSerializer(serializers.Serializer):
         )
         event.save()
         return event
+
+
+class EventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'name', 'description', 'venue', 'time', 'photoUrl']
