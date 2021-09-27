@@ -10,8 +10,8 @@ class Event(models.Model):
     description = models.CharField(max_length=255)
     venue = models.CharField(max_length=255)
     time = models.DateTimeField()
-    photoUrl = models.URLField(max_length=300, blank=True)
     creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    fireId = models.CharField(max_length=255, default='')
 
     def __str__(self):
         return f'{self.name}'

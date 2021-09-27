@@ -8,7 +8,7 @@ export type EventType = {
   description: string;
   id: number;
   name: string;
-  photoUrl: string;
+  fireId: string;
   time: string;
   venue: string;
 };

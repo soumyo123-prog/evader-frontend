@@ -3,14 +3,12 @@
 @import '../../sass/fonts';
 
 .add_event_form {
-  position: fixed;
-  top: 0;
-  right: 0;
   width: 100%;
   min-height: 100%;
   transform-origin: right;
   background: #35dc9b;
   transition: all 0.2s ease-in-out;
+  padding: 20px;
 
   input,
   textarea {
@@ -18,7 +16,7 @@
   }
 
   textarea {
-    height: 100px;
+    height: 50px;
   }
 }
 

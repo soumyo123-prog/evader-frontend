@@ -11,12 +11,6 @@ export default function CreatedEvents() {
   const { token } = useAuth();
 
   React.useEffect(() => {
-    document.addEventListener('newEventAdded', (event: any) => {
-      setEvents((prev) => prev.concat(event.detail));
-    });
-  }, []);
-
-  React.useEffect(() => {
     eventsFetcher(token!)
       .then((res) => {
         setEvents(res.data);
@@ -26,10 +20,7 @@ export default function CreatedEvents() {
 
   const content = events.map((event) => (
     <div
-      className={[
-        'col-lg-4 col-md-6 col-12',
-        classes.event_card_container,
-      ].join(' ')}
+      className={['col', classes.event_card_container].join(' ')}
       key={event.id}
     >
       <Link href="/">
@@ -43,7 +34,7 @@ export default function CreatedEvents() {
             description={event.description}
             venue={event.venue}
             time={event.time}
-            photoUrl={event.photoUrl}
+            fireId={event.fireId}
           />
         </a>
       </Link>

@@ -8,7 +8,7 @@ class EventSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=255, allow_blank=True)
     venue = serializers.CharField(max_length=255)
     time = serializers.DateTimeField()
-    photoUrl = serializers.URLField(max_length=300, allow_blank=True)
+    fireId = serializers.CharField(max_length=255)
 
     def validate(self, data):
         name = data.get('name')
@@ -23,13 +23,13 @@ class EventSerializer(serializers.Serializer):
         description = self.validated_data.get('description', '')
         venue = self.validated_data.get('venue')
         time = self.validated_data.get('time')
-        photoUrl = self.validated_data.get('photoUrl', '')
+        fireId = self.validated_data.get('fireId')
         user = self.context["request"].user
 
         event = Event.objects.create(
             name=name, description=description,
             venue=venue, time=time,
-            photoUrl=photoUrl, creator=user
+            creator=user, fireId=fireId
         )
         event.save()
         return event
@@ -38,4 +38,4 @@ class EventSerializer(serializers.Serializer):
 class EventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'description', 'venue', 'time', 'photoUrl']
+        fields = ['id', 'name', 'description', 'venue', 'time', 'fireId', ]

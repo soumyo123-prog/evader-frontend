@@ -5,6 +5,9 @@ import { IoTimeSharp } from 'react-icons/io5';
 import { BsCalendarFill } from 'react-icons/bs';
 import classes from './createdEventCard.module.scss';
 import { EventType } from '../../types/types';
+import firebase from '../../context/firebase';
+
+const storage = firebase.storage();
 
 export default function CreatedEventCard({
   id,
@@ -12,8 +15,24 @@ export default function CreatedEventCard({
   description,
   venue,
   time,
-  photoUrl,
+  fireId,
 }: PropsWithChildren<EventType>) {
+  const [url, setUrl] = React.useState<string>('');
+
+  React.useEffect(() => {
+    const storageRef = storage.refFromURL(
+      `gs://evader-2edf2.appspot.com/events/${fireId}.png`
+    );
+    storageRef
+      .getDownloadURL()
+      .then((downloadURL: string) => {
+        setUrl(downloadURL);
+      })
+      .catch(() => {
+        setUrl('');
+      });
+  }, []);
+
   return (
     <div
       className={[
@@ -30,7 +49,9 @@ export default function CreatedEventCard({
       >
         <img
           className={['card-img-top', classes.card_photo].join(' ')}
-          src={photoUrl}
+          src={
+            url || `https://avatars.dicebear.com/api/identicon/${fireId}.svg`
+          }
           alt=""
         />
       </div>

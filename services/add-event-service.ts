@@ -6,7 +6,7 @@ export default async function AddEventService(
   description: string,
   venue: string,
   time: string,
-  photoUrl: string,
+  fireId: string,
   token: string
 ) {
   return axios.post<EventType>(
@@ -16,7 +16,7 @@ export default async function AddEventService(
       description,
       venue,
       time,
-      photoUrl,
+      fireId,
     },
     {
       headers: {

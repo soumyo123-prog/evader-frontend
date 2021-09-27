@@ -1,31 +1,28 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
+import Compressor from 'compressorjs';
 import classes from './addEventForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import Validate from '../../utils/form-validator';
 import AddEventService from '../../services/add-event-service';
 import { useAuth } from '../../context/auth';
-import trigger from '../../utils/trigger-event';
+import firebase from '../../context/firebase';
 
-export default function AddEventForm({
-  show,
-}: PropsWithChildren<{ show: boolean }>) {
+const storage = firebase.storage();
+const db = firebase.firestore();
+
+export default function AddEventForm() {
   const [disableSubmit, setdisableSubmit] = React.useState<boolean>(true);
   const [name, setName] = React.useState<string>('');
   const [description, setDescription] = React.useState<string>('');
   const [venue, setVenue] = React.useState<string>('');
   const [date, setDate] = React.useState<string>('');
   const [time, setTime] = React.useState<string>('');
+  const fileUploadRef = React.useRef<HTMLInputElement>(null);
   const { token } = useAuth();
-
-  const reset = () => {
-    setName('');
-    setDescription('');
-    setVenue('');
-    setDate('');
-    setTime('');
-  };
+  const router = useRouter();
 
   const changeNameHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputName: string = e.target.value;
@@ -96,24 +93,35 @@ export default function AddEventForm({
       Number(time.split(':')[1]),
       0
     );
-    const eventPhotoUrl =
-      'https://images.shiksha.com/mediadata/images/articles/1583747992phpzaxKKK.jpeg';
 
     try {
-      const res = await AddEventService(
+      const dr = await db.collection('events').add({ name: eventName });
+      const fireEventId = dr.id;
+
+      await AddEventService(
         eventName,
         eventDescription,
         eventVenue,
         eventDateTime.toISOString(),
-        eventPhotoUrl,
+        fireEventId,
         token!
       );
-      trigger(res.data, 'newEventAdded');
-      toast('Event added successfully!');
+      if (fileUploadRef.current!.files!.length > 0) {
+        const storageRef = storage.ref().child(`events/${fireEventId}.png`);
+        const file = fileUploadRef.current!.files![0];
+        // eslint-disable-next-line no-new
+        new Compressor(file, {
+          quality: 0.8,
+          success: async (result: File) => {
+            await storageRef.put(result);
+          },
+          error: () => {},
+        });
+      }
     } catch (error: any) {
       toast(error.message);
     }
-    reset();
+    router.replace('/events');
   };
 
   React.useEffect(() => {
@@ -130,21 +138,16 @@ export default function AddEventForm({
     }
   }, [name, venue, date, time]);
 
-  const formClasses = [
-    'd-flex flex-column align-items-center justify-content-center',
-    'text-light',
-    classes.add_event_form,
-  ];
-
-  if (show) {
-    formClasses.push(classes.open);
-  } else {
-    formClasses.push(classes.close);
-  }
-
   return (
     <>
-      <form className={formClasses.join(' ')} onSubmit={createEventHandler}>
+      <form
+        className={[
+          'd-flex flex-column align-items-center',
+          'text-light',
+          classes.add_event_form,
+        ].join(' ')}
+        onSubmit={createEventHandler}
+      >
         <p className={['h1 text-uppercase'].join(' ')}> add event </p>
         <div className="mb-3">
           <label htmlFor="name" className={['form-label'].join(' ')}>
@@ -201,6 +204,18 @@ export default function AddEventForm({
             className={['form-control'].join(' ')}
             id="time"
             onChange={changeTimeHandler}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="avatar" className={['form-label'].join(' ')}>
+            Event Avatar
+          </label>
+          <input
+            type="file"
+            className={['form-control'].join(' ')}
+            id="avatar"
+            ref={fileUploadRef}
+            accept=".jpg, .jpeg, .png, .webp"
           />
         </div>
         <button
