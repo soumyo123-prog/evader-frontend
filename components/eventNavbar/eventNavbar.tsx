@@ -1,63 +1,34 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import classes from './eventNavbar.module.scss';
 
-export default function EventNavbar({
-  choosen,
-  clickHandler,
-}: PropsWithChildren<{
-  choosen: string;
-  // eslint-disable-next-line no-unused-vars
-  clickHandler: (val: string) => void;
-}>) {
+export default function EventNavbar() {
   return (
-    <nav className={['d-flex justify-content-center'].join(' ')}>
-      <ul
-        className={[
-          'd-flex justify-content-center',
-          classes.event_navbar,
-          `${
-            choosen === 'Created'
-              ? classes.event_navbar_left
-              : classes.event_navbar_right
-          }`,
-        ].join(' ')}
-      >
+    <nav className={[classes.event_navbar_container].join(' ')}>
+      <ul className={['d-flex', classes.event_navbar].join(' ')}>
         <li
           className={[
-            'd-flex align-items-center justify-content-center',
+            'd-flex justify-content-center align-items-center',
+            'text-uppercase',
+            'text-primary',
             classes.event_navbar_item,
-            `${
-              choosen === 'Created'
-                ? classes.event_navbar_item_active
-                : 'evader-dummy'
-            }`,
+            classes.event_navbar_state,
           ].join(' ')}
         >
-          <button
-            className={['btn'].join(' ')}
-            type="button"
-            onClick={() => clickHandler('Created')}
-          >
-            Created
-          </button>
+          Overview
         </li>
         <li
           className={[
-            'd-flex align-items-center justify-content-center',
+            'd-flex justify-content-center align-items-center',
+            'ms-auto',
             classes.event_navbar_item,
-            `${
-              choosen === 'Invited'
-                ? classes.event_navbar_item_active
-                : 'evader-dummy'
-            }`,
           ].join(' ')}
         >
           <button
-            className={['btn'].join(' ')}
+            className={[classes.navbar_toggler_icon].join(' ')}
             type="button"
-            onClick={() => clickHandler('Invited')}
           >
-            Invited
+            <GiHamburgerMenu size="1.5rem" />
           </button>
         </li>
       </ul>

@@ -1,29 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../context/auth';
-import eventsFetcher from '../../services/events-fetcher-service';
-import { EventType } from '../../types/types';
+import useEventsFetcher from '../../services/events-fetcher-service';
 import CreatedEventCard from '../createdEventCard/createdEventCard';
 import classes from './createdEvents.module.scss';
+import InlineSpinner from '../spinner/inlineSpinner';
 
 export default function CreatedEvents() {
-  const [events, setEvents] = React.useState<EventType[]>([]);
   const { token } = useAuth();
-
-  React.useEffect(() => {
-    eventsFetcher(token!)
-      .then((res) => {
-        setEvents(res.data);
-      })
-      .catch(() => {});
-  }, []);
+  const { events, loading } = useEventsFetcher(token!);
 
   const content = events.map((event) => (
     <div
       className={['col', classes.event_card_container].join(' ')}
       key={event.id}
     >
-      <Link href="/">
+      <Link href={`events/${event.id}`}>
         <a
           className={['d-block', classes.event_card_link].join(' ')}
           role="button"
@@ -40,6 +32,10 @@ export default function CreatedEvents() {
       </Link>
     </div>
   ));
+
+  if (loading) {
+    return <InlineSpinner />;
+  }
 
   return (
     <div className={['container-fluid'].join(' ')}>

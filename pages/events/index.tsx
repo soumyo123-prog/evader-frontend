@@ -7,7 +7,7 @@ import { useSidebar } from '../../context/sidebar';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
-import EventNavbar from '../../components/eventNavbar/eventNavbar';
+import EventsNavbar from '../../components/eventsNavbar/eventsNavbar';
 
 const AddEventButton = loadable(
   () => import('../../components/addButton/addButton')
@@ -41,7 +41,10 @@ const EventsPage = () => {
         <Wrapper>
           <Sidebar />
           <MainContentWrapper>
-            <EventNavbar choosen={choosen} clickHandler={navItemClickHandler} />
+            <EventsNavbar
+              choosen={choosen}
+              clickHandler={navItemClickHandler}
+            />
             {choosen === 'Created' ? <CreatedEvents /> : null}
             <AddEventButton clickHandler={addClickHandler} open={false} />
           </MainContentWrapper>

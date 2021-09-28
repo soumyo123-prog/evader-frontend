@@ -1,0 +1,31 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+@import '../../sass/fonts';
+
+.event_navbar {
+  position: relative;
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+.event_navbar_item {
+  width: 120px;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+
+  button {
+    padding: 0;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.event_navbar_item_active {
+  background-color: $bg-primary;
+  transform: scale(1.2, 1.2);
+}

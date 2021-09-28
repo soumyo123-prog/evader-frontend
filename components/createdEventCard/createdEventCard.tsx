@@ -5,9 +5,7 @@ import { IoTimeSharp } from 'react-icons/io5';
 import { BsCalendarFill } from 'react-icons/bs';
 import classes from './createdEventCard.module.scss';
 import { EventType } from '../../types/types';
-import firebase from '../../context/firebase';
-
-const storage = firebase.storage();
+import useEventAvatarFetcherService from '../../services/event-avatar-fetcher-service';
 
 export default function CreatedEventCard({
   id,
@@ -17,21 +15,7 @@ export default function CreatedEventCard({
   time,
   fireId,
 }: PropsWithChildren<EventType>) {
-  const [url, setUrl] = React.useState<string>('');
-
-  React.useEffect(() => {
-    const storageRef = storage.refFromURL(
-      `gs://evader-2edf2.appspot.com/events/${fireId}.png`
-    );
-    storageRef
-      .getDownloadURL()
-      .then((downloadURL: string) => {
-        setUrl(downloadURL);
-      })
-      .catch(() => {
-        setUrl('');
-      });
-  }, []);
+  const url = useEventAvatarFetcherService(fireId);
 
   return (
     <div
