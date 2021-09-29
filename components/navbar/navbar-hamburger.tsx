@@ -12,6 +12,7 @@ export default function NavbarHamburger() {
       className={[classes.navbar_hamburger_button].join(' ')}
       type="button"
       onClick={() => setExpand((prev) => !prev)}
+      onBlur={() => setExpand(false)}
     >
       {expand ? (
         <AiOutlineClose size="1.5rem" color="white" />

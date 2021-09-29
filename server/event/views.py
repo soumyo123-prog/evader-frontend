@@ -30,7 +30,7 @@ class CreateEventView(GenericAPIView):
         return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FetchEventView(RetrieveAPIView):
+class FetchEventsView(RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventsSerializer
     queryset = Event.objects.all()
@@ -41,3 +41,10 @@ class FetchEventView(RetrieveAPIView):
             serializer = self.get_serializer(events, many=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         return Response(data=[], status=status.HTTP_200_OK)
+
+
+class FetchEventView(RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = EventsSerializer
+    lookup_field = 'pk'
+    queryset = Event.objects.all()

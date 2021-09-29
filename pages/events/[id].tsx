@@ -1,21 +1,30 @@
+import loadable from '@loadable/component';
 import { useRouter } from 'next/router';
 import React from 'react';
-import EventCoverPhoto from '../../components/eventCoverPhoto/eventCoverPhoto';
-import EventNavbar from '../../components/eventNavbar/eventNavbar';
 import Sidebar from '../../components/sidebar/sidebar';
 import { useAuth } from '../../context/auth';
+import useEventFetcher from '../../services/event-fetcher-service';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
 
+const EventNavbar = loadable(
+  () => import('../../components/eventNavbar/eventNavbar')
+);
+const EventOverview = loadable(
+  () => import('../../components/eventOverview/eventOverview')
+);
+
 export default function EventPage() {
-  const [id, setId] = React.useState<string>('');
+  const [active, setActive] = React.useState<string>('overview');
   const { token } = useAuth();
   const router = useRouter();
+  const id = router.query.id as string;
+  const event = useEventFetcher(id);
 
-  React.useEffect(() => {
-    setId(router.query.id);
-  }, []);
+  const changeActiveHandler = (newActive: string) => {
+    setActive(newActive);
+  };
 
   let content = <Redirect to="/" />;
   if (token) {
@@ -23,7 +32,10 @@ export default function EventPage() {
       <Wrapper>
         <Sidebar />
         <MainContentWrapper>
-          <EventNavbar />
+          <EventNavbar active={active} changeActive={changeActiveHandler} />
+          {active === 'overview' ? (
+            <EventOverview fetchedEvent={event} />
+          ) : null}
         </MainContentWrapper>
       </Wrapper>
     );
