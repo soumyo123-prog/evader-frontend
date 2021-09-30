@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { PropsWithChildren } from 'react';
@@ -31,7 +32,6 @@ export default function EventNavbarExpanded({
         <EventNavbarExpandedItem
           changeActive={changeActive}
           field={field}
-          // eslint-disable-next-line react/no-array-index-key
           key={index}
         />
       ))}

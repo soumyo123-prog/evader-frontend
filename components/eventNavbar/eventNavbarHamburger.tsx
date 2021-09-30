@@ -20,7 +20,6 @@ export default function EventNavbarHamburger({
         className={['btn btn-primary'].join(' ')}
         type="button"
         onClick={expandToggleHandler}
-        onBlur={expandOffHandler}
       >
         <IoIosArrowDropdown size="1.5rem" />
       </button>

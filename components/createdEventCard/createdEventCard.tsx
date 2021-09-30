@@ -8,7 +8,6 @@ import { EventType } from '../../types/types';
 import useEventAvatarFetcherService from '../../services/event-avatar-fetcher-service';
 
 export default function CreatedEventCard({
-  id,
   name,
   description,
   venue,
