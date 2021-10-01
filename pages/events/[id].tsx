@@ -14,6 +14,9 @@ const EventNavbar = loadable(
 const EventOverview = loadable(
   () => import('../../components/eventOverview/eventOverview')
 );
+const EventInvitePeople = loadable(
+  () => import('../../components/eventInvitePeople/eventInvitePeople')
+);
 
 export default function EventPage() {
   const [active, setActive] = React.useState<string>('overview');
@@ -36,6 +39,7 @@ export default function EventPage() {
           {active === 'overview' ? (
             <EventOverview fetchedEvent={event} />
           ) : null}
+          {active === 'invite people' ? <EventInvitePeople id={id} /> : null}
         </MainContentWrapper>
       </Wrapper>
     );

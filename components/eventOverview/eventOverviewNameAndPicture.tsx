@@ -10,7 +10,7 @@ export default function EventOverviewNameAndPicture({
 
   return (
     <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light'].join(' ')}>
+      <div className={['card-header bg-primary text-light h5'].join(' ')}>
         Name
       </div>
       <div

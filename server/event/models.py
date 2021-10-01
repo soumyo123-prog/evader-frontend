@@ -19,7 +19,7 @@ class Event(models.Model):
 
 class People(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    status = models.BooleanField(default=False)
+    status = models.IntegerField(default=0)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):

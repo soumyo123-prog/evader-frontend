@@ -24,11 +24,11 @@ export default function EventOverviewVeue({
   return (
     <>
       <div className={['card m-3'].join(' ')}>
-        <div className={['card-header bg-primary text-light'].join(' ')}>
+        <div className={['card-header bg-primary text-light h5'].join(' ')}>
           Location
         </div>
         <div className={['card-body', 'bg-dark text-light'].join(' ')}>
-          <h5 className={['card-header'].join(' ')}>{venue}</h5>
+          <p className={['card-text'].join(' ')}>{venue}</p>
           <button
             className={['btn btn-primary'].join(' ')}
             type="button"

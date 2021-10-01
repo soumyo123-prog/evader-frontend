@@ -65,13 +65,7 @@ export default function AddEventForm() {
 
   const changeDateHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputDate: string = e.target.value;
-    const inputYear = inputDate.substring(0, 4);
-    const [result, error] = Validate.validateDate(inputYear);
-    if (result) {
-      setDate(inputDate);
-    } else {
-      toast(error);
-    }
+    setDate(inputDate);
   };
 
   const changeTimeHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -126,11 +120,20 @@ export default function AddEventForm() {
 
   React.useEffect(() => {
     let valid: boolean = false;
-    valid =
-      Validate.isValid(name) &&
-      Validate.isValid(venue) &&
-      Validate.isValid(date) &&
-      Validate.isValid(time);
+    valid = Validate.isValid(name) && Validate.isValid(venue);
+
+    if (date && time) {
+      const dateTime = new Date(date);
+      dateTime.setHours(
+        Number(time.split(':')[0]),
+        Number(time.split(':')[1]),
+        0
+      );
+      valid = valid && Validate.isValidDateTime(dateTime);
+    } else {
+      valid = false;
+    }
+
     if (valid) {
       setdisableSubmit(false);
     } else {

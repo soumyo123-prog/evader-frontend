@@ -9,6 +9,9 @@ const EventOverviewDescription = loadable(
   () => import('./eventOverviewDescription')
 );
 const EventOverviewVenue = loadable(() => import('./eventOverviewVenue'));
+const EventOverviewDateAndTime = loadable(
+  () => import('./eventOverviewDateAndTime')
+);
 
 export default function EventOverview({
   fetchedEvent,
@@ -21,7 +24,7 @@ export default function EventOverview({
       />
       <EventOverviewDescription description={fetchedEvent.description} />
       <EventOverviewVenue venue={fetchedEvent.venue} />
-      <div>Venue details and directions from current location</div>
+      <EventOverviewDateAndTime time={fetchedEvent.time} />
     </>
   );
 }

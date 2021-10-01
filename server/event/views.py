@@ -5,7 +5,7 @@ from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
 from .models import Event, Services, Products, People
-from .serializers import EventSerializer, EventsSerializer
+from .serializers import EventSerializer, EventsSerializer, InvitationSerializer, PeopleSerializer
 
 from datetime import datetime, timedelta
 
@@ -20,7 +20,6 @@ class CreateEventView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         time = datetime.strptime(request.data.get(
             'time'), '%Y-%m-%dT%H:%M:%S.%fZ')
-        time += timedelta(hours=5, minutes=30)
         request.data['time'] = time
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -48,3 +47,24 @@ class FetchEventView(RetrieveAPIView):
     serializer_class = EventsSerializer
     lookup_field = 'pk'
     queryset = Event.objects.all()
+
+
+class InvitePeopleView(GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = People.objects.all()
+    serializer_class = InvitationSerializer
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('pk', None)
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            invitation = serializer.save(id=id)
+            invitationDict = PeopleSerializer(invitation)
+
+            return Response(data=invitationDict.data, status=status.HTTP_200_OK)
+        else:
+            errors = serializer.errors.get('non_field_errors')
+            code = status.HTTP_400_BAD_REQUEST
+            if (errors[0].code == 404):
+                code = status.HTTP_404_NOT_FOUND
+            return Response(message={'error': errors[0]}, status=code)

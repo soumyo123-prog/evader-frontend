@@ -5,7 +5,7 @@ export default function EventOverviewDescription({
 }: PropsWithChildren<{ description: string }>) {
   return (
     <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light'].join(' ')}>
+      <div className={['card-header bg-primary text-light h5'].join(' ')}>
         Description
       </div>
       <div

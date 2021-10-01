@@ -8,6 +8,14 @@ export default class Validate {
     return false;
   }
 
+  static isValidDateTime(dateTime: Date): boolean {
+    const currDate = new Date();
+    if (dateTime.getTime() < currDate.getTime()) {
+      return false;
+    }
+    return true;
+  }
+
   // The below methods are for character by character validation
   static validateName(name: string): [boolean, string] {
     if (name.length === 0) {
@@ -55,13 +63,14 @@ export default class Validate {
     return [true, 'So far so good!'];
   }
 
-  static validateDate(year: string): [boolean, string] {
-    const currYear = new Date().getFullYear();
-    if (Number(year) > currYear) {
-      return [false, 'Year cannot be greater than current year!'];
+  static validateEmail(email: string): [boolean, string] {
+    if (email.length === 0) {
+      return [true, 'Email field is required!'];
     }
-    if (Number(year) < currYear) {
-      return [false, 'Year cannot be less than current year!'];
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(email.toLowerCase())) {
+      return [false, 'Email provided is not valid'];
     }
     return [true, 'So far so good!'];
   }

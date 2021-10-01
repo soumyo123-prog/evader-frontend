@@ -78,7 +78,7 @@ export default function CreatedEventCard({
           ].join(' ')}
         >
           <IoTimeSharp size="1.5rem" />
-          {moment(time).add(5, 'hours').add(30, 'minutes').format('h:mm A')}
+          {moment(time).format('h:mm A')}
         </p>
       </div>
     </div>

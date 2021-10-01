@@ -15,7 +15,13 @@ export default function EventNavbarExpanded({
   // eslint-disable-next-line no-unused-vars
   changeActive: (newActive: string) => void;
 }>) {
-  const fields = ['overview', 'guests', 'invite people', 'expenditure'];
+  const fields = [
+    'overview',
+    'guests',
+    'invite people',
+    'expenditure',
+    'event settings',
+  ];
   const notActive = fields.filter((field) => field !== active);
 
   return (
