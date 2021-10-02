@@ -15,6 +15,9 @@ const AddEventButton = loadable(
 const CreatedEvents = loadable(
   () => import('../../components/createdEvents/createdEvents')
 );
+const InvitedEvents = loadable(
+  () => import('../../components/invitedEvents/invitedEvents')
+);
 
 const EventsPage = () => {
   const [choosen, setChoosen] = React.useState<string>('Created');
@@ -45,7 +48,7 @@ const EventsPage = () => {
               choosen={choosen}
               clickHandler={navItemClickHandler}
             />
-            {choosen === 'Created' ? <CreatedEvents /> : null}
+            {choosen === 'Created' ? <CreatedEvents /> : <InvitedEvents />}
             <AddEventButton clickHandler={addClickHandler} open={false} />
           </MainContentWrapper>
         </Wrapper>

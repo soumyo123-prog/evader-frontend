@@ -1,16 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../context/auth';
-import useEventsFetcher from '../../services/events-fetcher-service';
+import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
+import classes from './invitedEvents.module.scss';
 import EventCard from '../eventCard/eventCard';
-import classes from './createdEvents.module.scss';
-import InlineSpinner from '../spinner/inlineSpinner';
 
-export default function CreatedEvents() {
-  const { token } = useAuth();
-  const { events, loading } = useEventsFetcher(token!);
+export default function InvitedEvents() {
+  const invitedEvents = useInvitedEventsFetcher();
 
-  const content = events.map((event) => (
+  const content = invitedEvents.map((event) => (
     <div
       className={['col', classes.event_card_container].join(' ')}
       key={event.id}
@@ -27,17 +24,13 @@ export default function CreatedEvents() {
             venue={event.venue}
             time={event.time}
             fireId={event.fireId}
-            status={undefined}
-            invitedBy={undefined}
+            status={event.status}
+            invitedBy={event.invitedBy}
           />
         </a>
       </Link>
     </div>
   ));
-
-  if (loading) {
-    return <InlineSpinner />;
-  }
 
   return (
     <div className={['container-fluid'].join(' ')}>

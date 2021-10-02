@@ -11,4 +11,6 @@ export type EventType = {
   fireId: string;
   time: string;
   venue: string;
+  status: number | undefined;
+  invitedBy: string | undefined;
 };

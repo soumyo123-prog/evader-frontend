@@ -1,13 +1,19 @@
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
 from .models import Event, Services, Products, People
-from .serializers import EventSerializer, EventsSerializer, InvitationSerializer, PeopleSerializer
+from .serializers import (
+    EventSerializer,
+    EventsSerializer,
+    InvitationSerializer,
+    PeopleSerializer,
+    InvitedEventSerializer
+)
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Create your views here.
 
@@ -25,7 +31,7 @@ class CreateEventView(GenericAPIView):
         if serializer.is_valid():
             event = serializer.save()
             eventDict = EventsSerializer(event)
-            return Response(data=eventDict.data, status=status.HTTP_200_OK)
+            return Response(data=eventDict.data, status=status.HTTP_201_CREATED)
         return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -55,16 +61,22 @@ class InvitePeopleView(GenericAPIView):
     serializer_class = InvitationSerializer
 
     def post(self, request, *args, **kwargs):
-        id = kwargs.get('pk', None)
+        request.data['id'] = kwargs.get('pk')
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            invitation = serializer.save(id=id)
-            invitationDict = PeopleSerializer(invitation)
+        if not serializer.is_valid():
+            error = serializer.errors.get('non_field_errors')[0]
+            return Response(data={'error': error}, status=status.HTTP_404_NOT_FOUND)
+        invitation = serializer.save()
+        invitationDict = PeopleSerializer(invitation)
+        return Response(data=invitationDict.data, status=status.HTTP_200_OK)
 
-            return Response(data=invitationDict.data, status=status.HTTP_200_OK)
-        else:
-            errors = serializer.errors.get('non_field_errors')
-            code = status.HTTP_400_BAD_REQUEST
-            if (errors[0].code == 404):
-                code = status.HTTP_404_NOT_FOUND
-            return Response(message={'error': errors[0]}, status=code)
+
+class FetchInvitedEventsView(GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Event.objects.all()
+    serializer_class = InvitedEventSerializer
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        invitations = serializer.fetch()
+        return Response(data=invitations, status=status.HTTP_200_OK)

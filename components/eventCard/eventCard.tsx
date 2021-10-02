@@ -3,11 +3,11 @@ import moment from 'moment';
 import { HiLocationMarker } from 'react-icons/hi';
 import { IoTimeSharp } from 'react-icons/io5';
 import { BsCalendarFill } from 'react-icons/bs';
-import classes from './createdEventCard.module.scss';
+import classes from './eventCard.module.scss';
 import { EventType } from '../../types/types';
 import useEventAvatarFetcherService from '../../services/event-avatar-fetcher-service';
 
-export default function CreatedEventCard({
+export default function EventCard({
   name,
   description,
   venue,

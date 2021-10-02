@@ -18,19 +18,21 @@ export default function EventInvitePeople({
     setEmail(e.target.value);
   };
 
-  const invitePeopleHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const invitePeopleHandler: React.FormEventHandler<HTMLFormElement> = async (
+    e
+  ) => {
     e.preventDefault();
     const [result, error] = Validate.validateEmail(email);
     if (!result || error === 'Email field is required!') {
-      return toast(error);
+      toast(error);
+    } else {
+      try {
+        await invitePeople(id, email, token!);
+        toast('Invitation sent successfully');
+      } catch (err: any) {
+        toast(err.response.data.error);
+      }
     }
-    invitePeople(id, email, token!)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err: any) => {
-        toast(err.message);
-      });
   };
 
   return (
