@@ -12,6 +12,10 @@ const EventOverviewVenue = loadable(() => import('./eventOverviewVenue'));
 const EventOverviewDateAndTime = loadable(
   () => import('./eventOverviewDateAndTime')
 );
+const EventOverviewInvitedBy = loadable(
+  () => import('./eventOverviewInvitedBy')
+);
+const EventOverviewStatus = loadable(() => import('./eventOverviewStatus'));
 
 export default function EventOverview({
   fetchedEvent,
@@ -23,6 +27,16 @@ export default function EventOverview({
         fireId={fetchedEvent.fireId}
       />
       <EventOverviewDescription description={fetchedEvent.description} />
+      {fetchedEvent.invitedBy ? (
+        <>
+          <EventOverviewInvitedBy invitedBy={fetchedEvent.invitedBy} />
+          <EventOverviewStatus
+            status={fetchedEvent.status!}
+            dateTime={fetchedEvent.time}
+            id={fetchedEvent.id}
+          />
+        </>
+      ) : null}
       <EventOverviewVenue venue={fetchedEvent.venue} />
       <EventOverviewDateAndTime time={fetchedEvent.time} />
     </>

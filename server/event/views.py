@@ -10,7 +10,8 @@ from .serializers import (
     EventsSerializer,
     InvitationSerializer,
     PeopleSerializer,
-    InvitedEventSerializer
+    InvitedEventSerializer,
+    InvitationStatusSerializer
 )
 
 from datetime import datetime
@@ -51,8 +52,16 @@ class FetchEventsView(RetrieveAPIView):
 class FetchEventView(RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventsSerializer
-    lookup_field = 'pk'
     queryset = Event.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.filter(id=kwargs.get('pk'), creator=request.user)
+        if event:
+            serializer = self.get_serializer(event[0])
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'User not permitted to view the event'},
+            status=status.HTTP_403_FORBIDDEN)
 
 
 class InvitePeopleView(GenericAPIView):
@@ -80,3 +89,39 @@ class FetchInvitedEventsView(GenericAPIView):
         serializer = self.get_serializer()
         invitations = serializer.fetch()
         return Response(data=invitations, status=status.HTTP_200_OK)
+
+
+class FetchInvitedEventView(GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = EventsSerializer
+    queryset = People.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        invitation = People.objects.filter(
+            event__id=kwargs.get('pk'), user=request.user)
+        if invitation:
+            invitation = invitation[0]
+            event = self.get_serializer(invitation.event).data
+            event['status'] = invitation.status
+            event['invitedBy'] = (
+                f'{invitation.event.creator.name} : {invitation.event.creator.email}')
+            return Response(data=event, status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'User is not permitted to view this event'},
+            status=status.HTTP_403_FORBIDDEN)
+
+
+class SetInvitationStatusView(GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = InvitationStatusSerializer
+    queryset = People.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        request.data['id'] = kwargs.get('pk')
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={}, status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'User not permitted to modify this invitation'},
+            status=status.HTTP_403_FORBIDDEN)

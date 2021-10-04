@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers, status
 from .models import Event, People
 from django.contrib.auth import get_user_model
@@ -84,7 +85,33 @@ class InvitedEventSerializer(serializers.Serializer):
                 eventObj = invitation.event
                 eventDict = EventsSerializer(eventObj).data
                 eventDict['status'] = invitation.status
-                eventDict['invitedBy'] = eventObj.creator.email
+                eventDict['invitedBy'] = f'{eventObj.creator.name} : {eventObj.creator.email}'
                 invitedEvents.append(eventDict)
             return invitedEvents
         return []
+
+
+class InvitationStatusSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    status = serializers.IntegerField()
+
+    def validate(self, data):
+        id = data.get('id')
+        status = data.get('status')
+        user = self.context['request'].user
+
+        if not People.objects.filter(event__id=id, user=user).exists():
+            raise ValidationError(
+                detail='User not permitted to modify this invitation',
+                code=status.HTTP_403_FORBIDDEN)
+
+        return data
+
+    def save(self):
+        id = self.validated_data.get('id')
+        status = self.validated_data.get('status')
+        user = self.context['request'].user
+
+        invitation = People.objects.filter(event__id=id, user=user)[0]
+        invitation.status = status
+        invitation.save()

@@ -4,7 +4,9 @@ from .views import (
     FetchEventsView,
     FetchEventView,
     InvitePeopleView,
-    FetchInvitedEventsView
+    FetchInvitedEventsView,
+    FetchInvitedEventView,
+    SetInvitationStatusView
 )
 
 urlpatterns = [
@@ -12,5 +14,7 @@ urlpatterns = [
     path('fetch/', FetchEventsView.as_view()),
     path('fetch/invited', FetchInvitedEventsView.as_view()),
     path('fetch/<int:pk>/', FetchEventView.as_view()),
+    path('fetch/invited/<int:pk>/', FetchInvitedEventView.as_view()),
     path('invite/<int:pk>/', InvitePeopleView.as_view()),
+    path('invitation/status/<int:pk>/', SetInvitationStatusView.as_view())
 ]

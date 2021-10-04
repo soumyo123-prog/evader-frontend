@@ -23,14 +23,14 @@ export default function EventPage() {
   const { token } = useAuth();
   const router = useRouter();
   const id = router.query.id as string;
-  const event = useEventFetcher(id);
+  const { event, error } = useEventFetcher(id);
 
   const changeActiveHandler = (newActive: string) => {
     setActive(newActive);
   };
 
   let content = <Redirect to="/" />;
-  if (token) {
+  if (token && !error) {
     content = (
       <Wrapper>
         <Sidebar />

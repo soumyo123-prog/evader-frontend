@@ -12,7 +12,7 @@ export default function InvitedEvents() {
       className={['col', classes.event_card_container].join(' ')}
       key={event.id}
     >
-      <Link href={`events/${event.id}`}>
+      <Link href={`events/invited/${event.id}`}>
         <a
           className={['d-block', classes.event_card_link].join(' ')}
           role="button"
