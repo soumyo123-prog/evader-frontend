@@ -44,15 +44,15 @@ class InvitationSerializer(serializers.Serializer):
         id = data.get('id')
         if not User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                detail='User with this email does not exist',
+                message='User with this email does not exist',
                 code=status.HTTP_404_NOT_FOUND)
         if not Event.objects.filter(id=id).exists():
             raise serializers.ValidationError(
-                detail='Event with this id does not exist',
+                message='Event with this id does not exist',
                 code=status.HTTP_404_NOT_FOUND)
         if People.objects.filter(user__email=email, event__id=id).exists():
             raise serializers.ValidationError(
-                detail='User is already invited to this event',
+                message='User is already invited to this event',
                 code=status.HTTP_409_CONFLICT)
 
         return data
@@ -102,7 +102,7 @@ class InvitationStatusSerializer(serializers.Serializer):
 
         if not People.objects.filter(event__id=id, user=user).exists():
             raise ValidationError(
-                detail='User not permitted to modify this invitation',
+                message='User not permitted to modify this invitation',
                 code=status.HTTP_403_FORBIDDEN)
 
         return data
@@ -115,3 +115,39 @@ class InvitationStatusSerializer(serializers.Serializer):
         invitation = People.objects.filter(event__id=id, user=user)[0]
         invitation.status = status
         invitation.save()
+
+
+class GuestsSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+
+    def validate(self, data):
+        id = data.get('id')
+        user = self.context['request'].user
+
+        event = Event.objects.filter(id=id)
+        if not event:
+            raise ValidationError(
+                message='Event with this id does not exist', code=status.HTTP_404_NOT_FOUND)
+
+        creator = event[0].creator
+        invitation = People.objects.filter(event__id=id, user=user)
+        if creator == user:
+            return data
+        if invitation:
+            return data
+
+        raise ValidationError(
+            message='User not permitted to see guest list of this event',
+            code=status.HTTP_403_FORBIDDEN)
+
+    def fetch(self):
+        guests = People.objects.filter(event__id=self.validated_data.get('id'))
+        guestsDictList = []
+        if guests:
+            for guest in guests:
+                guestsDictList.append({
+                    'status': guest.status,
+                    'name': guest.user.name,
+                    'email': guest.user.email
+                })
+        return guestsDictList

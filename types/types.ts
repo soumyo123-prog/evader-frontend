@@ -14,3 +14,9 @@ export type EventType = {
   status: number | undefined;
   invitedBy: string | undefined;
 };
+
+export type GuestType = {
+  status: number;
+  name: string;
+  email: string;
+};

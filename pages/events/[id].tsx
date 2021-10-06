@@ -17,6 +17,7 @@ const EventOverview = loadable(
 const EventInvitePeople = loadable(
   () => import('../../components/eventInvitePeople/eventInvitePeople')
 );
+const Guests = loadable(() => import('../../components/guests/guests'));
 
 export default function EventPage() {
   const [active, setActive] = React.useState<string>('overview');
@@ -40,6 +41,7 @@ export default function EventPage() {
             <EventOverview fetchedEvent={event} />
           ) : null}
           {active === 'invite people' ? <EventInvitePeople id={id} /> : null}
+          {active === 'guests' ? <Guests eventId={id} /> : null}
         </MainContentWrapper>
       </Wrapper>
     );

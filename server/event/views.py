@@ -11,7 +11,8 @@ from .serializers import (
     InvitationSerializer,
     PeopleSerializer,
     InvitedEventSerializer,
-    InvitationStatusSerializer
+    InvitationStatusSerializer,
+    GuestsSerializer
 )
 
 from datetime import datetime
@@ -125,3 +126,26 @@ class SetInvitationStatusView(GenericAPIView):
         return Response(
             data={'error': 'User not permitted to modify this invitation'},
             status=status.HTTP_403_FORBIDDEN)
+
+
+class FetchGuestsView(RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = GuestsSerializer
+    queryset = People.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        request.data['id'] = id
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            guestsDictList = serializer.fetch()
+            return Response(data=guestsDictList, status=status.HTTP_200_OK)
+        errors = serializer.errors
+        code = status.HTTP_400_BAD_REQUEST
+        if errors['non_field_errors']:
+            if errors['non_field_errors'][0].code == 404:
+                code = status.HTTP_404_NOT_FOUND
+            else:
+                code = status.HTTP_403_FORBIDDEN
+            return Response(data=[], status=code)
+        return Response(data=[], status=status.HTTP_400_BAD_REQUEST)
