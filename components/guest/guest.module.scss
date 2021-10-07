@@ -1,0 +1,18 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+@import '../../sass/fonts';
+
+.guest_card_container {
+  padding-top: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  height: 100%;
+}
+
+.guest_picture {
+  height: 150px;
+  width: 150px;
+  padding: 10px;
+  overflow: hidden;
+  background-color: #e6e6e6;
+  border-radius: 50%;
+}

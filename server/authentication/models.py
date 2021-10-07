@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
-    uid = models.CharField(max_length=64, primary_key=True)
+    uid = models.CharField(max_length=1500, primary_key=True)
     photoUrl = models.URLField(max_length=255, default='')
 
     USERNAME_FIELD = 'uid'

@@ -14,9 +14,17 @@ export default function AddEvent({
       type="button"
     >
       {open ? (
-        <AiOutlineClose size="1.5rem" color="white" />
+        <AiOutlineClose
+          size="1.5rem"
+          color="white"
+          data-testid="add-event-close-icon"
+        />
       ) : (
-        <IoMdAdd size="1.5rem" color="white" />
+        <IoMdAdd
+          size="1.5rem"
+          color="white"
+          data-testid="add-event-open-icon"
+        />
       )}
     </button>
   );

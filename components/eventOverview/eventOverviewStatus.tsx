@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { useAuth } from '../../context/auth';
 import setInvitationStatusService from '../../services/set-invitation-status-service';
 
-enum InvitationStatus {
+export enum InvitationStatus {
   'Pending',
   'Accepted',
   'Declined',

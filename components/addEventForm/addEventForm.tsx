@@ -162,6 +162,7 @@ export default function AddEventForm() {
             id="name"
             onChange={changeNameHandler}
             value={name}
+            data-testid="add-event-form-name-input"
           />
         </div>
         <div className="mb-3">
@@ -173,6 +174,7 @@ export default function AddEventForm() {
             id="description"
             onChange={changeDescriptionHandler}
             value={description}
+            data-testid="add-event-form-description-input"
           />
         </div>
         <div className="mb-3">
@@ -185,6 +187,7 @@ export default function AddEventForm() {
             id="venue"
             onChange={changeVenueHandler}
             value={venue}
+            data-testid="add-event-form-venue-input"
           />
         </div>
         <div className="mb-3">
@@ -196,6 +199,7 @@ export default function AddEventForm() {
             className={['form-control'].join(' ')}
             id="date"
             onChange={changeDateHandler}
+            data-testid="add-event-form-date-input"
           />
         </div>
         <div className="mb-3">
@@ -207,6 +211,7 @@ export default function AddEventForm() {
             className={['form-control'].join(' ')}
             id="time"
             onChange={changeTimeHandler}
+            data-testid="add-event-form-time-input"
           />
         </div>
         <div className="mb-3">
@@ -219,12 +224,14 @@ export default function AddEventForm() {
             id="avatar"
             ref={fileUploadRef}
             accept=".jpg, .jpeg, .png, .webp"
+            data-testid="add-event-form-avatar-input"
           />
         </div>
         <button
           className={['btn btn-success'].join(' ')}
           type="submit"
           disabled={disableSubmit}
+          data-testid="add-event-form-submit-button"
         >
           Create
         </button>
