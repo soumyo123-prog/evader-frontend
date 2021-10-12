@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { useAuth } from '../../context/auth';
 import setInvitationStatusService from '../../services/set-invitation-status-service';
+import classes from './eventOverview.module.scss';
 
 export enum InvitationStatus {
   'Pending',
@@ -31,11 +32,9 @@ export default function EventOverviewStatus({
   };
 
   return (
-    <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light h5'].join(' ')}>
-        Status
-      </div>
-      <div className={['card-body', 'bg-dark text-light'].join(' ')}>
+    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
+      <div className={['card-header h5'].join(' ')}>Status</div>
+      <div className={['card-body'].join(' ')}>
         <p className={['card-text'].join(' ')}>{invitationStatus}</p>
         <p className={['card-text'].join(' ')}>
           <strong>Change Status:</strong>

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import useEventAvatarFetcherService from '../../services/event-avatar-fetcher-service';
+import { useEventAvatarFetcherService } from '../../services/event-avatar-fetcher-service';
 import classes from './eventOverview.module.scss';
 
 export default function EventOverviewNameAndPicture({
@@ -9,16 +9,12 @@ export default function EventOverviewNameAndPicture({
   const url = useEventAvatarFetcherService(fireId);
 
   return (
-    <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light h5'].join(' ')}>
-        Name
-      </div>
+    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
+      <div className={['card-header h5'].join(' ')}>Name</div>
       <div
-        className={[
-          'card-body',
-          'bg-dark text-light',
-          'd-flex flex-column align-items-center',
-        ].join(' ')}
+        className={['card-body', 'd-flex flex-column align-items-center'].join(
+          ' '
+        )}
       >
         <div
           className={[

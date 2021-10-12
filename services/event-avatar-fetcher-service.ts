@@ -1,9 +1,10 @@
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import firebase from '../context/firebase';
 
 const storage = firebase.storage();
 
-export default function useEventAvatarFetcherService(fireId: string) {
+export const useEventAvatarFetcherService = (fireId: string) => {
   const [url, setUrl] = React.useState<string>('');
 
   React.useEffect(() => {
@@ -25,4 +26,4 @@ export default function useEventAvatarFetcherService(fireId: string) {
   }, []);
 
   return url;
-}
+};

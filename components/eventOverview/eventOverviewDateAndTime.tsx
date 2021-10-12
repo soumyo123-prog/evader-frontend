@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React, { PropsWithChildren } from 'react';
+import classes from './eventOverview.module.scss';
 
 export default function EventOverviewDateAndTime({
   time,
@@ -7,11 +8,9 @@ export default function EventOverviewDateAndTime({
   const addToGoogleCalendar = () => {};
 
   return (
-    <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light h5'].join(' ')}>
-        Date and Time
-      </div>
-      <div className={['card-body', 'bg-dark text-light'].join(' ')}>
+    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
+      <div className={['card-header h5'].join(' ')}>Date and Time</div>
+      <div className={['card-body'].join(' ')}>
         <p className={['card-text'].join(' ')}>
           {moment(time).format('dddd, MMMM Do YYYY, h:mm a')}
         </p>

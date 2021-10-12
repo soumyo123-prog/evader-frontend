@@ -10,6 +10,8 @@ firebase-admin = "*"
 django-cors-headers = "*"
 google-auth = "*"
 python-dotenv = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 

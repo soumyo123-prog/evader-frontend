@@ -1,20 +1,13 @@
 import React, { PropsWithChildren } from 'react';
+import classes from './eventOverview.module.scss';
 
 export default function EventOverviewDescription({
   description,
 }: PropsWithChildren<{ description: string }>) {
   return (
-    <div className={['card m-3'].join(' ')}>
-      <div className={['card-header bg-primary text-light h5'].join(' ')}>
-        Description
-      </div>
-      <div
-        className={[
-          'card-body',
-          'bg-dark text-light',
-          'd-flex align-items-center',
-        ].join(' ')}
-      >
+    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
+      <div className={['card-header h5'].join(' ')}>Description</div>
+      <div className={['card-body', 'd-flex align-items-center'].join(' ')}>
         <p className={['card-text'].join(' ')}>{description}</p>
       </div>
     </div>

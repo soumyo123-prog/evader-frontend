@@ -8,9 +8,11 @@ const EventNavbarExpanded = loadable(() => import('./eventNavbarExpanded'));
 
 export default function EventNavbar({
   active,
+  fields,
   changeActive,
 }: PropsWithChildren<{
   active: string;
+  fields: string[];
   // eslint-disable-next-line no-unused-vars
   changeActive: (newActive: string) => void;
 }>) {
@@ -38,6 +40,7 @@ export default function EventNavbar({
           changeActive={changeActive}
           expand={expand}
           active={active}
+          fields={fields}
         />
       </nav>
     </>

@@ -26,6 +26,14 @@ export default function EventPage() {
   const id = router.query.id as string;
   const { event, error } = useEventFetcher(id);
 
+  const fields = [
+    'overview',
+    'guests',
+    'invite people',
+    'expenditure',
+    'event settings',
+  ];
+
   const changeActiveHandler = (newActive: string) => {
     setActive(newActive);
   };
@@ -36,7 +44,11 @@ export default function EventPage() {
       <Wrapper>
         <Sidebar />
         <MainContentWrapper>
-          <EventNavbar active={active} changeActive={changeActiveHandler} />
+          <EventNavbar
+            fields={fields}
+            active={active}
+            changeActive={changeActiveHandler}
+          />
           {active === 'overview' ? (
             <EventOverview fetchedEvent={event} />
           ) : null}

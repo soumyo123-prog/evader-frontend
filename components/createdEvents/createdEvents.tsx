@@ -1,14 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../context/auth';
-import useEventsFetcher from '../../services/events-fetcher-service';
+import { useEventsFetcher } from '../../services/events-fetcher-service';
 import EventCard from '../eventCard/eventCard';
 import classes from './createdEvents.module.scss';
 import InlineSpinner from '../spinner/inlineSpinner';
 
 export default function CreatedEvents() {
-  const { token } = useAuth();
-  const { events, loading } = useEventsFetcher(token!);
+  const { events, loading } = useEventsFetcher();
 
   const content = events.map((event) => (
     <div
@@ -41,7 +39,9 @@ export default function CreatedEvents() {
 
   return (
     <div className={['container-fluid'].join(' ')}>
-      <div className={['row'].join(' ')}>{content}</div>
+      <div className={['row'].join(' ')} data-testid="created-events-container">
+        {content}
+      </div>
     </div>
   );
 }

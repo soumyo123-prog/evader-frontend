@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import classes from './eventOverview.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function EventOverviewVeue({
@@ -23,11 +24,9 @@ export default function EventOverviewVeue({
 
   return (
     <>
-      <div className={['card m-3'].join(' ')}>
-        <div className={['card-header bg-primary text-light h5'].join(' ')}>
-          Location
-        </div>
-        <div className={['card-body', 'bg-dark text-light'].join(' ')}>
+      <div className={['card m-3 shadow', classes.min_width].join(' ')}>
+        <div className={['card-header'].join(' ')}>Location</div>
+        <div className={['card-body'].join(' ')}>
           <p className={['card-text'].join(' ')}>{venue}</p>
           <button
             className={['btn btn-primary'].join(' ')}

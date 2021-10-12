@@ -1,8 +1,11 @@
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
+import { useAuth } from '../context/auth';
 import axios from '../context/axios';
 import { EventType } from '../types/types';
 
-export default function useEventsFetcher(token: string) {
+const useEventsFetcher = () => {
+  const { token } = useAuth();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType[]>([]);
 
@@ -35,4 +38,6 @@ export default function useEventsFetcher(token: string) {
   }, []);
 
   return { events, loading };
-}
+};
+
+export { useEventsFetcher };

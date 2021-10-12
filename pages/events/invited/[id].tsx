@@ -11,12 +11,23 @@ import Wrapper from '../../../utils/sidebar-content-wrapper';
 const EventOverview = loadable(
   () => import('../../../components/eventOverview/eventOverview')
 );
+const EventNavbar = loadable(
+  () => import('../../../components/eventNavbar/eventNavbar')
+);
+const Guests = loadable(() => import('../../../components/guests/guests'));
 
 export default function InvitedEventPage() {
+  const [active, setActive] = React.useState<string>('overview');
   const { token } = useAuth();
   const router = useRouter();
   const id = router.query.id as string;
   const { event, error } = useEventInvitedFetcher(id);
+
+  const fields = ['overview', 'guests'];
+
+  const changeActiveHandler = (newActive: string) => {
+    setActive(newActive);
+  };
 
   let content = <Redirect to="/" />;
   if (token && !error) {
@@ -24,7 +35,15 @@ export default function InvitedEventPage() {
       <Wrapper>
         <Sidebar />
         <MainContentWrapper>
-          <EventOverview fetchedEvent={event} />
+          <EventNavbar
+            fields={fields}
+            active={active}
+            changeActive={changeActiveHandler}
+          />
+          {active === 'overview' ? (
+            <EventOverview fetchedEvent={event} />
+          ) : null}
+          {active === 'guests' ? <Guests eventId={id} /> : null}
         </MainContentWrapper>
       </Wrapper>
     );

@@ -8,20 +8,15 @@ import EventNavbarExpandedItem from './eventNavbarExpandedItem';
 export default function EventNavbarExpanded({
   expand,
   active,
+  fields,
   changeActive,
 }: PropsWithChildren<{
   expand: boolean;
   active: string;
+  fields: string[];
   // eslint-disable-next-line no-unused-vars
   changeActive: (newActive: string) => void;
 }>) {
-  const fields = [
-    'overview',
-    'guests',
-    'invite people',
-    'expenditure',
-    'event settings',
-  ];
   const notActive = fields.filter((field) => field !== active);
 
   return (
