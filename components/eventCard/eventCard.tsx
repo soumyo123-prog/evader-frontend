@@ -33,7 +33,7 @@ export default function EventCard({
         <img
           className={['card-img-top', classes.card_photo].join(' ')}
           src={
-            url || `https://avatars.dicebear.com/api/identicon/${fireId}.svg`
+            url || `https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`
           }
           alt=""
         />

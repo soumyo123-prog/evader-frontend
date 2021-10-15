@@ -19,12 +19,13 @@ export default function EventOverviewNameAndPicture({
         <div
           className={[
             'd-flex justify-content-center align-items-center',
+            'p-2',
             classes.picture_container,
           ].join(' ')}
         >
           <img
             src={
-              url || `https://avatars.dicebear.com/api/identicon/${fireId}.svg`
+              url || `https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`
             }
             alt=""
           />

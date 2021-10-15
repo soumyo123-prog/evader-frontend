@@ -25,7 +25,7 @@ export default function EventOverviewVeue({
   return (
     <>
       <div className={['card m-3 shadow', classes.min_width].join(' ')}>
-        <div className={['card-header'].join(' ')}>Location</div>
+        <div className={['card-header h5'].join(' ')}>Location</div>
         <div className={['card-body'].join(' ')}>
           <p className={['card-text'].join(' ')}>{venue}</p>
           <button
