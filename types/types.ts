@@ -20,3 +20,11 @@ export type GuestType = {
   name: string;
   email: string;
 };
+
+export type ExpenditureType = {
+  id: number;
+  name: string;
+  organization: string;
+  quantity: number;
+  unitPrice: number;
+};

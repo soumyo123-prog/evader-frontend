@@ -4,11 +4,10 @@
 
 .add_button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 10px;
   z-index: 50;
-
-  transition: all 0.1s ease-in-out;
+  font-size: 1.1rem;
 }
 
 .add_button_icon {
@@ -18,13 +17,13 @@
   }
 }
 
-.add_button_icon_pos_rot {
+.add_button_icon_rotate {
   path {
     transform: rotate(45deg);
   }
 }
 
-.add_button_icon_neg_rot {
+.add_button_icon_no_rotate {
   path {
     transform: rotate(0deg);
   }

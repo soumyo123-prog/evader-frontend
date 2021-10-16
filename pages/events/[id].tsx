@@ -17,6 +17,9 @@ const EventOverview = loadable(
 const EventInvitePeople = loadable(
   () => import('../../components/eventInvitePeople/eventInvitePeople')
 );
+const Expenditure = loadable(
+  () => import('../../components/expenditure/expenditure')
+);
 const Guests = loadable(() => import('../../components/guests/guests'));
 
 export default function EventPage() {
@@ -54,6 +57,7 @@ export default function EventPage() {
           ) : null}
           {active === 'invite people' ? <EventInvitePeople id={id} /> : null}
           {active === 'guests' ? <Guests eventId={id} /> : null}
+          {active === 'expenditure' ? <Expenditure id={id} /> : null}
         </MainContentWrapper>
       </Wrapper>
     );

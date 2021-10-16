@@ -1,6 +1,5 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { useRouter } from 'next/router';
 import Sidebar from '../../components/sidebar/sidebar';
 import { useAuth } from '../../context/auth';
 import { useSidebar } from '../../context/sidebar';
@@ -12,6 +11,9 @@ import EventsNavbar from '../../components/eventsNavbar/eventsNavbar';
 const AddEventButton = loadable(
   () => import('../../components/addButton/addButton')
 );
+const AddEventForm = loadable(
+  () => import('../../components/addEventForm/addEventForm')
+);
 const CreatedEvents = loadable(
   () => import('../../components/createdEvents/createdEvents')
 );
@@ -20,17 +22,17 @@ const InvitedEvents = loadable(
 );
 
 const EventsPage = () => {
+  const [open, setOpen] = React.useState(false);
   const [choosen, setChoosen] = React.useState<string>('Created');
   const { setActive } = useSidebar();
   const { token } = useAuth();
-  const router = useRouter();
 
   const navItemClickHandler = (button: string) => {
     setChoosen(button);
   };
 
   const addClickHandler = () => {
-    router.push('/events/create');
+    setOpen((prev) => !prev);
   };
 
   React.useEffect(() => {
@@ -44,12 +46,18 @@ const EventsPage = () => {
         <Wrapper>
           <Sidebar />
           <MainContentWrapper>
-            <EventsNavbar
-              choosen={choosen}
-              clickHandler={navItemClickHandler}
-            />
-            {choosen === 'Created' ? <CreatedEvents /> : <InvitedEvents />}
-            <AddEventButton clickHandler={addClickHandler} open={false} />
+            {open ? (
+              <AddEventForm />
+            ) : (
+              <>
+                <EventsNavbar
+                  choosen={choosen}
+                  clickHandler={navItemClickHandler}
+                />
+                {choosen === 'Created' ? <CreatedEvents /> : <InvitedEvents />}
+              </>
+            )}
+            <AddEventButton clickHandler={addClickHandler} open={open} />
           </MainContentWrapper>
         </Wrapper>
       </>
