@@ -1,14 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { useRouter } from 'next/router';
+
 import { toast, ToastContainer } from 'react-toastify';
 import Compressor from 'compressorjs';
-import classes from './addEventForm.module.scss';
-import 'react-toastify/dist/ReactToastify.css';
+import { Label, Input, Button } from 'reactstrap';
+
 import Validate from '../../utils/form-validator';
 import AddEventService from '../../services/add-event-service';
-import { useAuth } from '../../context/auth';
 import firebase from '../../context/firebase';
+
+import { useAuth } from '../../context/auth';
+
+import * as styles from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 const storage = firebase.storage();
 const db = firebase.firestore();
@@ -37,16 +42,17 @@ export default function AddEventForm() {
     }
   };
 
-  const changeDescriptionHandler: React.ChangeEventHandler<HTMLTextAreaElement> =
-    (e) => {
-      const inputDescription: string = e.target.value;
-      const [result, error] = Validate.validateDescription(inputDescription);
-      if (result) {
-        setDescription(inputDescription);
-      } else {
-        toast(error);
-      }
-    };
+  const changeDescriptionHandler: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    const inputDescription: string = e.target.value;
+    const [result, error] = Validate.validateDescription(inputDescription);
+    if (result) {
+      setDescription(inputDescription);
+    } else {
+      toast(error);
+    }
+  };
 
   const changeVenueHandler: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -143,99 +149,77 @@ export default function AddEventForm() {
 
   return (
     <>
-      <form
-        className={[
-          'd-flex flex-column align-items-center',
-          'text-light',
-          classes.add_event_form,
-        ].join(' ')}
-        onSubmit={createEventHandler}
-      >
-        <p className={['h1 text-uppercase'].join(' ')}> add event </p>
-        <div className="mb-3">
-          <label htmlFor="name" className={['form-label'].join(' ')}>
-            Name
-          </label>
-          <input
+      <styles.AddEventForm onSubmit={createEventHandler}>
+        <styles.Heading>add event</styles.Heading>
+        <styles.Group>
+          <Label for="name">Name</Label>
+          <Input
             type="text"
-            className={['form-control'].join(' ')}
             id="name"
             onChange={changeNameHandler}
             value={name}
             data-testid="add-event-form-name-input"
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="description" className={['form-label'].join(' ')}>
-            Description
-          </label>
-          <textarea
-            className={['form-control'].join(' ')}
+        </styles.Group>
+        <styles.Group>
+          <Label for="description">Description</Label>
+          <Input
+            type="textarea"
             id="description"
             onChange={changeDescriptionHandler}
             value={description}
             data-testid="add-event-form-description-input"
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="venue" className={['form-label'].join(' ')}>
-            Venue
-          </label>
-          <input
+        </styles.Group>
+        <styles.Group>
+          <Label for="venue">Venue</Label>
+          <Input
             type="text"
-            className={['form-control'].join(' ')}
             id="venue"
             onChange={changeVenueHandler}
             value={venue}
             data-testid="add-event-form-venue-input"
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="date" className={['form-label'].join(' ')}>
-            Date
-          </label>
-          <input
+        </styles.Group>
+        <styles.Group>
+          <Label for="date">Date</Label>
+          <Input
             type="date"
-            className={['form-control'].join(' ')}
             id="date"
             onChange={changeDateHandler}
             data-testid="add-event-form-date-input"
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="time" className={['form-label'].join(' ')}>
-            Time
-          </label>
-          <input
+        </styles.Group>
+        <styles.Group>
+          <Label for="time">Time</Label>
+          <Input
             type="time"
-            className={['form-control'].join(' ')}
             id="time"
             onChange={changeTimeHandler}
             data-testid="add-event-form-time-input"
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="avatar" className={['form-label'].join(' ')}>
+        </styles.Group>
+        <styles.Group>
+          <Label htmlFor="avatar" className={['form-label'].join(' ')}>
             Event Avatar
-          </label>
+          </Label>
           <input
+            className="form-control"
             type="file"
-            className={['form-control'].join(' ')}
             id="avatar"
             ref={fileUploadRef}
             accept=".jpg, .jpeg, .png, .webp"
             data-testid="add-event-form-avatar-input"
           />
-        </div>
-        <button
-          className={['btn btn-success'].join(' ')}
+        </styles.Group>
+        <Button
           type="submit"
           disabled={disableSubmit}
           data-testid="add-event-form-submit-button"
         >
           Create
-        </button>
-      </form>
+        </Button>
+      </styles.AddEventForm>
       <ToastContainer
         position="top-right"
         autoClose={5000}
