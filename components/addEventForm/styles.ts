@@ -1,9 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import styled from 'styled-components';
-import { Form, FormGroup } from 'reactstrap';
 import * as colors from '../../global/colors';
 
-export const AddEventForm = styled(Form)`
+export const AddEventForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,23 +14,31 @@ export const AddEventForm = styled(Form)`
   transform-origin: right;
   transition: all 0.2s ease-in-out;
 
-  background-color: #35dc9b;
-  color: ${colors.TEXT_LIGHT};
-
   input,
   textarea {
-    width: 300px;
+    background-color: #f2f2f2;
+
+    border: 2px solid #cfcfcf;
+    outline: none;
+    min-width: 300px;
+    width: 60%;
+
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+
+    &:focus {
+      border: 2px solid #a6a6a6;
+    }
   }
 
-  textarea {
-    height: 50px;
+  button {
+    margin-top: 1rem;
   }
 `;
 
-export const Heading = styled.h1`
-  text-transform: uppercase;
-`;
-
-export const Group = styled(FormGroup)`
-  margin-bottom: 16px;
+export const Heading = styled.h2`
+  margin-bottom: 2rem;
+  text-transform: capitalize;
+  color: ${colors.BG_PRIMARY};
 `;

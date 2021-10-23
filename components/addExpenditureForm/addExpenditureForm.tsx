@@ -5,10 +5,12 @@ import classes from './addExpenditureForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { AddExpenditure } from '../../services/add-expenditure-service';
 import { useAuth } from '../../context/auth';
+import EventEmitterService from '../../services/event-emitter-service';
 
 export default function AddExpenditureForm({
   id,
-}: PropsWithChildren<{ id: string }>) {
+  closeForm,
+}: PropsWithChildren<{ id: string; closeForm: () => void }>) {
   const [name, setName] = React.useState<string>('');
   const [organization, setOrganization] = React.useState<string>('');
   const [unitPrice, setUnitPrice] = React.useState<number>(0);
@@ -49,7 +51,8 @@ export default function AddExpenditureForm({
           unitPrice,
           quantity
         );
-        console.log(expenditure);
+        EventEmitterService('add_expenditure', expenditure.data);
+        closeForm();
       } catch (err: any) {
         toast(err.response.data.error);
       }

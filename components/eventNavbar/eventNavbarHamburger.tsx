@@ -1,28 +1,22 @@
 import React, { PropsWithChildren } from 'react';
+
 import { IoIosArrowDropdown } from 'react-icons/io';
-import classes from './eventNavbar.module.scss';
+import { Button } from 'reactstrap';
+
+import * as styles from './styles';
 
 export default function EventNavbarHamburger({
+  expand,
   expandToggleHandler,
-  expandOffHandler,
 }: PropsWithChildren<{
+  expand: boolean;
   expandToggleHandler: () => void;
-  expandOffHandler: () => void;
 }>) {
   return (
-    <li
-      className={[
-        'd-flex justify-content-center align-items-center',
-        classes.event_navbar_item,
-      ].join(' ')}
-    >
-      <button
-        className={['btn btn-primary'].join(' ')}
-        type="button"
-        onClick={expandToggleHandler}
-      >
+    <styles.Hamburger expand={expand}>
+      <Button color="primary" type="button" onClick={expandToggleHandler}>
         <IoIosArrowDropdown size="1.5rem" />
-      </button>
-    </li>
+      </Button>
+    </styles.Hamburger>
   );
 }

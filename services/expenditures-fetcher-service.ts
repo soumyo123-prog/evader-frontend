@@ -6,11 +6,20 @@ import { ExpenditureType } from '../types/types';
 
 export const useExpenditureFetcher = (eventId: string) => {
   const { token } = useAuth();
-  const [expenditures, setExpenditures] = React.useState<ExpenditureType[]>();
+  const [expenditures, setExpenditures] = React.useState<ExpenditureType[]>([]);
   const [error, setError] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     let isMounted = true;
+
+    document.addEventListener('add_expenditure', (e: any) => {
+      if (isMounted) {
+        setExpenditures((prevExpenditures) =>
+          prevExpenditures?.concat(e.detail)
+        );
+      }
+    });
+
     axios
       .get<ExpenditureType[]>(`event/expenditure/${eventId}/`, {
         headers: { Authorization: `Token ${token}` },

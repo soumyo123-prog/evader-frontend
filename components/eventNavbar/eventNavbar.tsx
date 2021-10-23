@@ -1,6 +1,7 @@
-import loadable from '@loadable/component';
 import React, { PropsWithChildren } from 'react';
-import classes from './eventNavbar.module.scss';
+import loadable from '@loadable/component';
+
+import * as styles from './styles';
 
 const EventNavbarActive = loadable(() => import('./eventNavbarActive'));
 const EventNavbarHamburger = loadable(() => import('./eventNavbarHamburger'));
@@ -22,18 +23,14 @@ export default function EventNavbar({
     setExpand((prev) => !prev);
   };
 
-  const expandOffHandler = () => {
-    setExpand(false);
-  };
-
   return (
     <>
-      <nav className={[classes.event_navbar_container].join(' ')}>
-        <ul className={['d-flex', classes.event_navbar].join(' ')}>
+      <styles.EventNavbarContainer>
+        <ul>
           <EventNavbarActive active={active} />
           <EventNavbarHamburger
+            expand={expand}
             expandToggleHandler={expandToggleHandler}
-            expandOffHandler={expandOffHandler}
           />
         </ul>
         <EventNavbarExpanded
@@ -42,7 +39,7 @@ export default function EventNavbar({
           active={active}
           fields={fields}
         />
-      </nav>
+      </styles.EventNavbarContainer>
     </>
   );
 }

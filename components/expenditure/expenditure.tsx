@@ -6,13 +6,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useExpenditureFetcher } from '../../services/expenditures-fetcher-service';
 import AddExpenditureButton from '../addExpenditureButton/addExpenditureButton';
 
-import classes from './expenditure.module.scss';
+import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddExpenditureForm = loadable(
   () => import('../addExpenditureForm/addExpenditureForm')
 );
-const Expenditures = loadable(() => import('../expenditures/expenditures'));
+const ExpenditureTable = loadable(
+  () => import('../expenditureTable/expenditureTable')
+);
 
 export default function Expenditure({ id }: PropsWithChildren<{ id: string }>) {
   const [open, setOpen] = React.useState(false);
@@ -30,14 +32,14 @@ export default function Expenditure({ id }: PropsWithChildren<{ id: string }>) {
 
   return (
     <>
-      <div className={[classes.expenditure_container].join(' ')}>
+      <styles.ExpenditureContainer>
         {open ? (
-          <AddExpenditureForm id={id} />
+          <AddExpenditureForm id={id} closeForm={() => setOpen(false)} />
         ) : (
-          <Expenditures items={expenditures!} />
+          <ExpenditureTable items={expenditures!} />
         )}
         <AddExpenditureButton open={open} clickHandler={addClickHandler} />
-      </div>
+      </styles.ExpenditureContainer>
       <ToastContainer
         position="top-right"
         autoClose={5000}

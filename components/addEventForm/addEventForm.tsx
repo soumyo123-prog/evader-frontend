@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { toast, ToastContainer } from 'react-toastify';
 import Compressor from 'compressorjs';
-import { Label, Input, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import Validate from '../../utils/form-validator';
 import AddEventService from '../../services/add-event-service';
@@ -42,17 +42,16 @@ export default function AddEventForm() {
     }
   };
 
-  const changeDescriptionHandler: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    const inputDescription: string = e.target.value;
-    const [result, error] = Validate.validateDescription(inputDescription);
-    if (result) {
-      setDescription(inputDescription);
-    } else {
-      toast(error);
-    }
-  };
+  const changeDescriptionHandler: React.ChangeEventHandler<HTMLTextAreaElement> =
+    (e) => {
+      const inputDescription: string = e.target.value;
+      const [result, error] = Validate.validateDescription(inputDescription);
+      if (result) {
+        setDescription(inputDescription);
+      } else {
+        toast(error);
+      }
+    };
 
   const changeVenueHandler: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -151,69 +150,52 @@ export default function AddEventForm() {
     <>
       <styles.AddEventForm onSubmit={createEventHandler}>
         <styles.Heading>add event</styles.Heading>
-        <styles.Group>
-          <Label for="name">Name</Label>
-          <Input
-            type="text"
-            id="name"
-            onChange={changeNameHandler}
-            value={name}
-            data-testid="add-event-form-name-input"
-          />
-        </styles.Group>
-        <styles.Group>
-          <Label for="description">Description</Label>
-          <Input
-            type="textarea"
-            id="description"
-            onChange={changeDescriptionHandler}
-            value={description}
-            data-testid="add-event-form-description-input"
-          />
-        </styles.Group>
-        <styles.Group>
-          <Label for="venue">Venue</Label>
-          <Input
-            type="text"
-            id="venue"
-            onChange={changeVenueHandler}
-            value={venue}
-            data-testid="add-event-form-venue-input"
-          />
-        </styles.Group>
-        <styles.Group>
-          <Label for="date">Date</Label>
-          <Input
-            type="date"
-            id="date"
-            onChange={changeDateHandler}
-            data-testid="add-event-form-date-input"
-          />
-        </styles.Group>
-        <styles.Group>
-          <Label for="time">Time</Label>
-          <Input
-            type="time"
-            id="time"
-            onChange={changeTimeHandler}
-            data-testid="add-event-form-time-input"
-          />
-        </styles.Group>
-        <styles.Group>
-          <Label htmlFor="avatar" className={['form-label'].join(' ')}>
-            Event Avatar
-          </Label>
-          <input
-            className="form-control"
-            type="file"
-            id="avatar"
-            ref={fileUploadRef}
-            accept=".jpg, .jpeg, .png, .webp"
-            data-testid="add-event-form-avatar-input"
-          />
-        </styles.Group>
+        <input
+          type="text"
+          id="name"
+          placeholder="Name"
+          onChange={changeNameHandler}
+          value={name}
+          data-testid="add-event-form-name-input"
+        />
+        <textarea
+          id="description"
+          placeholder="Description"
+          onChange={changeDescriptionHandler}
+          value={description}
+          data-testid="add-event-form-description-input"
+        />
+        <input
+          type="text"
+          id="venue"
+          placeholder="Venue"
+          onChange={changeVenueHandler}
+          value={venue}
+          data-testid="add-event-form-venue-input"
+        />
+        <input
+          type="date"
+          id="date"
+          onChange={changeDateHandler}
+          data-testid="add-event-form-date-input"
+        />
+        <input
+          type="time"
+          id="time"
+          onChange={changeTimeHandler}
+          data-testid="add-event-form-time-input"
+        />
+        <input
+          className="form-control"
+          type="file"
+          id="avatar"
+          ref={fileUploadRef}
+          accept=".jpg, .jpeg, .png, .webp"
+          data-testid="add-event-form-avatar-input"
+        />
         <Button
           type="submit"
+          color="primary"
           disabled={disableSubmit}
           data-testid="add-event-form-submit-button"
         >
