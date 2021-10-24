@@ -2,16 +2,8 @@ import loadable from '@loadable/component';
 import React, { PropsWithChildren } from 'react';
 import { EventType } from '../../types/types';
 
-const EventOverviewNameAndPicture = loadable(
-  () => import('./eventOverviewNameAndPicture')
-);
-const EventOverviewDescription = loadable(
-  () => import('./eventOverviewDescription')
-);
-const EventOverviewVenue = loadable(() => import('./eventOverviewVenue'));
-const EventOverviewDateAndTime = loadable(
-  () => import('./eventOverviewDateAndTime')
-);
+const EventOverviewDetails = loadable(() => import('./eventOverviewDetails'));
+const EventOverviewTable = loadable(() => import('./eventOverviewTable'));
 const EventOverviewInvitedBy = loadable(
   () => import('./eventOverviewInvitedBy')
 );
@@ -23,21 +15,19 @@ export default function EventOverview({
   return (
     <div className={['container-fluid'].join(' ')}>
       <div className={['row'].join(' ')}>
-        <div className={['col'].join(' ')}>
-          <EventOverviewNameAndPicture
+        <div className={['col-12 p-3'].join(' ')}>
+          <EventOverviewDetails
             name={fetchedEvent.name}
             fireId={fetchedEvent.fireId}
+            description={fetchedEvent.description}
           />
-        </div>
-        <div className={['col'].join(' ')}>
-          <EventOverviewDescription description={fetchedEvent.description} />
         </div>
         {fetchedEvent.invitedBy ? (
           <>
-            <div className={['col'].join(' ')}>
+            <div className={['col-12 p-3'].join(' ')}>
               <EventOverviewInvitedBy invitedBy={fetchedEvent.invitedBy} />
             </div>
-            <div className={['col'].join(' ')}>
+            <div className={['col-12 p-3'].join(' ')}>
               <EventOverviewStatus
                 status={fetchedEvent.status!}
                 dateTime={fetchedEvent.time}
@@ -46,11 +36,11 @@ export default function EventOverview({
             </div>
           </>
         ) : null}
-        <div className={['col'].join(' ')}>
-          <EventOverviewVenue venue={fetchedEvent.venue} />
-        </div>
-        <div className={['col'].join(' ')}>
-          <EventOverviewDateAndTime time={fetchedEvent.time} />
+        <div className={['col-12 p-3'].join(' ')}>
+          <EventOverviewTable
+            venue={fetchedEvent.venue}
+            time={fetchedEvent.time}
+          />
         </div>
       </div>
     </div>
