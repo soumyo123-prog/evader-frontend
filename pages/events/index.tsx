@@ -39,6 +39,12 @@ const EventsPage = () => {
     setActive('events');
   }, []);
 
+  React.useEffect(() => {
+    document.addEventListener('event_created', () => {
+      setOpen(false);
+    });
+  }, []);
+
   let content = <Redirect to="/" />;
   if (token) {
     content = (

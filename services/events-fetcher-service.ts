@@ -11,6 +11,18 @@ const useEventsFetcher = () => {
 
   React.useEffect(() => {
     let isMounted = true;
+    document.addEventListener('event_deleted', (e: any) => {
+      if (isMounted) {
+        setEvents((prev) => prev.filter((event) => event.id !== e.detail.id));
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    let isMounted = true;
     if (isMounted) {
       setLoading(true);
     }

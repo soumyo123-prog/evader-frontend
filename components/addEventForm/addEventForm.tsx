@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { useRouter } from 'next/router';
 
 import { toast, ToastContainer } from 'react-toastify';
 import Compressor from 'compressorjs';
@@ -14,6 +13,7 @@ import { useAuth } from '../../context/auth';
 
 import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
+import EventEmitterService from '../../services/event-emitter-service';
 
 const storage = firebase.storage();
 const db = firebase.firestore();
@@ -27,7 +27,6 @@ export default function AddEventForm() {
   const [time, setTime] = React.useState<string>('');
   const fileUploadRef = React.useRef<HTMLInputElement>(null);
   const { token } = useAuth();
-  const router = useRouter();
 
   const changeNameHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputName: string = e.target.value;
@@ -117,10 +116,10 @@ export default function AddEventForm() {
           error: () => {},
         });
       }
+      EventEmitterService('event_created', {});
     } catch (error: any) {
       toast(error.message);
     }
-    router.replace('/events');
   };
 
   React.useEffect(() => {
