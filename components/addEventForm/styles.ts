@@ -11,9 +11,6 @@ export const AddEventForm = styled.form`
   min-height: 100%;
   padding: 20px;
 
-  transform-origin: right;
-  transition: all 0.2s ease-in-out;
-
   input,
   textarea {
     background-color: #f2f2f2;

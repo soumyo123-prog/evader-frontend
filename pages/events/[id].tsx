@@ -1,6 +1,7 @@
 import loadable from '@loadable/component';
 import { useRouter } from 'next/router';
 import React from 'react';
+import EventSettings from '../../components/eventSettings/eventSettings';
 import Sidebar from '../../components/sidebar/sidebar';
 import { useAuth } from '../../context/auth';
 import useEventFetcher from '../../services/event-fetcher-service';
@@ -52,12 +53,13 @@ export default function EventPage() {
             active={active}
             changeActive={changeActiveHandler}
           />
-          {active === 'overview' ? (
-            <EventOverview fetchedEvent={event} />
-          ) : null}
-          {active === 'invite people' ? <EventInvitePeople id={id} /> : null}
-          {active === 'guests' ? <Guests eventId={id} /> : null}
-          {active === 'expenditure' ? <Expenditure id={id} /> : null}
+          {active === 'overview' && <EventOverview fetchedEvent={event} />}
+          {active === 'invite people' && <EventInvitePeople id={id} />}
+          {active === 'guests' && <Guests eventId={id} />}
+          {active === 'expenditure' && <Expenditure id={id} />}
+          {active === 'event settings' && (
+            <EventSettings id={id} fetchedEvent={event} />
+          )}
         </MainContentWrapper>
       </Wrapper>
     );
