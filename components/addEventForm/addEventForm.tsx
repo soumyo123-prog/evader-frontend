@@ -34,10 +34,10 @@ export default function AddEventForm() {
     if (result) {
       setName(inputName);
       if (error === 'Name field is required!') {
-        toast(error);
+        toast.error(error);
       }
     } else {
-      toast(error);
+      toast.error(error);
     }
   };
 
@@ -48,7 +48,7 @@ export default function AddEventForm() {
       if (result) {
         setDescription(inputDescription);
       } else {
-        toast(error);
+        toast.error(error);
       }
     };
 
@@ -60,10 +60,10 @@ export default function AddEventForm() {
     if (result) {
       setVenue(inputVenue);
       if (error === 'Venue field is required!') {
-        toast(error);
+        toast.error(error);
       }
     } else {
-      toast(error);
+      toast.error(error);
     }
   };
 
@@ -118,7 +118,7 @@ export default function AddEventForm() {
       }
       EventEmitterService('event_created', {});
     } catch (error: any) {
-      toast(error.message);
+      toast.error(error.message);
     }
   };
 

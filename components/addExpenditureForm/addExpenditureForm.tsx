@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { PropsWithChildren } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import classes from './addExpenditureForm.module.scss';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { AddExpenditure } from '../../services/add-expenditure-service';
 import { useAuth } from '../../context/auth';
 import EventEmitterService from '../../services/event-emitter-service';
+
+import * as styles from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddExpenditureForm({
   id,
@@ -54,63 +56,42 @@ export default function AddExpenditureForm({
         EventEmitterService('add_expenditure', expenditure.data);
         closeForm();
       } catch (err: any) {
-        toast(err.response.data.error);
+        toast.error(err.response.data.error);
       }
     };
 
   return (
     <>
-      <form
-        onSubmit={submitExpenditureHandler}
-        className={[
-          'd-flex flex-column justify-content-center align-items-center',
-          classes.add_expenditure_form,
-        ].join(' ')}
-      >
-        <p className={['h3 text-primary mb-5'].join(' ')}> Add Expenditure </p>
-        <input
+      <styles.Form onSubmit={submitExpenditureHandler}>
+        <styles.Heading>Add Expenditure</styles.Heading>
+        <styles.Input
           type="text"
-          className={[
-            'rounded p-2 mb-3',
-            classes.add_expenditure_form_input,
-          ].join(' ')}
           placeholder="Name"
           onChange={changeNameHandler}
           value={name}
         />
-        <input
+        <styles.Input
           type="text"
-          className={[
-            'rounded p-2 mb-3',
-            classes.add_expenditure_form_input,
-          ].join(' ')}
           placeholder="Organization"
           onChange={changeOrganizationHandler}
           value={organization}
         />
-        <input
+        <styles.Input
           type="number"
-          className={[
-            'rounded p-2 mb-3',
-            classes.add_expenditure_form_input,
-          ].join(' ')}
           placeholder="Unit Price"
           onChange={changeUnitPriceHandler}
           min="0"
         />
-        <input
+        <styles.Input
           type="number"
-          className={['rounded p-2', classes.add_expenditure_form_input].join(
-            ' '
-          )}
           placeholder="Quantity"
           onChange={changeQuantityHandler}
           min="1"
         />
-        <button type="submit" className={['btn btn-primary mt-5'].join(' ')}>
+        <styles.Submit type="submit" color="primary">
           Submit
-        </button>
-      </form>
+        </styles.Submit>
+      </styles.Form>
       <ToastContainer
         position="top-right"
         autoClose={5000}

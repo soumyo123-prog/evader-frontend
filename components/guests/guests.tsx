@@ -15,11 +15,11 @@ export default function Guests({
   React.useEffect(() => {
     if (error) {
       if (error === 404) {
-        toast('Event with this id not found');
+        toast.error('Event with this id not found');
       } else if (error === 403) {
-        toast('User not permitted to access this event guest list');
+        toast.error('User not permitted to access this event guest list');
       } else {
-        toast('Request failed with status code 400');
+        toast.error('Request failed with status code 400');
       }
     }
   }, [error]);

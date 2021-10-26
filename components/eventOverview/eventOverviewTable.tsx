@@ -23,7 +23,7 @@ export default function EventOverviewTable({
         }
       );
     } else {
-      toast('Your browser does not support geolocation service');
+      toast.error('Your browser does not support geolocation service');
     }
   };
 

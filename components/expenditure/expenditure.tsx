@@ -22,7 +22,7 @@ export default function Expenditure({ id }: PropsWithChildren<{ id: string }>) {
 
   React.useEffect(() => {
     if (error) {
-      toast('Something went wrong!');
+      toast.error('Something went wrong!');
     }
   }, []);
 

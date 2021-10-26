@@ -10,7 +10,7 @@ export default function IsNotAuth() {
 
   React.useEffect(() => {
     if (errorToast) {
-      toast('Error white authenticating!');
+      toast.error('Error white authenticating!');
       setErrorToast(false);
     }
   }, [errorToast]);

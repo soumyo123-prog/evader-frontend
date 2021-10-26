@@ -1,13 +1,16 @@
 import React, { PropsWithChildren } from 'react';
+
 import moment from 'moment';
 import { Button } from 'reactstrap';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { EventType } from '../../types/types';
 import { useAuth } from '../../context/auth';
 import SaveEventSettingsService from '../../services/save-event-settings-service';
+import Validate from '../../utils/form-validator';
 
 import * as styles from './styles';
-import Validate from '../../utils/form-validator';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EventSettings({
   id,
@@ -83,7 +86,12 @@ export default function EventSettings({
       time: eventDateTime,
     };
 
-    await SaveEventSettingsService(id, token!, modifiedData);
+    try {
+      await SaveEventSettingsService(id, token!, modifiedData);
+      toast.success('Event settings saved successfully!');
+    } catch (err: any) {
+      toast.error('Something went wrong!');
+    }
   };
 
   React.useEffect(() => {
@@ -105,69 +113,82 @@ export default function EventSettings({
   }, [name, date, time]);
 
   return (
-    <styles.Form>
-      <styles.LabelInput show={name} for="name">
-        Name
-      </styles.LabelInput>
-      <styles.Input
-        type="text"
-        id="name"
-        value={name}
-        onChange={editNameHandler}
-        placeholder="Name"
-      />
+    <>
+      <styles.Form>
+        <styles.LabelInput show={name} for="name">
+          Name
+        </styles.LabelInput>
+        <styles.Input
+          type="text"
+          id="name"
+          value={name}
+          onChange={editNameHandler}
+          placeholder="Name"
+        />
 
-      <styles.LabelInput show={description} for="description">
-        Description
-      </styles.LabelInput>
-      <styles.Textarea
-        id="description"
-        value={description}
-        onChange={editDescriptionHandler}
-        placeholder="Description"
-      />
+        <styles.LabelInput show={description} for="description">
+          Description
+        </styles.LabelInput>
+        <styles.Textarea
+          id="description"
+          value={description}
+          onChange={editDescriptionHandler}
+          placeholder="Description"
+        />
 
-      <styles.LabelInput show={date} for="date">
-        Date
-      </styles.LabelInput>
-      <styles.Input
-        type="date"
-        id="date"
-        value={date}
-        onChange={editDateHandler}
-      />
+        <styles.LabelInput show={date} for="date">
+          Date
+        </styles.LabelInput>
+        <styles.Input
+          type="date"
+          id="date"
+          value={date}
+          onChange={editDateHandler}
+        />
 
-      <styles.LabelInput show={time} for="time">
-        Time
-      </styles.LabelInput>
-      <styles.Input
-        type="time"
-        id="time"
-        value={time}
-        onChange={editTimeHandler}
-      />
+        <styles.LabelInput show={time} for="time">
+          Time
+        </styles.LabelInput>
+        <styles.Input
+          type="time"
+          id="time"
+          value={time}
+          onChange={editTimeHandler}
+        />
 
-      {changed && (
-        <styles.Confirmation>
-          <Button
-            type="button"
-            color="danger"
-            outline
-            onClick={cancelEditHandler}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            color="success"
-            outline
-            disabled={disabled}
-            onClick={sumbitSettingsHandler}
-          >
-            Confirm
-          </Button>
-        </styles.Confirmation>
-      )}
-    </styles.Form>
+        {changed && (
+          <styles.Confirmation>
+            <Button
+              type="button"
+              color="danger"
+              outline
+              onClick={cancelEditHandler}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              color="success"
+              outline
+              disabled={disabled}
+              onClick={sumbitSettingsHandler}
+            >
+              Confirm
+            </Button>
+          </styles.Confirmation>
+        )}
+      </styles.Form>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }

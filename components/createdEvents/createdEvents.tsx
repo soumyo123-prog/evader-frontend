@@ -1,9 +1,12 @@
 import React, { PropsWithChildren } from 'react';
 import Link from 'next/link';
+import { Container, Row } from 'reactstrap';
+
 import { useEventsFetcher } from '../../services/events-fetcher-service';
 import EventCard from '../eventCard/eventCard';
-import classes from './createdEvents.module.scss';
 import InlineSpinner from '../spinner/inlineSpinner';
+
+import * as styles from './styles';
 
 export default function CreatedEvents({
   filter,
@@ -18,15 +21,9 @@ export default function CreatedEvents({
       (filter === 'completed' && upcoming < 0)
     ) {
       return (
-        <div
-          className={['col', classes.event_card_container].join(' ')}
-          key={event.id}
-        >
+        <styles.Column key={event.id}>
           <Link href={`events/${event.id}`}>
-            <a
-              className={['d-block', classes.event_card_link].join(' ')}
-              role="button"
-            >
+            <styles.EventLink role="button">
               <EventCard
                 id={event.id}
                 name={event.name}
@@ -37,9 +34,9 @@ export default function CreatedEvents({
                 status={undefined}
                 invitedBy={undefined}
               />
-            </a>
+            </styles.EventLink>
           </Link>
-        </div>
+        </styles.Column>
       );
     }
 
@@ -51,10 +48,8 @@ export default function CreatedEvents({
   }
 
   return (
-    <div className={['container-fluid'].join(' ')}>
-      <div className={['row'].join(' ')} data-testid="created-events-container">
-        {content}
-      </div>
-    </div>
+    <Container fluid>
+      <Row data-testid="created-events-container">{content}</Row>
+    </Container>
   );
 }

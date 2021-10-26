@@ -37,7 +37,7 @@ export default function EventCard({
         EventEmitterService('event_deleted', { id });
       })
       .catch(() => {
-        toast('Something went wrong !');
+        toast.error('Something went wrong !');
       });
   };
 
