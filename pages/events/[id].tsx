@@ -33,10 +33,16 @@ export default function EventPage() {
   const fields = [
     'overview',
     'guests',
-    'invite people',
     'expenditure',
+    'invite people',
     'event settings',
   ];
+
+  const upcoming = new Date(event.time).getTime() >= new Date().getTime();
+  if (!upcoming) {
+    fields.pop();
+    fields.pop();
+  }
 
   const changeActiveHandler = (newActive: string) => {
     setActive(newActive);
@@ -54,10 +60,12 @@ export default function EventPage() {
             changeActive={changeActiveHandler}
           />
           {active === 'overview' && <EventOverview fetchedEvent={event} />}
-          {active === 'invite people' && <EventInvitePeople id={id} />}
           {active === 'guests' && <Guests eventId={id} />}
           {active === 'expenditure' && <Expenditure id={id} />}
-          {active === 'event settings' && (
+          {active === 'invite people' && upcoming && (
+            <EventInvitePeople id={id} />
+          )}
+          {active === 'event settings' && upcoming && (
             <EventSettings id={id} fetchedEvent={event} />
           )}
         </MainContentWrapper>

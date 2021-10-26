@@ -24,6 +24,7 @@ const InvitedEvents = loadable(
 const EventsPage = () => {
   const [open, setOpen] = React.useState(false);
   const [choosen, setChoosen] = React.useState<string>('Created');
+  const [filter, setFilter] = React.useState('upcoming');
   const { setActive } = useSidebar();
   const { token } = useAuth();
 
@@ -59,8 +60,14 @@ const EventsPage = () => {
                 <EventsNavbar
                   choosen={choosen}
                   clickHandler={navItemClickHandler}
+                  filter={filter}
+                  changeFilterHandler={(val: string) => setFilter(val)}
                 />
-                {choosen === 'Created' ? <CreatedEvents /> : <InvitedEvents />}
+                {choosen === 'Created' ? (
+                  <CreatedEvents filter={filter} />
+                ) : (
+                  <InvitedEvents filter={filter} />
+                )}
               </>
             )}
             <AddEventButton clickHandler={addClickHandler} open={open} />

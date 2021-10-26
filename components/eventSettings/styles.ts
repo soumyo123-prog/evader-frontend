@@ -1,16 +1,30 @@
+import { Label } from 'reactstrap';
 import styled from 'styled-components';
 import * as colors from '../../global/colors';
 
-export const TD = styled.td`
-  vertical-align: center;
-  padding: 0.5rem;
-  text-align: center;
+interface LabelProps {
+  show: string;
+}
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
 `;
 
-export const TH = styled.th`
-  vertical-align: center;
-  padding: 0.5rem;
-  text-align: center;
+export const LabelInput = styled(Label)<LabelProps>`
+  width: 60%;
+  min-width: 300px;
+
+  color: ${colors.BG_PRIMARY};
+  font-size: 1.1rem;
+  transition: all 0.1s ease-in-out;
+
+  ${(props) =>
+    props.show
+      ? 'transform: translateY(0) scaleY(1);'
+      : 'transform: translateY(100%) scaleY(0);'}
 `;
 
 export const Input = styled.input`
@@ -20,6 +34,7 @@ export const Input = styled.input`
   outline: none;
   min-width: 300px;
   width: 60%;
+  margin-bottom: 1rem;
 
   padding: 0.5rem;
   border-radius: 5px;
@@ -37,6 +52,7 @@ export const Textarea = styled.textarea`
   min-width: 300px;
   min-height: 200px;
   width: 60%;
+  margin-bottom: 1rem;
 
   padding: 0.5rem;
   border-radius: 5px;
@@ -49,4 +65,5 @@ export const Textarea = styled.textarea`
 export const Confirmation = styled.div`
   display: flex;
   justify-content: space-evenly;
+  width: 60%;
 `;
