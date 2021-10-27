@@ -11,7 +11,7 @@ export default function SaveEventSettingsService(
   token: string,
   data: eventModifications
 ) {
-  return axios.patch(`event/update/${eventId}/`, data, {
+  return axios.put(`event/update/${eventId}/`, data, {
     headers: { Authorization: `Token ${token}` },
   });
 }
