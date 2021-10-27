@@ -29,7 +29,12 @@ export default function Guests({
       className={['col', classes.guest_card_container].join(' ')}
       key={guest.email}
     >
-      <Guest name={guest.name} email={guest.email} status={guest.status} />
+      <Guest
+        id={guest.id}
+        name={guest.name}
+        email={guest.email}
+        status={guest.status}
+      />
     </div>
   ));
 

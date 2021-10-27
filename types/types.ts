@@ -16,6 +16,7 @@ export type EventType = {
 };
 
 export type GuestType = {
+  id: number;
   status: number;
   name: string;
   email: string;

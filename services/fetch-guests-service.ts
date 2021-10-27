@@ -11,6 +11,14 @@ export default function useFetchGuests(eventId: string) {
   React.useEffect(() => {
     let isMounted = true;
 
+    document.addEventListener('invitation_removed', (e: any) => {
+      if (isMounted) {
+        setGuests((prevGuests) =>
+          prevGuests.filter((guest) => guest.id !== e.detail.id)
+        );
+      }
+    });
+
     axios
       .get<GuestType[]>(`event/fetch/${eventId}/guests/`, {
         headers: { Authorization: `Token ${token}` },

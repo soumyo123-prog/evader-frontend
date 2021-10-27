@@ -7,3 +7,5 @@ export const TEXT_LIGHT = 'rgb(248, 249, 250)';
 export const TEXT_REDUCED_OPACITY = 'rgb(124, 123, 135)';
 
 export const INFO = '#0dcaf0';
+export const DANGER = '#dc3545';
+export const SUCCESS = '#198754';

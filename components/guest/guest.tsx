@@ -1,42 +1,76 @@
 import React, { PropsWithChildren } from 'react';
+
+import { toast, ToastContainer } from 'react-toastify';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { CardBody } from 'reactstrap';
+
 import { InvitationStatus } from '../eventOverview/eventOverviewStatus';
-import classes from './guest.module.scss';
+
+import * as styles from './styles';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../context/auth';
+import RemoveInvitationService from '../../services/remove-invitation-service';
+import EventEmitterService from '../../services/event-emitter-service';
 
 export default function Guest({
+  id,
   name,
   email,
   status,
-}: PropsWithChildren<{ name: string; email: string; status: number }>) {
+}: PropsWithChildren<{
+  id: number;
+  name: string;
+  email: string;
+  status: number;
+}>) {
+  const { token } = useAuth();
+
+  const removeGuestHandler: React.ChangeEventHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await RemoveInvitationService(id, token!);
+      EventEmitterService('invitation_removed', { id });
+    } catch (err: any) {
+      toast.error('Something went wrong!');
+    }
+  };
+
   return (
-    <div
-      className={[
-        'card',
-        'd-flex flex-column justify-content-center align-items-center',
-        classes.guest_card_container,
-      ].join(' ')}
-    >
-      <img
-        src={`https://avatars.dicebear.com/api/big-ears-neutral/${email}.svg`}
-        className={['card-img-top', classes.guest_picture].join(' ')}
-        alt="..."
-      />
-      <div className="card-body">
-        <h5 className="card-title text-center">{name}</h5>
-        <p className="card-text text-center text-info">{email}</p>
-      </div>
-      <div className="card-footer w-100 d-flex flex-column align-items-center">
-        <strong>Status:</strong>
-        <p
-          className={[
-            'h5 text-uppercase',
-            `${status === 0 ? 'text-primary' : 'evader-dummy'}`,
-            `${status === 1 ? 'text-success' : 'evader-dummy'}`,
-            `${status === 2 ? 'text-danger' : 'evader-dummy'}`,
-          ].join(' ')}
+    <>
+      <styles.CardContainer>
+        <styles.Image
+          src={`https://avatars.dicebear.com/api/big-ears-neutral/${email}.svg`}
+          alt="..."
+        />
+        <styles.DeleteButton
+          outline
+          color="danger"
+          onClick={removeGuestHandler}
         >
-          {InvitationStatus[status]}{' '}
-        </p>
-      </div>
-    </div>
+          <RiDeleteBin6Fill size="1.5rem" />
+        </styles.DeleteButton>
+        <CardBody>
+          <styles.Title tag="h5">{name}</styles.Title>
+          <styles.Text>{email}</styles.Text>
+        </CardBody>
+        <styles.Footer>
+          <strong>Status:</strong>
+          <styles.StatusText status={status}>
+            {InvitationStatus[status]}{' '}
+          </styles.StatusText>
+        </styles.Footer>
+      </styles.CardContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }
