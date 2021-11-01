@@ -69,5 +69,5 @@ export const DeleteButton = styled(Button)`
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 50;
+  z-index: 30;
 `;

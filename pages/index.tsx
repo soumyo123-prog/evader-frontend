@@ -1,11 +1,17 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { useAuth } from '../context/auth';
-import IsNotAuth from '../components/home/isNotAuth';
+
 import { useSidebar } from '../context/sidebar';
 import fetchProfileData from '../services/fetch-profile-data-service';
+
 import Wrapper from '../utils/sidebar-content-wrapper';
 import Sidebar from '../components/sidebar/sidebar';
 import Spinner from '../components/spinner/spinner';
+import MainContentWrapper from '../utils/main-content-wrapper';
+
+const IsNotAuth = loadable(() => import('../components/home/isNotAuth'));
+const IsAuth = loadable(() => import('../components/home/isAuth'));
 
 const Home = () => {
   const { loading, token, setBackendUser } = useAuth();
@@ -35,6 +41,9 @@ const Home = () => {
       <>
         <Wrapper>
           <Sidebar />
+          <MainContentWrapper>
+            <IsAuth />
+          </MainContentWrapper>
         </Wrapper>
       </>
     );

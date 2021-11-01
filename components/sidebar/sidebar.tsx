@@ -7,7 +7,6 @@ import classes from './sidebar.module.scss';
 
 const SidebarLogout = loadable(() => import('./sidebar-logout'));
 const SidebarSettings = loadable(() => import('./sidebar-settings'));
-const SidebarProfile = loadable(() => import('./sidebar-profile'));
 const SidebarEvents = loadable(() => import('./sidebar-events'));
 const SidebarHome = loadable(() => import('./sidebar-home'));
 
@@ -47,15 +46,6 @@ export default function Sidebar() {
           ].join(' ')}
         >
           <SidebarEvents expand={expand} active={active} />
-        </li>
-        <li
-          className={[
-            'list-group-item',
-            'd-flex justify-content-center align-items-center',
-            classes.sidebar_list_item,
-          ].join(' ')}
-        >
-          <SidebarProfile expand={expand} active={active} />
         </li>
         <li
           className={[

@@ -1,9 +1,10 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../context/auth';
-import 'react-toastify/dist/ReactToastify.css';
 
-import classes from './isNotAuth.module.scss';
+import * as styles from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function IsNotAuth() {
   const { errorToast, setErrorToast, signInHandler } = useAuth();
@@ -16,40 +17,16 @@ export default function IsNotAuth() {
   }, [errorToast]);
 
   return (
-    <div
-      className={[
-        'overflow-auto',
-        'w-100 h-100',
-        'd-flex flex-column align-items-center justify-content-center',
-      ].join(' ')}
-    >
-      <div
-        className={[
-          classes.project_name,
-          'text-uppercase',
-          'user-select-none',
-        ].join(' ')}
-      >
-        Evader
-      </div>
-      <div
-        className={[
-          classes.project_slogan,
-          'text-capitalize',
-          'user-select-none',
-        ].join(' ')}
-      >
+    <styles.IsNotAuthContainer>
+      <styles.ProjectName> Evader </styles.ProjectName>
+      <styles.ProjectSlogan>
         the all in one events management platform
-      </div>
-      <div className={['mt-4'].join(' ')}>
-        <button
-          className={['btn btn-primary'].join(' ')}
-          onClick={signInHandler}
-          type="button"
-        >
+      </styles.ProjectSlogan>
+      <styles.ButtonContainer>
+        <Button color="primary" onClick={signInHandler} type="button">
           Authenticate
-        </button>
-      </div>
+        </Button>
+      </styles.ButtonContainer>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -61,6 +38,6 @@ export default function IsNotAuth() {
         draggable
         pauseOnHover
       />
-    </div>
+    </styles.IsNotAuthContainer>
   );
 }
