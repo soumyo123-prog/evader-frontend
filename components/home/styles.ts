@@ -35,6 +35,7 @@ export const IsAuthContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
+  position: relative;
 
   overflow: auto;
   width: 100%;

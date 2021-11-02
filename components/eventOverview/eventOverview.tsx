@@ -1,5 +1,6 @@
 import loadable from '@loadable/component';
 import React, { PropsWithChildren } from 'react';
+import { Container, Row } from 'reactstrap';
 import { EventType } from '../../types/types';
 
 const EventOverviewDetails = loadable(() => import('./eventOverviewDetails'));
@@ -13,8 +14,8 @@ export default function EventOverview({
   fetchedEvent,
 }: PropsWithChildren<{ fetchedEvent: EventType }>) {
   return (
-    <div className={['container-fluid'].join(' ')}>
-      <div className={['row'].join(' ')}>
+    <Container fluid>
+      <Row>
         <div className={['col-12 p-3'].join(' ')}>
           <EventOverviewDetails
             name={fetchedEvent.name}
@@ -42,7 +43,7 @@ export default function EventOverview({
             time={fetchedEvent.time}
           />
         </div>
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 }

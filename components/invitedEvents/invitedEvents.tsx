@@ -1,15 +1,20 @@
 import React, { PropsWithChildren } from 'react';
 import Link from 'next/link';
+import { Row } from 'reactstrap';
+
 import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
-import classes from './invitedEvents.module.scss';
 import EventCard from '../eventCard/eventCard';
+import NotFound from '../notFound/notFound';
+
+import classes from './invitedEvents.module.scss';
 
 export default function InvitedEvents({
   filter,
 }: PropsWithChildren<{ filter: string }>) {
   const invitedEvents = useInvitedEventsFetcher();
+  const text = 'Nothing Found';
 
-  const content = invitedEvents.map((event) => {
+  let content = invitedEvents.map((event) => {
     const upcoming = new Date(event.time).getTime() - new Date().getTime();
 
     if (
@@ -44,10 +49,12 @@ export default function InvitedEvents({
 
     return null;
   });
+  content = content.filter((event) => !!event);
 
   return (
     <div className={['container-fluid'].join(' ')}>
       <div className={['row'].join(' ')}>{content}</div>
+      <Row>{content.length === 0 && <NotFound text={text} />}</Row>
     </div>
   );
 }

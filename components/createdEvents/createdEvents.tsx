@@ -7,13 +7,15 @@ import EventCard from '../eventCard/eventCard';
 import InlineSpinner from '../spinner/inlineSpinner';
 
 import * as styles from './styles';
+import NotFound from '../notFound/notFound';
 
 export default function CreatedEvents({
   filter,
 }: PropsWithChildren<{ filter: string }>) {
   const { events, loading } = useEventsFetcher();
+  const text = 'Nothing Found';
 
-  const content = events.map((event) => {
+  let content = events.map((event) => {
     const upcoming = new Date(event.time).getTime() - new Date().getTime();
 
     if (
@@ -42,6 +44,7 @@ export default function CreatedEvents({
 
     return null;
   });
+  content = content.filter((event) => !!event);
 
   if (loading) {
     return <InlineSpinner />;
@@ -50,6 +53,7 @@ export default function CreatedEvents({
   return (
     <Container fluid>
       <Row data-testid="created-events-container">{content}</Row>
+      <Row>{content.length === 0 && <NotFound text={text} />}</Row>
     </Container>
   );
 }
