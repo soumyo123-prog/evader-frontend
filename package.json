@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.0",
+    "@types/gapi": "^0.0.41",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
     "boxicons": "^2.0.9",
     "compressorjs": "^1.0.7",
     "firebase": "^8.10.0",
+    "googleapis": "^89.0.0",
     "moment": "^2.29.1",
     "next": "11.1.2",
     "nprogress": "^0.2.0",

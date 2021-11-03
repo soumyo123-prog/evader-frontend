@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import firebase, { User } from './firebase';
 import axios from './axios';
 import { userProfileType } from '../types/types';
-import authLoginService from '../services/auth-login-service';
 import authLogoutService from '../services/auth-logout-service';
+
+declare let gapi: any;
 
 export const AuthContext = React.createContext<{
   fireUser: User | null;
@@ -75,14 +76,35 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   }, [fireUser]);
 
   const signInHandler = () => {
-    authLoginService()
-      .then((result) => {
-        const { user } = result;
-        setFireUser(user);
-      })
-      .catch(() => {
-        setErrorToast(true);
-      });
+    gapi.load('auth2', () => {
+      gapi.auth2
+        .init({
+          clientId:
+            '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
+        })
+        .then(async () => {
+          const googleAuth = gapi.auth2.getAuthInstance();
+          const googleUser = await googleAuth.signIn();
+          const authResponse = googleUser.getAuthResponse();
+          const credential = firebase.auth.GoogleAuthProvider.credential(
+            authResponse.id_token,
+            authResponse.access_token
+          );
+          firebase
+            .auth()
+            .signInWithCredential(credential)
+            .then((result) => {
+              const { user } = result;
+              setFireUser(user);
+            })
+            .catch(() => {
+              setErrorToast(true);
+            });
+        })
+        .catch((err: any) => {
+          console.log(err.details);
+        });
+    });
   };
 
   const signOutHandler = () => {

@@ -40,10 +40,7 @@ export default class Validate {
     ) {
       return [false, 'Cannot input two spaces between two parts of name!'];
     }
-    if (name[name.length - 1] === ' ') {
-      return [true, 'So far so good!'];
-    }
-    return [false, 'Invalid character input at name field!'];
+    return [true, 'So far so good!'];
   }
 
   static validateDescription(description: string): [boolean, string] {

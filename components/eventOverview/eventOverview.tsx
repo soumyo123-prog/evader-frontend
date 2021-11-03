@@ -1,7 +1,10 @@
 import loadable from '@loadable/component';
 import React, { PropsWithChildren } from 'react';
 import { Container, Row } from 'reactstrap';
+
 import { EventType } from '../../types/types';
+
+import * as styles from './styles';
 
 const EventOverviewDetails = loadable(() => import('./eventOverviewDetails'));
 const EventOverviewTable = loadable(() => import('./eventOverviewTable'));
@@ -16,33 +19,33 @@ export default function EventOverview({
   return (
     <Container fluid>
       <Row>
-        <div className={['col-12 p-3'].join(' ')}>
+        <styles.Column xs="12">
           <EventOverviewDetails
             name={fetchedEvent.name}
             fireId={fetchedEvent.fireId}
             description={fetchedEvent.description}
           />
-        </div>
+        </styles.Column>
         {fetchedEvent.invitedBy ? (
           <>
-            <div className={['col-12 p-3'].join(' ')}>
+            <styles.Column xs="12">
               <EventOverviewInvitedBy invitedBy={fetchedEvent.invitedBy} />
-            </div>
-            <div className={['col-12 p-3'].join(' ')}>
+            </styles.Column>
+            <styles.Column xs="12">
               <EventOverviewStatus
                 status={fetchedEvent.status!}
                 dateTime={fetchedEvent.time}
                 id={fetchedEvent.id}
               />
-            </div>
+            </styles.Column>
           </>
         ) : null}
-        <div className={['col-12 p-3'].join(' ')}>
+        <styles.Column xs="12">
           <EventOverviewTable
             venue={fetchedEvent.venue}
             time={fetchedEvent.time}
           />
-        </div>
+        </styles.Column>
       </Row>
     </Container>
   );

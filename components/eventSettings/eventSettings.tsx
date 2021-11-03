@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/router';
 
 import moment from 'moment';
 import { Button } from 'reactstrap';
@@ -30,6 +31,7 @@ export default function EventSettings({
   );
 
   const { token } = useAuth();
+  const router = useRouter();
 
   const modifyChanged = (val: boolean) => {
     if (changed && !val) {
@@ -88,7 +90,7 @@ export default function EventSettings({
 
     try {
       await SaveEventSettingsService(id, token!, modifiedData);
-      toast.success('Event settings saved successfully!');
+      router.replace(`/events`);
     } catch (err: any) {
       toast.error('Something went wrong!');
     }

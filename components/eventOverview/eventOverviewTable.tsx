@@ -1,15 +1,54 @@
 import React, { PropsWithChildren } from 'react';
+
+import { HiLocationMarker } from 'react-icons/hi';
+import { BsCalendarFill } from 'react-icons/bs';
 import moment from 'moment';
 import { toast, ToastContainer } from 'react-toastify';
-import { Table } from 'reactstrap';
 
+import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
+
+declare let gapi: any;
 
 export default function EventOverviewTable({
   time,
   venue,
 }: PropsWithChildren<{ time: string; venue: string }>) {
-  const addToGoogleCalendar = () => {};
+  const addToGoogleCalendar = () => {
+    gapi.load('client', () => {
+      gapi.client.init({
+        apiKey: 'AIzaSyBsLHhKI8t1pNuZZX4CSv5OMViFaJqrAtU',
+        clientId:
+          '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
+        discoveryDocs: [
+          'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+        ],
+        scopes: 'https://www.googleapis.com/auth/calendar',
+      });
+
+      // gapi.client.load('calendar', 'v3', async () => {
+      //   console.log('calendar loaded');
+      //   try {
+      //     const insert = await gapi.client.calendar.events.insert({
+      //       calendarId: 'primary',
+      //       summary: 'Evader',
+      //       location: venue,
+      //       description: 'Evader',
+      //       start: {
+      //         dateTime: moment(time, 'YYYY-MM-DD HH:mm:ss').toISOString(),
+      //         timeZone: 'Asia/Kolkata',
+      //       },
+      //       end: {
+      //         dateTime: moment(time, 'YYYY-MM-DD HH:mm:ss').toISOString(),
+      //         timeZone: 'Asia/Kolkata',
+      //       },
+      //     });
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // });
+    });
+  };
 
   const getDirectionsHandler = () => {
     if (navigator.geolocation) {
@@ -28,45 +67,41 @@ export default function EventOverviewTable({
   };
 
   return (
-    <div
-      className={[
-        'd-flex flex-column align-items-start justify-content-center border shadow w-100 p-2',
-      ].join(' ')}
-    >
-      <Table borderless className={['mb-0'].join(' ')}>
+    <styles.OverviewTableContainer>
+      <styles.OverviewTable borderless>
         <tbody>
           <tr>
-            <td>
-              <strong>Location</strong>
-            </td>
+            <styles.LocationIcon>
+              <HiLocationMarker size="2rem" />
+            </styles.LocationIcon>
             <td>{venue}</td>
             <td>
-              <button
-                className={['btn btn-primary ms-2'].join(' ')}
+              <styles.TableButton
+                color="primary"
                 type="button"
                 onClick={getDirectionsHandler}
               >
                 Get Directions
-              </button>
+              </styles.TableButton>
             </td>
           </tr>
           <tr>
-            <td>
-              <strong>Date and Time</strong>
-            </td>
+            <styles.CalendarIcon>
+              <BsCalendarFill size="2rem" />
+            </styles.CalendarIcon>
             <td>{moment(time).format('dddd, MMMM Do YYYY, h:mm a')}</td>
             <td>
-              <button
-                className={['btn btn-primary ms-2'].join(' ')}
+              <styles.TableButton
+                color="primary"
                 type="button"
                 onClick={addToGoogleCalendar}
               >
                 Add to Calendar
-              </button>
+              </styles.TableButton>
             </td>
           </tr>
         </tbody>
-      </Table>
+      </styles.OverviewTable>
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -78,6 +113,6 @@ export default function EventOverviewTable({
         draggable
         pauseOnHover
       />
-    </div>
+    </styles.OverviewTableContainer>
   );
 }
