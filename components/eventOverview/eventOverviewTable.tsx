@@ -13,41 +13,32 @@ declare let gapi: any;
 export default function EventOverviewTable({
   time,
   venue,
-}: PropsWithChildren<{ time: string; venue: string }>) {
-  const addToGoogleCalendar = () => {
-    gapi.load('client', () => {
-      gapi.client.init({
-        apiKey: 'AIzaSyBsLHhKI8t1pNuZZX4CSv5OMViFaJqrAtU',
-        clientId:
-          '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
-        discoveryDocs: [
-          'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-        ],
-        scopes: 'https://www.googleapis.com/auth/calendar',
-      });
+  name,
+  description,
+}: PropsWithChildren<{
+  time: string;
+  venue: string;
+  name: string;
+  description: string;
+}>) {
+  const addToGoogleCalendar = async () => {
+    const event = {
+      summary: name,
+      description,
+      location: venue,
+      start: { dateTime: time },
+      end: { dateTime: moment(time).add(1, 'h').toISOString() },
+    };
 
-      // gapi.client.load('calendar', 'v3', async () => {
-      //   console.log('calendar loaded');
-      //   try {
-      //     const insert = await gapi.client.calendar.events.insert({
-      //       calendarId: 'primary',
-      //       summary: 'Evader',
-      //       location: venue,
-      //       description: 'Evader',
-      //       start: {
-      //         dateTime: moment(time, 'YYYY-MM-DD HH:mm:ss').toISOString(),
-      //         timeZone: 'Asia/Kolkata',
-      //       },
-      //       end: {
-      //         dateTime: moment(time, 'YYYY-MM-DD HH:mm:ss').toISOString(),
-      //         timeZone: 'Asia/Kolkata',
-      //       },
-      //     });
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // });
-    });
+    try {
+      await gapi.client.calendar.events.insert({
+        calendarId: 'primary',
+        resource: event,
+      });
+      toast.success('Event added to Google Calendar');
+    } catch (err) {
+      toast.error('Failed to add event to Google Calendar');
+    }
   };
 
   const getDirectionsHandler = () => {

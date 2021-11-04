@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import firebase, { User } from './firebase';
 import axios from './axios';
 import { userProfileType } from '../types/types';
-import authLogoutService from '../services/auth-logout-service';
 
 declare let gapi: any;
 
@@ -75,45 +74,48 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
     });
   }, [fireUser]);
 
-  const signInHandler = () => {
-    gapi.load('auth2', () => {
-      gapi.auth2
-        .init({
-          clientId:
-            '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
-        })
-        .then(async () => {
-          const googleAuth = gapi.auth2.getAuthInstance();
-          const googleUser = await googleAuth.signIn();
-          const authResponse = googleUser.getAuthResponse();
-          const credential = firebase.auth.GoogleAuthProvider.credential(
-            authResponse.id_token,
-            authResponse.access_token
-          );
-          firebase
-            .auth()
-            .signInWithCredential(credential)
-            .then((result) => {
-              const { user } = result;
-              setFireUser(user);
-            })
-            .catch(() => {
-              setErrorToast(true);
-            });
-        })
-        .catch((err: any) => {
-          console.log(err.details);
-        });
+  React.useEffect(() => {
+    gapi.load('client:auth2', () => {
+      gapi.client.init({
+        apiKey: 'AIzaSyBsLHhKI8t1pNuZZX4CSv5OMViFaJqrAtU',
+        clientId:
+          '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
+        discoveryDocs: [
+          'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+        ],
+        scope: 'https://www.googleapis.com/auth/calendar',
+      });
+
+      gapi.client.load('calendar', 'v3', () => {});
     });
+  }, []);
+
+  const signInHandler = async () => {
+    const googleAuth = gapi.auth2.getAuthInstance();
+    const googleUser = await googleAuth.signIn();
+    const authResponse = googleUser.getAuthResponse();
+    const credential = firebase.auth.GoogleAuthProvider.credential(
+      authResponse.id_token,
+      authResponse.access_token
+    );
+    firebase
+      .auth()
+      .signInWithCredential(credential)
+      .then((result) => {
+        const { user } = result;
+        setFireUser(user);
+      })
+      .catch(() => {
+        setErrorToast(true);
+      });
   };
 
-  const signOutHandler = () => {
-    authLogoutService().then(() => {
-      setBackendUser({} as userProfileType);
-      setFireUser(null);
-      setToken(null);
-      router.replace('/');
-    });
+  const signOutHandler = async () => {
+    await firebase.auth().signOut();
+    setBackendUser({} as userProfileType);
+    setFireUser(null);
+    setToken(null);
+    router.replace('/');
   };
 
   return (

@@ -44,6 +44,8 @@ export default function EventOverview({
           <EventOverviewTable
             venue={fetchedEvent.venue}
             time={fetchedEvent.time}
+            name={fetchedEvent.name}
+            description={fetchedEvent.description}
           />
         </styles.Column>
       </Row>
