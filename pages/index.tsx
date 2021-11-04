@@ -1,7 +1,8 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { useAuth } from '../context/auth';
+import Head from 'next/head';
 
+import { useAuth } from '../context/auth';
 import { useSidebar } from '../context/sidebar';
 import fetchProfileData from '../services/fetch-profile-data-service';
 
@@ -34,11 +35,19 @@ const Home = () => {
   let content = loading ? (
     <Spinner text="Trying to log you in..." />
   ) : (
-    <IsNotAuth />
+    <>
+      <Head>
+        <title>Evader</title>
+      </Head>
+      <IsNotAuth />
+    </>
   );
   if (token) {
     content = (
       <>
+        <Head>
+          <title>Home | Evader</title>
+        </Head>
         <Wrapper>
           <Sidebar />
           <MainContentWrapper>

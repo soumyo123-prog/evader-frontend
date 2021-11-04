@@ -1,12 +1,14 @@
 import loadable from '@loadable/component';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Head from 'next/head';
+
 import Sidebar from '../../../components/sidebar/sidebar';
-import { useAuth } from '../../../context/auth';
-import useEventInvitedFetcher from '../../../services/event-invited-fetcher';
 import MainContentWrapper from '../../../utils/main-content-wrapper';
 import Redirect from '../../../utils/redirector';
 import Wrapper from '../../../utils/sidebar-content-wrapper';
+import { useAuth } from '../../../context/auth';
+import useEventInvitedFetcher from '../../../services/event-invited-fetcher';
 
 const EventOverview = loadable(
   () => import('../../../components/eventOverview/eventOverview')
@@ -32,20 +34,25 @@ export default function InvitedEventPage() {
   let content = <Redirect to="/" />;
   if (token && !error) {
     content = (
-      <Wrapper>
-        <Sidebar />
-        <MainContentWrapper>
-          <EventNavbar
-            fields={fields}
-            active={active}
-            changeActive={changeActiveHandler}
-          />
-          {active === 'overview' ? (
-            <EventOverview fetchedEvent={event} />
-          ) : null}
-          {active === 'guests' ? <Guests eventId={id} /> : null}
-        </MainContentWrapper>
-      </Wrapper>
+      <>
+        <Head>
+          <title>{event.name} | Evader</title>
+        </Head>
+        <Wrapper>
+          <Sidebar />
+          <MainContentWrapper>
+            <EventNavbar
+              fields={fields}
+              active={active}
+              changeActive={changeActiveHandler}
+            />
+            {active === 'overview' ? (
+              <EventOverview fetchedEvent={event} />
+            ) : null}
+            {active === 'guests' ? <Guests eventId={id} /> : null}
+          </MainContentWrapper>
+        </Wrapper>
+      </>
     );
   }
 

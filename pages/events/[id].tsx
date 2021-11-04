@@ -1,13 +1,15 @@
 import loadable from '@loadable/component';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Head from 'next/head';
+
 import EventSettings from '../../components/eventSettings/eventSettings';
 import Sidebar from '../../components/sidebar/sidebar';
-import { useAuth } from '../../context/auth';
-import useEventFetcher from '../../services/event-fetcher-service';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
+import { useAuth } from '../../context/auth';
+import useEventFetcher from '../../services/event-fetcher-service';
 
 const EventNavbar = loadable(
   () => import('../../components/eventNavbar/eventNavbar')
@@ -51,25 +53,30 @@ export default function EventPage() {
   let content = <Redirect to="/" />;
   if (token && !error) {
     content = (
-      <Wrapper>
-        <Sidebar />
-        <MainContentWrapper>
-          <EventNavbar
-            fields={fields}
-            active={active}
-            changeActive={changeActiveHandler}
-          />
-          {active === 'overview' && <EventOverview fetchedEvent={event} />}
-          {active === 'guests' && <Guests eventId={id} />}
-          {active === 'expenditure' && <Expenditure id={id} />}
-          {active === 'invite people' && upcoming && (
-            <EventInvitePeople id={id} />
-          )}
-          {active === 'event settings' && upcoming && (
-            <EventSettings id={id} fetchedEvent={event} />
-          )}
-        </MainContentWrapper>
-      </Wrapper>
+      <>
+        <Head>
+          <title>{event.name} | Evader</title>
+        </Head>
+        <Wrapper>
+          <Sidebar />
+          <MainContentWrapper>
+            <EventNavbar
+              fields={fields}
+              active={active}
+              changeActive={changeActiveHandler}
+            />
+            {active === 'overview' && <EventOverview fetchedEvent={event} />}
+            {active === 'guests' && <Guests eventId={id} />}
+            {active === 'expenditure' && <Expenditure id={id} />}
+            {active === 'invite people' && upcoming && (
+              <EventInvitePeople id={id} />
+            )}
+            {active === 'event settings' && upcoming && (
+              <EventSettings id={id} fetchedEvent={event} />
+            )}
+          </MainContentWrapper>
+        </Wrapper>
+      </>
     );
   }
 

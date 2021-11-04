@@ -1,12 +1,14 @@
 import React from 'react';
 import loadable from '@loadable/component';
+import Head from 'next/head';
+
 import Sidebar from '../../components/sidebar/sidebar';
-import { useAuth } from '../../context/auth';
-import { useSidebar } from '../../context/sidebar';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
 import EventsNavbar from '../../components/eventsNavbar/eventsNavbar';
+import { useAuth } from '../../context/auth';
+import { useSidebar } from '../../context/sidebar';
 
 const AddEventButton = loadable(
   () => import('../../components/addButton/addButton')
@@ -77,7 +79,14 @@ const EventsPage = () => {
     );
   }
 
-  return content;
+  return (
+    <>
+      <Head>
+        <title>Events | Evader</title>
+      </Head>
+      {content}
+    </>
+  );
 };
 
 export default EventsPage;
