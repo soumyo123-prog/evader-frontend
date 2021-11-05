@@ -10,6 +10,11 @@ import { SidebarProvider } from '../context/sidebar';
 import Navbar from '../components/navbar/navbar';
 
 declare const gapi: any;
+declare global {
+  interface Window {
+    onLoadCallback: () => void;
+  }
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
