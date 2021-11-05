@@ -1,9 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import loadable from '@loadable/component';
 
-import classes from './eventsNavbar.module.scss';
+import * as styles from './styles';
 
-const NavbarDropdown = loadable(() => import('./eventsNavbarDropdown'));
+const Filter = loadable(() => import('./filter'));
+const State = loadable(() => import('./state'));
 
 export default function EventsNavbar({
   filter,
@@ -20,62 +21,16 @@ export default function EventsNavbar({
 }>) {
   return (
     <>
-      <nav className={['d-flex justify-content-center'].join(' ')}>
-        <ul
-          className={[
-            'd-flex justify-content-center',
-            classes.event_navbar,
-            `${
-              choosen === 'Created'
-                ? classes.event_navbar_left
-                : classes.event_navbar_right
-            }`,
-          ].join(' ')}
-        >
-          <li
-            className={[
-              'd-flex align-items-center justify-content-center',
-              classes.event_navbar_item,
-              `${
-                choosen === 'Created'
-                  ? classes.event_navbar_item_active
-                  : 'evader-dummy'
-              }`,
-            ].join(' ')}
-          >
-            <button
-              className={['btn'].join(' ')}
-              type="button"
-              onClick={() => clickHandler('Created')}
-            >
-              Created
-            </button>
+      <styles.Navbar>
+        <styles.List>
+          <li>
+            <State current={choosen} changeCurrentHandler={clickHandler} />
           </li>
-          <li
-            className={[
-              'd-flex align-items-center justify-content-center',
-              classes.event_navbar_item,
-              `${
-                choosen === 'Invited'
-                  ? classes.event_navbar_item_active
-                  : 'evader-dummy'
-              }`,
-            ].join(' ')}
-          >
-            <button
-              className={['btn'].join(' ')}
-              type="button"
-              onClick={() => clickHandler('Invited')}
-            >
-              Invited
-            </button>
+          <li>
+            <Filter filter={filter} changeFilterHandler={changeFilterHandler} />
           </li>
-        </ul>
-      </nav>
-      <NavbarDropdown
-        filter={filter}
-        changeFilterHandler={changeFilterHandler}
-      />
+        </styles.List>
+      </styles.Navbar>
     </>
   );
 }

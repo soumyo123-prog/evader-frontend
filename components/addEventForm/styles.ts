@@ -1,6 +1,11 @@
 /* eslint-disable import/prefer-default-export */
+import { Label } from 'reactstrap';
 import styled from 'styled-components';
 import * as colors from '../../global/colors';
+
+interface LabelProps {
+  show: string;
+}
 
 export const AddEventForm = styled.form`
   display: flex;
@@ -20,7 +25,6 @@ export const AddEventForm = styled.form`
     min-width: 300px;
     width: 60%;
 
-    margin-bottom: 1rem;
     padding: 0.5rem;
     border-radius: 5px;
 
@@ -29,13 +33,34 @@ export const AddEventForm = styled.form`
     }
   }
 
+  div {
+    min-width: 300px;
+    margin-bottom: 0.8rem;
+    width: 60%;
+    color: ${colors.DANGER};
+  }
+
   button {
     margin-top: 1rem;
   }
 `;
 
 export const Heading = styled.h2`
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   text-transform: capitalize;
   color: ${colors.BG_PRIMARY};
+`;
+
+export const LabelInput = styled(Label)<LabelProps>`
+  width: 60%;
+  min-width: 300px;
+
+  color: ${colors.BG_PRIMARY};
+  font-size: 1.1rem;
+  transition: all 0.1s ease-in-out;
+
+  ${(props) =>
+    props.show
+      ? 'transform: translateY(0) scaleY(1);'
+      : 'transform: translateY(100%) scaleY(0);'}
 `;

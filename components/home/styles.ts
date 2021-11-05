@@ -46,17 +46,30 @@ export const ImageContainer = styled.div`
   width: 250px;
   border-radius: 50%;
   overflow: hidden;
+
+  @media (max-width: 575px) {
+    height: 200px;
+    width: 200px;
+  }
 `;
 
 export const Intro = styled.div`
   font-size: 1.3rem;
   margin-top: 1.5rem;
+
+  @media (max-width: 575px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const FullName = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
+
+  @media (max-width: 575px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const UsageContainer = styled.div`
@@ -83,4 +96,8 @@ export const Usage = styled.div`
 export const UsageParam = styled.div`
   font-size: 2.5rem;
   font-weight: bold;
+
+  @media (max-width: 575px) {
+    font-size: 1.8rem;
+  }
 `;

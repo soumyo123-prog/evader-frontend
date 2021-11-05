@@ -6,36 +6,30 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-// import * as styles from './styles';
-
-export default function NavbarDropdown({
-  filter,
-  changeFilterHandler,
+export default function State({
+  current,
+  changeCurrentHandler,
 }: PropsWithChildren<{
-  filter: string;
+  current: string;
   // eslint-disable-next-line no-unused-vars
-  changeFilterHandler: (val: string) => void;
+  changeCurrentHandler: (value: string) => void;
 }>) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const menuItem = filter === 'upcoming' ? 'completed' : 'upcoming';
+  const menuItem = current === 'Created' ? 'Invited' : 'Created';
 
   const toggle = () => {
     setDropdownOpen((prev) => !prev);
   };
 
   return (
-    <Dropdown
-      className={['ms-2'].join(' ')}
-      isOpen={dropdownOpen}
-      toggle={toggle}
-    >
+    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle className={['text-capitalize'].join(' ')} caret>
-        {filter}
+        {current}
       </DropdownToggle>
       <DropdownMenu>
         <DropdownItem
           className={['text-capitalize'].join(' ')}
-          onClick={() => changeFilterHandler(menuItem)}
+          onClick={() => changeCurrentHandler(menuItem)}
         >
           {menuItem}
         </DropdownItem>

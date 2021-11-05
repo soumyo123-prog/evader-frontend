@@ -2,20 +2,18 @@
 import React from 'react';
 
 import { toast, ToastContainer } from 'react-toastify';
-import Compressor from 'compressorjs';
 import { Button } from 'reactstrap';
 
+import firebase from '../../context/firebase';
 import Validate from '../../utils/form-validator';
 import AddEventService from '../../services/add-event-service';
-import firebase from '../../context/firebase';
 
 import { useAuth } from '../../context/auth';
+import EventEmitterService from '../../services/event-emitter-service';
 
 import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
-import EventEmitterService from '../../services/event-emitter-service';
 
-const storage = firebase.storage();
 const db = firebase.firestore();
 
 export default function AddEventForm() {
@@ -25,45 +23,52 @@ export default function AddEventForm() {
   const [venue, setVenue] = React.useState<string>('');
   const [date, setDate] = React.useState<string>('');
   const [time, setTime] = React.useState<string>('');
-  const fileUploadRef = React.useRef<HTMLInputElement>(null);
+
   const { token } = useAuth();
 
+  const nameErrorRef = React.useRef<HTMLDivElement>(null);
+  const descriptionErrorRef = React.useRef<HTMLDivElement>(null);
+  const venueErrorRef = React.useRef<HTMLDivElement>(null);
+
   const changeNameHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    nameErrorRef!.current!.textContent! = '';
     const inputName: string = e.target.value;
     const [result, error] = Validate.validateName(inputName);
     if (result) {
       setName(inputName);
       if (error === 'Name field is required!') {
-        toast.error(error);
+        nameErrorRef!.current!.textContent! = `* ${error}`;
       }
     } else {
-      toast.error(error);
+      nameErrorRef.current!.textContent! = `* ${error}`;
     }
   };
 
   const changeDescriptionHandler: React.ChangeEventHandler<HTMLTextAreaElement> =
     (e) => {
+      descriptionErrorRef.current!.textContent! = '';
       const inputDescription: string = e.target.value;
       const [result, error] = Validate.validateDescription(inputDescription);
       if (result) {
         setDescription(inputDescription);
       } else {
-        toast.error(error);
+        descriptionErrorRef.current!.textContent! = `* ${error}`;
       }
     };
 
   const changeVenueHandler: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
+    venueErrorRef.current!.textContent! = '';
     const inputVenue: string = e.target.value;
     const [result, error] = Validate.validateVenue(inputVenue);
     if (result) {
       setVenue(inputVenue);
       if (error === 'Venue field is required!') {
-        toast.error(error);
+        venueErrorRef.current!.textContent! = `* ${error}`;
       }
     } else {
-      toast.error(error);
+      venueErrorRef.current!.textContent! = `* ${error}`;
     }
   };
 
@@ -104,18 +109,6 @@ export default function AddEventForm() {
         fireEventId,
         token!
       );
-      if (fileUploadRef.current!.files!.length > 0) {
-        const storageRef = storage.ref().child(`events/${fireEventId}.png`);
-        const file = fileUploadRef.current!.files![0];
-        // eslint-disable-next-line no-new
-        new Compressor(file, {
-          quality: 0.8,
-          success: async (result: File) => {
-            await storageRef.put(result);
-          },
-          error: () => {},
-        });
-      }
       EventEmitterService('event_created', {});
     } catch (error: any) {
       toast.error(error.message);
@@ -149,6 +142,9 @@ export default function AddEventForm() {
     <>
       <styles.AddEventForm onSubmit={createEventHandler}>
         <styles.Heading>add event</styles.Heading>
+        <styles.LabelInput show={name} for="name">
+          Name
+        </styles.LabelInput>
         <input
           type="text"
           id="name"
@@ -157,6 +153,10 @@ export default function AddEventForm() {
           value={name}
           data-testid="add-event-form-name-input"
         />
+        <div ref={nameErrorRef} />
+        <styles.LabelInput show={description} for="description">
+          Description
+        </styles.LabelInput>
         <textarea
           id="description"
           placeholder="Description"
@@ -164,6 +164,10 @@ export default function AddEventForm() {
           value={description}
           data-testid="add-event-form-description-input"
         />
+        <div ref={descriptionErrorRef} />
+        <styles.LabelInput show={venue} for="venue">
+          Venue
+        </styles.LabelInput>
         <input
           type="text"
           id="venue"
@@ -172,26 +176,27 @@ export default function AddEventForm() {
           value={venue}
           data-testid="add-event-form-venue-input"
         />
+        <div ref={venueErrorRef} />
+        <styles.LabelInput show for="date">
+          Date
+        </styles.LabelInput>
         <input
           type="date"
           id="date"
           onChange={changeDateHandler}
           data-testid="add-event-form-date-input"
         />
+        <div />
+        <styles.LabelInput show for="time">
+          Time
+        </styles.LabelInput>
         <input
           type="time"
           id="time"
           onChange={changeTimeHandler}
           data-testid="add-event-form-time-input"
         />
-        <input
-          className="form-control"
-          type="file"
-          id="avatar"
-          ref={fileUploadRef}
-          accept=".jpg, .jpeg, .png, .webp"
-          data-testid="add-event-form-avatar-input"
-        />
+        <div />
         <Button
           type="submit"
           color="primary"

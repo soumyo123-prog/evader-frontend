@@ -55,7 +55,7 @@ export default class Validate {
       return [true, 'Venue field is required!'];
     }
     if (venue.length > 255) {
-      return [false, 'Maximum description field length exceeded!'];
+      return [false, 'Maximum venue field length exceeded!'];
     }
     return [true, 'So far so good!'];
   }
