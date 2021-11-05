@@ -9,13 +9,31 @@ import { AuthProvider } from '../context/auth';
 import { SidebarProvider } from '../context/sidebar';
 import Navbar from '../components/navbar/navbar';
 
+declare const gapi: any;
+
 function MyApp({ Component, pageProps }: AppProps) {
+  React.useEffect(() => {
+    window.onLoadCallback = () => {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          apiKey: 'AIzaSyBsLHhKI8t1pNuZZX4CSv5OMViFaJqrAtU',
+          clientId:
+            '473772422344-ef5e87udgtft9jqm72m87bhclio6nvg1.apps.googleusercontent.com',
+          discoveryDocs: [
+            'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+          ],
+          scope: 'https://www.googleapis.com/auth/calendar',
+        });
+        gapi.client.load('calendar', 'v3', () => {});
+      });
+    };
+  }, []);
+
   return (
     <>
       <Head>
-        {/* <script src="https://apis.google.com/js/client.js" /> */}
         <script
-          src="https://apis.google.com/js/platform.js?onload=init"
+          src="https://apis.google.com/js/platform.js?onload=onLoadCallback"
           async
           defer
         />
