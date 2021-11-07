@@ -1,7 +1,5 @@
 import React, { PropsWithChildren } from 'react';
 
-import { useEventAvatarFetcherService } from '../../services/event-avatar-fetcher-service';
-
 import * as styles from './styles';
 
 export default function EventOverviewDetails({
@@ -9,15 +7,11 @@ export default function EventOverviewDetails({
   description,
   fireId,
 }: PropsWithChildren<{ name: string; fireId: string; description: string }>) {
-  const url = useEventAvatarFetcherService(fireId);
-
   return (
     <styles.OverviewDetailsContainer>
       <styles.PictureContainer>
         <img
-          src={
-            url || `https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`
-          }
+          src={`https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`}
           alt=""
         />
       </styles.PictureContainer>

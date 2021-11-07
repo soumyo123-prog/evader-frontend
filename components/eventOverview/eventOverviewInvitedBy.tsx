@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
-import classes from './eventOverview.module.scss';
+
+import * as styles from './styles';
 
 export default function EventOverviewInvitedBy({
   invitedBy,
@@ -8,18 +9,16 @@ export default function EventOverviewInvitedBy({
   const email = invitedBy.split(' : ')[1];
 
   return (
-    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
-      <div className={['card-header h5'].join(' ')}>Invited By</div>
-      <div className={['card-body'].join(' ')}>
-        <p className={['card-text'].join(' ')}>
-          <strong>Name : </strong>
-          {name}
-        </p>
-        <p className={['card-text'].join(' ')}>
-          <strong>Email : </strong>
-          {email}
-        </p>
-      </div>
-    </div>
+    <styles.Creator>
+      <h5>Invited By :</h5>
+      <styles.PictureContainer>
+        <img
+          src={`https://avatars.dicebear.com/api/big-ears-neutral/${email}.svg`}
+          alt=""
+        />
+      </styles.PictureContainer>
+      <styles.Name>{name}</styles.Name>
+      <p className={['card-text'].join(' ')}>{email}</p>
+    </styles.Creator>
   );
 }

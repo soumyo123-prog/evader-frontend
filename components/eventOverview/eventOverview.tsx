@@ -28,10 +28,10 @@ export default function EventOverview({
         </styles.Column>
         {fetchedEvent.invitedBy ? (
           <>
-            <styles.Column xs="12">
+            <styles.Column xs="12" sm="6">
               <EventOverviewInvitedBy invitedBy={fetchedEvent.invitedBy} />
             </styles.Column>
-            <styles.Column xs="12">
+            <styles.Column xs="12" sm="6">
               <EventOverviewStatus
                 status={fetchedEvent.status!}
                 dateTime={fetchedEvent.time}
@@ -46,6 +46,7 @@ export default function EventOverview({
             time={fetchedEvent.time}
             name={fetchedEvent.name}
             description={fetchedEvent.description}
+            duration={fetchedEvent.duration}
           />
         </styles.Column>
       </Row>

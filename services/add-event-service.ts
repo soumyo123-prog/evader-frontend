@@ -6,6 +6,7 @@ export default async function AddEventService(
   description: string,
   venue: string,
   time: string,
+  duration: number,
   fireId: string,
   token: string
 ) {
@@ -16,6 +17,7 @@ export default async function AddEventService(
       description,
       venue,
       time,
+      duration,
       fireId,
     },
     {

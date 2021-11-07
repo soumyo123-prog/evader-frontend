@@ -20,6 +20,16 @@ export const useExpenditureFetcher = (eventId: string) => {
       }
     });
 
+    document.addEventListener('expenditure_deleted', (e: any) => {
+      if (isMounted) {
+        setExpenditures((prevExpenditures) =>
+          prevExpenditures.filter(
+            (expenditure) => expenditure.id !== e.detail.id
+          )
+        );
+      }
+    });
+
     axios
       .get<ExpenditureType[]>(`event/expenditure/${eventId}/`, {
         headers: { Authorization: `Token ${token}` },

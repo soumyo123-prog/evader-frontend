@@ -23,6 +23,7 @@ export default function ExpenditureTable({
           <styles.TableHeader>Name</styles.TableHeader>
           <styles.TableHeader>Unit Price</styles.TableHeader>
           <styles.TableHeader>Quantity</styles.TableHeader>
+          <styles.TableHeader />
         </tr>
       </thead>
       <tbody>
@@ -34,6 +35,7 @@ export default function ExpenditureTable({
           <styles.TableData colSpan={1} style={{ fontSize: '1.2rem' }}>
             Total : {total}
           </styles.TableData>
+          <styles.TableData />
         </tr>
       </tbody>
     </Table>

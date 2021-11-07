@@ -8,7 +8,6 @@ import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { EventType } from '../../types/types';
-import { useEventAvatarFetcherService } from '../../services/event-avatar-fetcher-service';
 import EventDeleterService from '../../services/event-deleter-service';
 import EventEmitterService from '../../services/event-emitter-service';
 import { useAuth } from '../../context/auth';
@@ -26,7 +25,6 @@ export default function EventCard({
   invitedBy,
 }: PropsWithChildren<EventType>) {
   const { token } = useAuth();
-  const url = useEventAvatarFetcherService(fireId);
 
   const deleteClickHandler: React.ChangeEventHandler<HTMLButtonElement> = (
     e
@@ -51,9 +49,7 @@ export default function EventCard({
         )}
         <styles.ImageContainer>
           <styles.CardImage
-            src={
-              url || `https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`
-            }
+            src={`https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`}
             alt=""
           />
         </styles.ImageContainer>

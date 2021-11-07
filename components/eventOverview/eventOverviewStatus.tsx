@@ -1,7 +1,10 @@
 import React, { PropsWithChildren } from 'react';
+import { Button } from 'reactstrap';
+
 import { useAuth } from '../../context/auth';
 import setInvitationStatusService from '../../services/set-invitation-status-service';
-import classes from './eventOverview.module.scss';
+
+import * as styles from './styles';
 
 export enum InvitationStatus {
   'Pending',
@@ -32,35 +35,34 @@ export default function EventOverviewStatus({
   };
 
   return (
-    <div className={['card m-3 shadow', classes.min_width].join(' ')}>
-      <div className={['card-header h5'].join(' ')}>Status</div>
-      <div className={['card-body'].join(' ')}>
-        <p className={['card-text'].join(' ')}>{invitationStatus}</p>
-        <p className={['card-text'].join(' ')}>
-          <strong>Change Status:</strong>
-        </p>
-        <button
-          className={['btn btn-primary me-2'].join(' ')}
+    <styles.Status>
+      <styles.CurrentStatus>
+        <strong> Status : </strong>
+        {invitationStatus}
+      </styles.CurrentStatus>
+      <styles.ModifyContainer>
+        <Button
+          color="primary"
           disabled={disabled}
           onClick={() => changeInvitationStatus(0)}
         >
           Pending
-        </button>
-        <button
-          className={['btn btn-success me-2'].join(' ')}
+        </Button>
+        <Button
+          color="success"
           disabled={disabled}
           onClick={() => changeInvitationStatus(1)}
         >
           Accepted
-        </button>
-        <button
-          className={['btn btn-danger'].join(' ')}
+        </Button>
+        <Button
+          color="danger"
           disabled={disabled}
           onClick={() => changeInvitationStatus(2)}
         >
           Declined
-        </button>
-      </div>
-    </div>
+        </Button>
+      </styles.ModifyContainer>
+    </styles.Status>
   );
 }

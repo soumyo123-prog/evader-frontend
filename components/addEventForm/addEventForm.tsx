@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { toast, ToastContainer } from 'react-toastify';
-import { Button } from 'reactstrap';
+import { Button, FormGroup, Input } from 'reactstrap';
 
 import firebase from '../../context/firebase';
 import Validate from '../../utils/form-validator';
@@ -23,6 +23,8 @@ export default function AddEventForm() {
   const [venue, setVenue] = React.useState<string>('');
   const [date, setDate] = React.useState<string>('');
   const [time, setTime] = React.useState<string>('');
+  const [duration, setDuration] = React.useState<number>(1);
+  const [unit, setUnit] = React.useState<number>(2);
 
   const { token } = useAuth();
 
@@ -82,6 +84,18 @@ export default function AddEventForm() {
     setTime(inputTime);
   };
 
+  const changeDurationHandler: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    const inputDuration: number = Number(e.target.value);
+    setDuration(inputDuration);
+  };
+
+  const changeDurationUnitHandler: React.ChangeEventHandler<HTMLInputElement> =
+    (e) => {
+      setUnit(Number(e.target.value));
+    };
+
   const createEventHandler: React.FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
@@ -96,6 +110,7 @@ export default function AddEventForm() {
       Number(time.split(':')[1]),
       0
     );
+    const eventDuration = duration * 60 ** unit;
 
     try {
       const dr = await db.collection('events').add({ name: eventName });
@@ -106,6 +121,7 @@ export default function AddEventForm() {
         eventDescription,
         eventVenue,
         eventDateTime.toISOString(),
+        eventDuration,
         fireEventId,
         token!
       );
@@ -196,6 +212,26 @@ export default function AddEventForm() {
           onChange={changeTimeHandler}
           data-testid="add-event-form-time-input"
         />
+        <div />
+        <FormGroup style={{ display: 'flex' }}>
+          <input
+            type="number"
+            id="duration"
+            value={duration}
+            onChange={changeDurationHandler}
+            min="1"
+          />
+          <Input
+            type="select"
+            placeholder="duration"
+            value={unit}
+            onChange={changeDurationUnitHandler}
+          >
+            <option value="1">Minutes</option>
+            <option value="2">Hours</option>
+            <option value="3">Days</option>
+          </Input>
+        </FormGroup>
         <div />
         <Button
           type="submit"

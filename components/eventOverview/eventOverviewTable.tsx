@@ -12,22 +12,25 @@ declare let gapi: any;
 
 export default function EventOverviewTable({
   time,
+  duration,
   venue,
   name,
   description,
 }: PropsWithChildren<{
   time: string;
+  duration: number;
   venue: string;
   name: string;
   description: string;
 }>) {
   const addToGoogleCalendar = async () => {
+    console.log(duration);
     const event = {
       summary: name,
       description,
       location: venue,
       start: { dateTime: time },
-      end: { dateTime: moment(time).add(1, 'h').toISOString() },
+      end: { dateTime: moment(time).add(duration, 's').toISOString() },
     };
 
     try {

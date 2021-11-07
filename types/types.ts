@@ -13,6 +13,7 @@ export type EventType = {
   venue: string;
   status: number | undefined;
   invitedBy: string | undefined;
+  duration: number;
 };
 
 export type GuestType = {
