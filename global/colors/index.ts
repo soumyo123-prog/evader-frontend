@@ -9,3 +9,4 @@ export const TEXT_REDUCED_OPACITY = 'rgb(124, 123, 135)';
 export const INFO = '#0dcaf0';
 export const DANGER = '#dc3545';
 export const SUCCESS = '#198754';
+export const PURPLE = '#6c02b3';

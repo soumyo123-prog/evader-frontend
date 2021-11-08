@@ -24,7 +24,6 @@ export default function EventOverviewTable({
   description: string;
 }>) {
   const addToGoogleCalendar = async () => {
-    console.log(duration);
     const event = {
       summary: name,
       description,

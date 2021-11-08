@@ -21,6 +21,7 @@ export default function EventCard({
   description,
   venue,
   time,
+  duration,
   fireId,
   invitedBy,
 }: PropsWithChildren<EventType>) {
@@ -59,10 +60,14 @@ export default function EventCard({
           <styles.Venue>
             <HiLocationMarker size="1.5rem" /> {venue}
           </styles.Venue>
-          <styles.DateTime>
+          <styles.Duration>
             <BsCalendarFill />
-            {moment(time).format('dddd, MMM Do, YYYY')}
-          </styles.DateTime>
+            From {moment(time).format('dddd, MMM Do, YYYY')}
+          </styles.Duration>
+          <styles.Duration>
+            <BsCalendarFill />
+            To {moment(time).add(duration, 's').format('dddd, MMM Do, YYYY')}
+          </styles.Duration>
           <styles.DateTime>
             <IoTimeSharp size="1.5rem" />
             {moment(time).format('h:mm A')}

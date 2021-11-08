@@ -32,6 +32,7 @@ export default function CreatedEvents({
                 description={event.description}
                 venue={event.venue}
                 time={event.time}
+                duration={event.duration}
                 fireId={event.fireId}
                 status={undefined}
                 invitedBy={undefined}

@@ -68,6 +68,14 @@ export const Venue = styled(CardText)`
   color: ${colors.INFO};
 `;
 
+export const Duration = styled(CardText)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${colors.PURPLE};
+  font-weight: bold;
+`;
+
 export const DateTime = styled(CardText)`
   display: flex;
   justify-content: center;

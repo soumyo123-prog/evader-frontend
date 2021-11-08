@@ -110,7 +110,9 @@ export default function AddEventForm() {
       Number(time.split(':')[1]),
       0
     );
-    const eventDuration = duration * 60 ** unit;
+    let eventDuration = duration;
+    if (unit <= 2) eventDuration *= 60 ** unit;
+    else eventDuration *= 24 * 60 * 60;
 
     try {
       const dr = await db.collection('events').add({ name: eventName });
