@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 
 import moment from 'moment';
 import { HiLocationMarker } from 'react-icons/hi';
-import { IoTimeSharp } from 'react-icons/io5';
 import { BsCalendarFill } from 'react-icons/bs';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { toast, ToastContainer } from 'react-toastify';
@@ -62,16 +61,15 @@ export default function EventCard({
           </styles.Venue>
           <styles.Duration>
             <BsCalendarFill />
-            From {moment(time).format('dddd, MMM Do, YYYY')}
+            From {moment(time).format('dddd, MMM Do, YYYY - h:mm A')}
           </styles.Duration>
           <styles.Duration>
             <BsCalendarFill />
-            To {moment(time).add(duration, 's').format('dddd, MMM Do, YYYY')}
+            To{' '}
+            {moment(time)
+              .add(duration, 's')
+              .format('dddd, MMM Do, YYYY - h:mm A')}
           </styles.Duration>
-          <styles.DateTime>
-            <IoTimeSharp size="1.5rem" />
-            {moment(time).format('h:mm A')}
-          </styles.DateTime>
         </styles.CardDetails>
       </styles.CardContainer>
       <ToastContainer

@@ -1,15 +1,11 @@
 import React from 'react';
-import classes from './spinner.module.scss';
+
+import * as styles from './styles';
 
 export default function InlineSpinner() {
   return (
-    <div
-      className={[
-        'h-100 w-100 d-flex justify-content-center align-items-center',
-      ].join(' ')}
-      data-testid="inline-spinner"
-    >
-      <div className={[classes.inline_spinner].join(' ')} />
-    </div>
+    <styles.InlineSpinnerContainer data-testid="inline-spinner">
+      <styles.InlineSpinner />
+    </styles.InlineSpinnerContainer>
   );
 }
