@@ -9,11 +9,28 @@ export const IsNotAuthContainer = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
+
+  background-image: url('/homepage_background.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+export const ProjectDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
 `;
 
 export const ProjectName = styled.div`
   font-family: 'Chango', sans-serif;
-  font-size: 3rem;
+  font-size: 2rem;
   text-transform: uppercase;
   user-select: none;
 `;

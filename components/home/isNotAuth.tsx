@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { toast, ToastContainer } from 'react-toastify';
+
 import { useAuth } from '../../context/auth';
 
 import * as styles from './styles';
@@ -18,15 +19,17 @@ export default function IsNotAuth() {
 
   return (
     <styles.IsNotAuthContainer>
-      <styles.ProjectName> Evader </styles.ProjectName>
-      <styles.ProjectSlogan>
-        the all in one events management platform
-      </styles.ProjectSlogan>
-      <styles.ButtonContainer>
-        <Button color="primary" onClick={signInHandler} type="button">
-          Authenticate
-        </Button>
-      </styles.ButtonContainer>
+      <styles.ProjectDetailsContainer>
+        <styles.ProjectName> Evader </styles.ProjectName>
+        <styles.ProjectSlogan>
+          the all in one events management platform
+        </styles.ProjectSlogan>
+        <styles.ButtonContainer>
+          <Button color="primary" onClick={signInHandler} type="button">
+            Authenticate
+          </Button>
+        </styles.ButtonContainer>
+      </styles.ProjectDetailsContainer>
       <ToastContainer
         position="top-right"
         autoClose={5000}
