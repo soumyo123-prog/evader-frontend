@@ -11,7 +11,7 @@ export const SpinnerContainer = styled.div`
 `;
 
 export const InlineSpinnerContainer = styled.div`
-  height: 100%;
+  height: calc(100% - 113px);
   width: 100%;
   display: flex;
   justify-content: center;

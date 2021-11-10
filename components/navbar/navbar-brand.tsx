@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import classes from './navbar.module.scss';
+
+import * as styles from './styles';
 
 export default function NavbarBrand() {
   return (
     <Link href="/">
-      <a className={[classes.navbar_brand].join(' ')}>Evader</a>
+      <styles.Brand>Evader</styles.Brand>
     </Link>
   );
 }

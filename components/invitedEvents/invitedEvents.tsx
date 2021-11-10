@@ -1,12 +1,12 @@
 import React, { PropsWithChildren } from 'react';
 import Link from 'next/link';
-import { Row } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 
 import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
 import EventCard from '../eventCard/eventCard';
 import NotFound from '../notFound/notFound';
 
-import classes from './invitedEvents.module.scss';
+import * as styles from './styles';
 
 export default function InvitedEvents({
   filter,
@@ -22,15 +22,9 @@ export default function InvitedEvents({
       (filter === 'completed' && upcoming < 0)
     ) {
       return (
-        <div
-          className={['col', classes.event_card_container].join(' ')}
-          key={event.id}
-        >
+        <styles.CardContainer key={event.id}>
           <Link href={`events/invited/${event.id}`}>
-            <a
-              className={['d-block', classes.event_card_link].join(' ')}
-              role="button"
-            >
+            <styles.CardLink role="button">
               <EventCard
                 id={event.id}
                 name={event.name}
@@ -42,9 +36,9 @@ export default function InvitedEvents({
                 status={event.status}
                 invitedBy={event.invitedBy}
               />
-            </a>
+            </styles.CardLink>
           </Link>
-        </div>
+        </styles.CardContainer>
       );
     }
 
@@ -53,9 +47,9 @@ export default function InvitedEvents({
   content = content.filter((event) => !!event);
 
   return (
-    <div className={['container-fluid'].join(' ')}>
-      <div className={['row'].join(' ')}>{content}</div>
+    <Container fluid>
+      <Row>{content}</Row>
       <Row>{content.length === 0 && <NotFound text={text} />}</Row>
-    </div>
+    </Container>
   );
 }

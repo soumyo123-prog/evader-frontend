@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import loadable from '@loadable/component';
+
 import { useSidebar } from '../../context/sidebar';
+
 import classes from './sidebar.module.scss';
 
 const SidebarLogout = loadable(() => import('./sidebar-logout'));

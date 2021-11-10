@@ -1,8 +1,11 @@
 import React, { PropsWithChildren } from 'react';
 import loadable from '@loadable/component';
 import { toast, ToastContainer } from 'react-toastify';
+import { Container, Row } from 'reactstrap';
+
 import useFetchGuests from '../../services/fetch-guests-service';
-import classes from './guests.module.scss';
+
+import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Guest = loadable(() => import('../guest/guest'));
@@ -25,24 +28,21 @@ export default function Guests({
   }, [error]);
 
   const guestCards = guests.map((guest) => (
-    <div
-      className={['col', classes.guest_card_container].join(' ')}
-      key={guest.email}
-    >
+    <styles.GuestCardContainer key={guest.email}>
       <Guest
         id={guest.id}
         name={guest.name}
         email={guest.email}
         status={guest.status}
       />
-    </div>
+    </styles.GuestCardContainer>
   ));
 
   return (
     <>
-      <div className={['container-fluid'].join(' ')}>
-        <div className={['row'].join(' ')}>{guestCards}</div>
-      </div>
+      <Container fluid>
+        <Row>{guestCards}</Row>
+      </Container>
       <ToastContainer
         position="top-right"
         autoClose={5000}
