@@ -39,7 +39,7 @@ export default function Guest({
     <>
       <styles.CardContainer>
         <styles.Image
-          src={`https://avatars.dicebear.com/api/big-ears-neutral/${email}.svg`}
+          src={`https://avatars.dicebear.com/api/adventurer-neutral/${email}.svg`}
           alt="..."
         />
         <styles.DeleteButton

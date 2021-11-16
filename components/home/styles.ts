@@ -9,11 +9,6 @@ export const IsNotAuthContainer = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
-
-  background-image: url('/homepage_background.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 `;
 
 export const ProjectDetailsContainer = styled.div`

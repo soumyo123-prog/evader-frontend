@@ -32,8 +32,8 @@ export default function ExpenditureTable({
         ))}
         <tr>
           <styles.TableData colSpan={2} />
-          <styles.TableData colSpan={1} style={{ fontSize: '1.2rem' }}>
-            Total : {total}
+          <styles.TableData colSpan={1}>
+            <strong>Total</strong> : {total}
           </styles.TableData>
           <styles.TableData />
         </tr>

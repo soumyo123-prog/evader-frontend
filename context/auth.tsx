@@ -8,33 +8,28 @@ declare let gapi: any;
 
 export const AuthContext = React.createContext<{
   fireUser: User | null;
-  errorToast: boolean;
   loading: boolean;
   token: string | null;
   backendUser: userProfileType;
   signInHandler: () => void;
   signOutHandler: () => void;
   setFireUser: React.Dispatch<React.SetStateAction<User | null>>;
-  setErrorToast: React.Dispatch<React.SetStateAction<boolean>>;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   setBackendUser: React.Dispatch<React.SetStateAction<userProfileType>>;
 }>({
   fireUser: null,
-  errorToast: false,
   loading: false,
   token: null,
   backendUser: {} as userProfileType,
   signInHandler: () => {},
   signOutHandler: () => {},
   setFireUser: () => {},
-  setErrorToast: () => {},
   setToken: () => {},
   setBackendUser: () => {},
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [fireUser, setFireUser] = React.useState<User | null>(null);
-  const [errorToast, setErrorToast] = React.useState<boolean>(false);
   const [token, setToken] = React.useState<string | null>(null);
   const [backendUser, setBackendUser] = React.useState<userProfileType>(
     {} as userProfileType
@@ -61,12 +56,10 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
               .catch(() => {
                 setLoading(false);
                 setToken(null);
-                setErrorToast(true);
               });
           })
           .catch(() => {
             setLoading(false);
-            setErrorToast(true);
           });
       } else {
         setLoading(false);
@@ -89,9 +82,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
         const { user } = result;
         setFireUser(user);
       })
-      .catch(() => {
-        setErrorToast(true);
-      });
+      .catch(() => {});
   };
 
   const signOutHandler = async () => {
@@ -106,14 +97,12 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
     <AuthContext.Provider
       value={{
         fireUser,
-        errorToast,
         loading,
         token,
         backendUser,
         signInHandler,
         signOutHandler,
         setFireUser,
-        setErrorToast,
         setToken,
         setBackendUser,
       }}

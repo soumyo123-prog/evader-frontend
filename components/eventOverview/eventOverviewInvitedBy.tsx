@@ -13,7 +13,7 @@ export default function EventOverviewInvitedBy({
       <h5>Invited By :</h5>
       <styles.PictureContainer>
         <img
-          src={`https://avatars.dicebear.com/api/big-ears-neutral/${email}.svg`}
+          src={`https://avatars.dicebear.com/api/adventurer-neutral/${email}.svg`}
           alt=""
         />
       </styles.PictureContainer>

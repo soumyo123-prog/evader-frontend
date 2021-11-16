@@ -55,7 +55,6 @@ export const PictureContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  padding: 0.5rem;
   height: 150px;
   width: 150px;
   border-radius: 50%;

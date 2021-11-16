@@ -25,7 +25,7 @@ export default function IsAuth() {
     <styles.IsAuthContainer>
       <styles.ImageContainer>
         <img
-          src={`https://avatars.dicebear.com/api/big-ears-neutral/${fireUser?.email}.svg`}
+          src={`https://avatars.dicebear.com/api/adventurer-neutral/${fireUser?.email}.svg`}
           alt=""
         />
       </styles.ImageContainer>

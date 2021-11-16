@@ -1,46 +1,33 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { Button } from 'reactstrap';
-import { toast, ToastContainer } from 'react-toastify';
 
 import { useAuth } from '../../context/auth';
 
 import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function IsNotAuth() {
-  const { errorToast, setErrorToast, signInHandler } = useAuth();
+const Particles = loadable(() => import('./particles'));
 
-  React.useEffect(() => {
-    if (errorToast) {
-      toast.error('Error white authenticating!');
-      setErrorToast(false);
-    }
-  }, [errorToast]);
+export default function IsNotAuth() {
+  const { signInHandler } = useAuth();
 
   return (
-    <styles.IsNotAuthContainer>
-      <styles.ProjectDetailsContainer>
-        <styles.ProjectName> Evader </styles.ProjectName>
-        <styles.ProjectSlogan>
-          the all in one events management platform
-        </styles.ProjectSlogan>
-        <styles.ButtonContainer>
-          <Button color="primary" onClick={signInHandler} type="button">
-            Authenticate
-          </Button>
-        </styles.ButtonContainer>
-      </styles.ProjectDetailsContainer>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </styles.IsNotAuthContainer>
+    <>
+      <Particles />
+      <styles.IsNotAuthContainer>
+        <styles.ProjectDetailsContainer>
+          <styles.ProjectName> Evader </styles.ProjectName>
+          <styles.ProjectSlogan>
+            the all in one events management platform
+          </styles.ProjectSlogan>
+          <styles.ButtonContainer>
+            <Button color="primary" onClick={signInHandler} type="button">
+              Authenticate
+            </Button>
+          </styles.ButtonContainer>
+        </styles.ProjectDetailsContainer>
+      </styles.IsNotAuthContainer>
+    </>
   );
 }

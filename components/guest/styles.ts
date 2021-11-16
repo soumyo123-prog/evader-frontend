@@ -29,7 +29,6 @@ export const CardContainer = styled(Card)`
 export const Image = styled(CardImg)`
   height: 150px;
   width: 150px;
-  padding: 10px;
   overflow: hidden;
   background-color: #e6e6e6;
   border-radius: 50%;
