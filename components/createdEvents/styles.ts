@@ -1,19 +1,27 @@
 import styled from 'styled-components';
-import { Col } from 'reactstrap';
+import * as colors from '../../global/colors';
 
-export const Column = styled(Col)`
-  padding: 10px;
-  min-width: 300px;
-  a {
-    height: 100%;
+export const Heading = styled.th`
+  font-weight: normal;
+`;
+
+export const Name = styled.td`
+  font-size: 1.2rem;
+
+  @media (max-width: 575px) {
+    font-size: 1rem;
   }
 `;
 
-export const EventLink = styled.a`
-  display: block;
-  color: black;
-  text-decoration: none;
-  &:hover {
-    color: black;
+export const Date = styled.span`
+  white-space: nowrap;
+
+  @media (min-width: 768px) {
+    font-size: 1.2rem;
   }
+`;
+
+export const Time = styled.span`
+  white-space: nowrap;
+  color: ${colors.TEXT_REDUCED_OPACITY};
 `;

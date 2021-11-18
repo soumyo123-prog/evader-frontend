@@ -10,7 +10,10 @@
     "test": "jest --watchAll --coverage"
   },
   "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
     "@loadable/component": "^5.15.0",
+    "@mui/material": "^5.1.1",
     "@types/gapi": "^0.0.41",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",

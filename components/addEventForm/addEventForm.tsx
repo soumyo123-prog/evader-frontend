@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
+import TextField from '@mui/material/TextField';
 import { toast, ToastContainer } from 'react-toastify';
 import { Button, FormGroup, Input } from 'reactstrap';
 
@@ -158,6 +159,7 @@ export default function AddEventForm() {
 
   return (
     <>
+      <TextField id="standard-basic" label="Standard" variant="standard" />
       <styles.AddEventForm onSubmit={createEventHandler}>
         <styles.Heading>add event</styles.Heading>
         <styles.LabelInput show={name} for="name">

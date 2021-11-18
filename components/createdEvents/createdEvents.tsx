@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
+import moment from 'moment';
 import Link from 'next/link';
-import { Container, Row } from 'reactstrap';
+import { Container, Row, Table } from 'reactstrap';
 
 import { useEventsFetcher } from '../../services/events-fetcher-service';
-import EventCard from '../eventCard/eventCard';
 import InlineSpinner from '../spinner/inlineSpinner';
 
 import * as styles from './styles';
@@ -23,23 +23,33 @@ export default function CreatedEvents({
       (filter === 'completed' && upcoming < 0)
     ) {
       return (
-        <styles.Column key={event.id}>
-          <Link href={`events/${event.id}`}>
-            <styles.EventLink role="button">
-              <EventCard
-                id={event.id}
-                name={event.name}
-                description={event.description}
-                venue={event.venue}
-                time={event.time}
-                duration={event.duration}
-                fireId={event.fireId}
-                status={undefined}
-                invitedBy={undefined}
-              />
-            </styles.EventLink>
-          </Link>
-        </styles.Column>
+        <tr key={event.id}>
+          <styles.Name>{event.name}</styles.Name>
+          <td>
+            <div>
+              <styles.Date>
+                {moment(event.time).format('ddd Do MMM')}
+              </styles.Date>{' '}
+              -{' '}
+              <styles.Date>
+                {moment(event.time)
+                  .add(event.duration, 's')
+                  .format('ddd Do MMM')}
+              </styles.Date>
+            </div>
+            <div>
+              <styles.Time>{moment(event.time).format('h:mm A')}</styles.Time> -{' '}
+              <styles.Time>
+                {moment(event.time).add(event.duration, 's').format('h:mm A')}
+              </styles.Time>
+            </div>
+          </td>
+          <td>
+            <Link href={`events/${event.id}`}>
+              <a className="btn btn-primary">Details</a>
+            </Link>
+          </td>
+        </tr>
       );
     }
 
@@ -53,7 +63,18 @@ export default function CreatedEvents({
 
   return (
     <Container fluid>
-      <Row data-testid="created-events-container">{content}</Row>
+      <Row data-testid="created-events-container">
+        <Table>
+          <thead style={{ fontSize: '0.9rem' }}>
+            <tr>
+              <styles.Heading>Name</styles.Heading>
+              <styles.Heading>Timings</styles.Heading>
+              <styles.Heading />
+            </tr>
+          </thead>
+          <tbody>{content}</tbody>
+        </Table>
+      </Row>
       <Row>{content.length === 0 && <NotFound text={text} />}</Row>
     </Container>
   );
