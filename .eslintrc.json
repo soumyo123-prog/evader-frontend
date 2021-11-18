@@ -16,15 +16,10 @@
   "rules": {
     "jsx-a11y/anchor-is-valid": 0,
     "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
+    "react/jsx-props-no-spreading": 0,
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "optionalDependencies": false,
-        "peerDependencies": false
-      }
-    ],
+    "import/no-extraneous-dependencies": 0,
     "import/extensions": [
       "error",
       "ignorePackages",
