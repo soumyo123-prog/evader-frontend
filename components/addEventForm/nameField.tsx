@@ -11,11 +11,24 @@ export default function NameField({
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
 }>) {
+  const [invalid, setInvalid] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+
   const changeNameHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setInvalid(false);
+    setMessage('');
+
     const inputName: string = e.target.value;
     const [result, error] = Validate.validateName(inputName);
     if (result) {
       setName(inputName);
+      if (!inputName) {
+        setInvalid(true);
+        setMessage(error);
+      }
+    } else {
+      setInvalid(true);
+      setMessage(error);
     }
   };
 
@@ -28,6 +41,8 @@ export default function NameField({
       label="Name"
       value={name}
       onChange={changeNameHandler}
+      error={invalid}
+      helperText={message}
     />
   );
 }

@@ -19,10 +19,10 @@ export default class Validate {
   // The below methods are for character by character validation
   static validateName(name: string): [boolean, string] {
     if (name.length === 0) {
-      return [true, 'Name field is required!'];
+      return [true, 'Name is a required field'];
     }
     if (name.length > 100) {
-      return [false, 'Maximum name field length exceeded!'];
+      return [false, 'Length of name should not exceed 100 characters'];
     }
     if (name[name.length - 1] >= 'a' && name[name.length - 1] <= 'z') {
       return [true, 'So far so good!'];
@@ -31,31 +31,31 @@ export default class Validate {
       return [true, 'So far so good!'];
     }
     if (name.length === 1 && name[0] === ' ') {
-      return [false, 'Cannot input space at the beginning of name!'];
+      return [false, 'Cannot enter whitespace at the beginning of name'];
     }
     if (
       name.length > 1 &&
       name[name.length - 1] === ' ' &&
       name[name.length - 2] === ' '
     ) {
-      return [false, 'Cannot input two spaces between two parts of name!'];
+      return [false, 'Cannot enter two whitespace between parts of name'];
     }
     return [true, 'So far so good!'];
   }
 
   static validateDescription(description: string): [boolean, string] {
     if (description.length > 255) {
-      return [false, 'Maximum description field length exceeded!'];
+      return [false, 'Length of description should not exceed 255 characters'];
     }
     return [true, 'So far so good!'];
   }
 
   static validateVenue(venue: string): [boolean, string] {
     if (venue.length === 0) {
-      return [true, 'Venue field is required!'];
+      return [true, 'Venue is a required field'];
     }
     if (venue.length > 255) {
-      return [false, 'Maximum venue field length exceeded!'];
+      return [false, 'Length of venue should not exceed 255 characters'];
     }
     return [true, 'So far so good!'];
   }

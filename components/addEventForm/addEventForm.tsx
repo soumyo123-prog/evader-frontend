@@ -17,15 +17,16 @@ import EventEmitterService from '../../services/event-emitter-service';
 import NameField from './nameField';
 import DescriptionField from './descriptionField';
 import VenueField from './venueField';
+import { DurationField, UnitField } from './durationField';
 
 import 'react-toastify/dist/ReactToastify.css';
 import DateField from './dateField';
 import TimeField from './timeField';
-import DurationField from './durationField';
 
 const db = firebase.firestore();
 
 export default function AddEventForm() {
+  const [disabled, setDisabled] = React.useState(true);
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [venue, setVenue] = React.useState('');
@@ -35,46 +36,46 @@ export default function AddEventForm() {
 
   const { token } = useAuth();
 
-  // const createEventHandler: React.FormEventHandler<HTMLFormElement> = async (
-  //   e
-  // ) => {
-  //   e.preventDefault();
+  React.useEffect(() => {
+    setDisabled(!name || !venue || dateTime <= moment());
+  }, [name, venue, dateTime]);
 
-  //   const eventName = name;
-  //   const eventDescription = description;
-  //   const eventVenue = venue;
-  //   const eventDateTime = new Date(date);
-  //   eventDateTime.setHours(
-  //     Number(time.split(':')[0]),
-  //     Number(time.split(':')[1]),
-  //     0
-  //   );
-  //   let eventDuration = duration;
-  //   if (unit <= 2) eventDuration *= 60 ** unit;
-  //   else eventDuration *= 24 * 60 * 60;
+  const createEventHandler: React.FormEventHandler<HTMLFormElement> = async (
+    e
+  ) => {
+    e.preventDefault();
 
-  //   try {
-  //     const dr = await db.collection('events').add({ name: eventName });
-  //     const fireEventId = dr.id;
+    const eventName = name;
+    const eventDescription = description;
+    const eventVenue = venue;
+    const eventDateTime = dateTime;
+    let eventDuration = duration;
+    if (unit <= 2) eventDuration *= 60 ** unit;
+    else eventDuration *= 24 * 60 * 60;
 
-  //     await AddEventService(
-  //       eventName,
-  //       eventDescription,
-  //       eventVenue,
-  //       eventDateTime.toISOString(),
-  //       eventDuration,
-  //       fireEventId,
-  //       token!
-  //     );
-  //     EventEmitterService('event_created', {});
-  //   } catch (error: any) {
-  //     toast.error(error.message);
-  //   }
-  // };
+    try {
+      const dr = await db.collection('events').add({ name: eventName });
+      const fireEventId = dr.id;
+
+      await AddEventService(
+        eventName,
+        eventDescription,
+        eventVenue,
+        eventDateTime.toISOString(),
+        eventDuration,
+        fireEventId,
+        token!
+      );
+
+      EventEmitterService('event_created', {});
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="div" maxWidth="xs">
         <Box
           sx={{
             marginTop: 8,
@@ -86,7 +87,7 @@ export default function AddEventForm() {
           <Typography variant="h6" gutterBottom>
             Event Details
           </Typography>
-          <Box component="form" sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={createEventHandler} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <NameField name={name} setName={setName} />
@@ -106,16 +107,15 @@ export default function AddEventForm() {
               <Grid item xs={12} sm={6}>
                 <TimeField time={dateTime} setTime={setDateTime} />
               </Grid>
-              <Grid item xs={12}>
-                <DurationField
-                  duration={duration}
-                  setDuration={setDuration}
-                  unit={unit}
-                  setUnit={setUnit}
-                />
+              <Grid item xs={6}>
+                <DurationField duration={duration} setDuration={setDuration} />
+              </Grid>
+              <Grid item xs={6}>
+                <UnitField unit={unit} setUnit={setUnit} />
               </Grid>
             </Grid>
             <Button
+              disabled={disabled}
               type="submit"
               fullWidth
               variant="contained"

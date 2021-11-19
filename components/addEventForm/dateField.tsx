@@ -5,6 +5,7 @@ import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 
 export default function DateField({
   date,
@@ -13,18 +14,33 @@ export default function DateField({
   date: moment.Moment;
   setDate: React.Dispatch<React.SetStateAction<moment.Moment>>;
 }>) {
+  const [invalid, setInvalid] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+
   const changeDateHandler = (newValue: any) => {
-    setDate(newValue);
+    setInvalid(false);
+    setMessage('');
+
+    if (newValue > moment()) {
+      setDate(newValue);
+    } else {
+      setInvalid(true);
+      setMessage('Date and time must be greater than current moment');
+    }
   };
 
   return (
-    <LocalizationProvider dateAdapter={DateAdapter}>
-      <DatePicker
-        label="Date"
-        value={date}
-        onChange={(newValue) => changeDateHandler(newValue)}
-        renderInput={(params) => <TextField {...params} />}
-      />
-    </LocalizationProvider>
+    <FormControl fullWidth>
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <DatePicker
+          label="Date"
+          value={date}
+          onChange={(newValue) => changeDateHandler(newValue)}
+          renderInput={(params) => (
+            <TextField {...params} error={invalid} helperText={message} />
+          )}
+        />
+      </LocalizationProvider>
+    </FormControl>
   );
 }
