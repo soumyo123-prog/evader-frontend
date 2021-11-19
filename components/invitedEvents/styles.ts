@@ -1,19 +1,15 @@
-import { Col } from 'reactstrap';
 import styled from 'styled-components';
+import * as colors from '../../global/colors';
 
-export const CardContainer = styled(Col)`
-  padding: 10px;
-  min-width: 300px;
-  a {
-    height: 100%;
-  }
+export const Heading = styled.th`
+  font-weight: normal;
 `;
 
-export const CardLink = styled.a`
-  display: block;
-  text-decoration: none;
-  color: black;
-  &:hover {
-    color: black;
-  }
+export const Date = styled.span`
+  white-space: nowrap;
+`;
+
+export const Time = styled.span`
+  white-space: nowrap;
+  color: ${colors.TEXT_REDUCED_OPACITY};
 `;

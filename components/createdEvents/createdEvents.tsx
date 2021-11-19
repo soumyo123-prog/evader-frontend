@@ -1,19 +1,32 @@
 import React, { PropsWithChildren } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
-import { Container, Row, Table } from 'reactstrap';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaExpandArrowsAlt } from 'react-icons/fa';
+import { Button, Container, Row, Table } from 'reactstrap';
 
 import { useEventsFetcher } from '../../services/events-fetcher-service';
 import InlineSpinner from '../spinner/inlineSpinner';
+import NotFound from '../notFound/notFound';
+import EventDeleterService from '../../services/event-deleter-service';
+import EventEmitterService from '../../services/event-emitter-service';
+import { useAuth } from '../../context/auth';
 
 import * as styles from './styles';
-import NotFound from '../notFound/notFound';
 
 export default function CreatedEvents({
   filter,
 }: PropsWithChildren<{ filter: string }>) {
+  const { token } = useAuth();
   const { events, loading } = useEventsFetcher();
   const text = 'Nothing Found';
+
+  const deleteClickHandler = (e: any, id: number) => {
+    e.preventDefault();
+    EventDeleterService(id, token!).then(() => {
+      EventEmitterService('event_deleted', { id });
+    });
+  };
 
   let content = events.map((event) => {
     const upcoming = new Date(event.time).getTime() - new Date().getTime();
@@ -24,7 +37,7 @@ export default function CreatedEvents({
     ) {
       return (
         <tr key={event.id}>
-          <styles.Name>{event.name}</styles.Name>
+          <td>{event.name}</td>
           <td>
             <div>
               <styles.Date>
@@ -45,8 +58,17 @@ export default function CreatedEvents({
             </div>
           </td>
           <td>
+            <Button
+              outline
+              color="danger"
+              onClick={(e) => deleteClickHandler(e, event.id)}
+            >
+              <RiDeleteBin6Fill size="1.5rem" />
+            </Button>
             <Link href={`events/${event.id}`}>
-              <a className="btn btn-primary">Details</a>
+              <a className="btn btn-outline-primary">
+                <FaExpandArrowsAlt size="1.5rem" />
+              </a>
             </Link>
           </td>
         </tr>

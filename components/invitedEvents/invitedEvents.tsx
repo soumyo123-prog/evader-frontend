@@ -1,9 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import Link from 'next/link';
-import { Container, Row } from 'reactstrap';
+import moment from 'moment';
+import { FaExpandArrowsAlt } from 'react-icons/fa';
+import { Container, Row, Table } from 'reactstrap';
 
 import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
-import EventCard from '../eventCard/eventCard';
 import NotFound from '../notFound/notFound';
 
 import * as styles from './styles';
@@ -22,23 +23,35 @@ export default function InvitedEvents({
       (filter === 'completed' && upcoming < 0)
     ) {
       return (
-        <styles.CardContainer key={event.id}>
-          <Link href={`events/invited/${event.id}`}>
-            <styles.CardLink role="button">
-              <EventCard
-                id={event.id}
-                name={event.name}
-                description={event.description}
-                venue={event.venue}
-                time={event.time}
-                duration={event.duration}
-                fireId={event.fireId}
-                status={event.status}
-                invitedBy={event.invitedBy}
-              />
-            </styles.CardLink>
-          </Link>
-        </styles.CardContainer>
+        <tr key={event.id}>
+          <td>{event.name}</td>
+          <td>
+            <div>
+              <styles.Date>
+                {moment(event.time).format('ddd Do MMM')}
+              </styles.Date>{' '}
+              -{' '}
+              <styles.Date>
+                {moment(event.time)
+                  .add(event.duration, 's')
+                  .format('ddd Do MMM')}
+              </styles.Date>
+            </div>
+            <div>
+              <styles.Time>{moment(event.time).format('h:mm A')}</styles.Time> -{' '}
+              <styles.Time>
+                {moment(event.time).add(event.duration, 's').format('h:mm A')}
+              </styles.Time>
+            </div>
+          </td>
+          <td>
+            <Link href={`events/invited/${event.id}`}>
+              <a className="btn btn-outline-primary">
+                <FaExpandArrowsAlt size="1.5rem" />
+              </a>
+            </Link>
+          </td>
+        </tr>
       );
     }
 
@@ -48,7 +61,18 @@ export default function InvitedEvents({
 
   return (
     <Container fluid>
-      <Row>{content}</Row>
+      <Row>
+        <Table>
+          <thead style={{ fontSize: '0.9rem' }}>
+            <tr>
+              <styles.Heading>Name</styles.Heading>
+              <styles.Heading>Timings</styles.Heading>
+              <styles.Heading />
+            </tr>
+          </thead>
+          <tbody>{content}</tbody>
+        </Table>
+      </Row>
       <Row>{content.length === 0 && <NotFound text={text} />}</Row>
     </Container>
   );
