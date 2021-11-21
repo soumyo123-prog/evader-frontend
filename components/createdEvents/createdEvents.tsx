@@ -11,8 +11,11 @@ import NotFound from '../notFound/notFound';
 import EventDeleterService from '../../services/event-deleter-service';
 import EventEmitterService from '../../services/event-emitter-service';
 import { useAuth } from '../../context/auth';
+import firebase from '../../context/firebase';
 
 import * as styles from './styles';
+
+const db = firebase.firestore();
 
 export default function CreatedEvents({
   filter,
@@ -21,11 +24,11 @@ export default function CreatedEvents({
   const { events, loading } = useEventsFetcher();
   const text = 'Nothing Found';
 
-  const deleteClickHandler = (e: any, id: number) => {
+  const deleteClickHandler = async (e: any, id: number, fireId: string) => {
     e.preventDefault();
-    EventDeleterService(id, token!).then(() => {
-      EventEmitterService('event_deleted', { id });
-    });
+    await EventDeleterService(id, token!);
+    await db.collection('events').doc(fireId).delete();
+    EventEmitterService('event_deleted', { id });
   };
 
   let content = events.map((event) => {
@@ -61,7 +64,7 @@ export default function CreatedEvents({
             <Button
               outline
               color="danger"
-              onClick={(e) => deleteClickHandler(e, event.id)}
+              onClick={(e) => deleteClickHandler(e, event.id, event.fireId)}
             >
               <RiDeleteBin6Fill size="1.5rem" />
             </Button>

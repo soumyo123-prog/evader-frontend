@@ -1,4 +1,5 @@
 import React from 'react';
+import loadable from '@loadable/component';
 
 import moment from 'moment';
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,14 +15,21 @@ import firebase from '../../context/firebase';
 import AddEventService from '../../services/add-event-service';
 import EventEmitterService from '../../services/event-emitter-service';
 
-import NameField from './nameField';
-import DescriptionField from './descriptionField';
-import VenueField from './venueField';
-import { DurationField, UnitField } from './durationField';
-
 import 'react-toastify/dist/ReactToastify.css';
 import DateField from './dateField';
 import TimeField from './timeField';
+
+const NameField = loadable(() => import('./nameField'));
+const DescriptionField = loadable(() => import('./descriptionField'));
+const VenueField = loadable(() => import('./venueField'));
+const Duration = loadable(async () => {
+  const { DurationField } = await import('./durationField');
+  return DurationField;
+});
+const Unit = loadable(async () => {
+  const { UnitField } = await import('./durationField');
+  return UnitField;
+});
 
 const db = firebase.firestore();
 
@@ -108,10 +116,10 @@ export default function AddEventForm() {
                 <TimeField time={dateTime} setTime={setDateTime} />
               </Grid>
               <Grid item xs={6}>
-                <DurationField duration={duration} setDuration={setDuration} />
+                <Duration duration={duration} setDuration={setDuration} />
               </Grid>
               <Grid item xs={6}>
-                <UnitField unit={unit} setUnit={setUnit} />
+                <Unit unit={unit} setUnit={setUnit} />
               </Grid>
             </Grid>
             <Button
