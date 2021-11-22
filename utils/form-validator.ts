@@ -61,13 +61,10 @@ export default class Validate {
   }
 
   static validateEmail(email: string): [boolean, string] {
-    if (email.length === 0) {
-      return [true, 'Email field is required!'];
-    }
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(email.toLowerCase())) {
-      return [false, 'Email provided is not valid'];
+      return [false, 'Please provide a valid email address'];
     }
     return [true, 'So far so good!'];
   }

@@ -19,6 +19,12 @@ export default function useFetchGuests(eventId: string) {
       }
     });
 
+    document.addEventListener('invitation_added', (e: any) => {
+      if (isMounted) {
+        setGuests((prevGuests) => [...prevGuests, e.detail]);
+      }
+    });
+
     axios
       .get<GuestType[]>(`event/fetch/${eventId}/guests/`, {
         headers: { Authorization: `Token ${token}` },

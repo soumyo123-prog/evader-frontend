@@ -17,9 +17,6 @@ const EventNavbar = loadable(
 const EventOverview = loadable(
   () => import('../../components/eventOverview/eventOverview')
 );
-const EventInvitePeople = loadable(
-  () => import('../../components/eventInvitePeople/eventInvitePeople')
-);
 const Expenditure = loadable(
   () => import('../../components/expenditure/expenditure')
 );
@@ -32,13 +29,7 @@ export default function EventPage() {
   const id = router.query.id as string;
   const { event, error } = useEventFetcher(id);
 
-  const fields = [
-    'overview',
-    'guests',
-    'expenditure',
-    'invite people',
-    'event settings',
-  ];
+  const fields = ['overview', 'guests', 'expenditure', 'event settings'];
 
   const upcoming = new Date(event.time).getTime() >= new Date().getTime();
   if (!upcoming) {
@@ -68,9 +59,6 @@ export default function EventPage() {
             {active === 'overview' && <EventOverview fetchedEvent={event} />}
             {active === 'guests' && <Guests eventId={id} />}
             {active === 'expenditure' && <Expenditure id={id} />}
-            {active === 'invite people' && upcoming && (
-              <EventInvitePeople id={id} />
-            )}
             {active === 'event settings' && upcoming && (
               <EventSettings id={id} fetchedEvent={event} />
             )}
