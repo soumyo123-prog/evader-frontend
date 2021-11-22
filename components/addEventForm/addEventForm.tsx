@@ -83,7 +83,7 @@ export default function AddEventForm() {
 
   return (
     <>
-      <Container component="div" maxWidth="xs">
+      <Container component="div" maxWidth="sm">
         <Box
           sx={{
             marginTop: 8,

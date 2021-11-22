@@ -52,7 +52,7 @@ export default function AddExpenditureForm({
 
   return (
     <>
-      <Container component="div" maxWidth="xs">
+      <Container component="div" maxWidth="sm">
         <Box
           sx={{
             marginTop: 8,
