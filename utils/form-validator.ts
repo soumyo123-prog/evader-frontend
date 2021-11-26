@@ -44,8 +44,8 @@ export default class Validate {
   }
 
   static validateDescription(description: string): [boolean, string] {
-    if (description.length > 255) {
-      return [false, 'Length of description should not exceed 255 characters'];
+    if (description.length > 1000) {
+      return [false, 'Length of description should not exceed 1000 characters'];
     }
     return [true, 'So far so good!'];
   }
