@@ -4,34 +4,18 @@ import Link from 'next/link';
 import moment from 'moment';
 import { FaExpand } from 'react-icons/fa';
 import { IoIosArrowDropdown } from 'react-icons/io';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { Button } from 'reactstrap';
 
-import EventDeleterService from '../../services/event-deleter-service';
-import EventEmitterService from '../../services/event-emitter-service';
 import { EventType } from '../../types/types';
-import firebase from '../../context/firebase';
-import { useAuth } from '../../context/auth';
 
 import * as styles from './styles';
 
-const db = firebase.firestore();
-
-export default function Row({
+export default function EventTableRow({
   event,
 }: PropsWithChildren<{ event: EventType }>) {
   const [expand, setExpand] = React.useState(false);
-  const { token } = useAuth();
 
   const expandTableHandler = () => {
     setExpand((prevExpand) => !prevExpand);
-  };
-
-  const deleteClickHandler = async (e: any, id: number, fireId: string) => {
-    e.preventDefault();
-    await EventDeleterService(id, token!);
-    await db.collection('events').doc(fireId).delete();
-    EventEmitterService('event_deleted', { id });
   };
 
   return (
@@ -67,17 +51,7 @@ export default function Row({
           </div>
         </styles.Timings>
         <td style={{ verticalAlign: 'middle' }}>
-          <Button
-            outline
-            color="danger"
-            onClick={(e) => deleteClickHandler(e, event.id, event.fireId)}
-            style={{ border: 'none', padding: '2px' }}
-          >
-            <RiDeleteBin6Fill size="1.5rem" />
-          </Button>
-        </td>
-        <td style={{ verticalAlign: 'middle' }}>
-          <Link href={`events/${event.id}`}>
+          <Link href={`events/invited/${event.id}`}>
             <a
               className="btn btn-outline-primary"
               style={{ border: 'none', padding: '2px' }}

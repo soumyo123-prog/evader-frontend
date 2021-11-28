@@ -12,35 +12,14 @@ interface HamburgerProps {
 
 export const EventNavbarContainer = styled.nav`
   height: 50px;
-  background-color: #e6e6e6;
-
-  ul {
-    display: flex;
-    height: 100%;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-family: 'Ubuntu', sans-serif;
-
-    li {
-      height: 100%;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
+  background-color: ${colors.INFO};
 `;
 
-export const Active = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-right: auto;
-  margin-left: auto;
+export const Active = styled.span`
   letter-spacing: 2px;
 
   text-transform: uppercase;
-  color: ${colors.BG_PRIMARY};
+  color: ${colors.TEXT_LIGHT};
   font-weight: bold;
 `;
 
@@ -53,9 +32,8 @@ export const Expanded = styled.div<ExpandedProps>`
   z-index: 50;
 
   width: 100%;
-  padding-right: 60px;
 
-  background-color: #e6e6e6;
+  background-color: ${colors.INFO};
 
   transform-origin: top;
   transition: all 0.1s ease-in-out;

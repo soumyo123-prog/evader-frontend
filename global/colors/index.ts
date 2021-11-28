@@ -10,3 +10,4 @@ export const INFO = '#0dcaf0';
 export const DANGER = '#dc3545';
 export const SUCCESS = '#198754';
 export const PURPLE = '#6c02b3';
+export const WARNING = '#FFA900';

@@ -1,26 +1,21 @@
 import styled from 'styled-components';
-import { Button, Col, Table } from 'reactstrap';
+import { Col } from 'reactstrap';
 import * as colors from '../../global/colors';
 
 export const Column = styled(Col)`
   padding: 1rem;
 `;
 
-export const OverviewTableContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  padding: 0.2rem;
-  width: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
-`;
-
-export const OverviewTable = styled(Table)`
-  margin-bottom: 0;
-  padding: 0.2rem;
+  padding: 1rem;
+  background-color: #fff;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 export const LocationIcon = styled.td`
@@ -33,21 +28,6 @@ export const CalendarIcon = styled.td`
   svg {
     color: ${colors.DANGER};
   }
-`;
-
-export const TableButton = styled(Button)`
-  margin-left: 0.5rem;
-`;
-
-export const OverviewDetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 0.5rem;
-  width: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
 `;
 
 export const PictureContainer = styled.div`
@@ -69,37 +49,13 @@ export const PictureContainer = styled.div`
 
 export const Name = styled.h5`
   text-transform: capitalize;
+  text-align: center;
   margin-top: 0.5rem;
 `;
 
 export const Description = styled.p`
   text-align: center;
   width: 75%;
-`;
-
-export const Creator = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.5rem;
-  width: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
-`;
-
-export const Status = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.5rem;
-  width: 100%;
-  height: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
 `;
 
 export const CurrentStatus = styled.div`

@@ -1,9 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import Link from 'next/link';
-import moment from 'moment';
-import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { Container, Row, Table } from 'reactstrap';
 
+import Event from './eventTableRow';
 import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
 import NotFound from '../notFound/notFound';
 
@@ -22,37 +20,7 @@ export default function InvitedEvents({
       (filter === 'upcoming' && upcoming >= 0) ||
       (filter === 'completed' && upcoming < 0)
     ) {
-      return (
-        <tr key={event.id}>
-          <td>{event.name}</td>
-          <td>
-            <div>
-              <styles.Date>
-                {moment(event.time).format('ddd Do MMM')}
-              </styles.Date>{' '}
-              -{' '}
-              <styles.Date>
-                {moment(event.time)
-                  .add(event.duration, 's')
-                  .format('ddd Do MMM')}
-              </styles.Date>
-            </div>
-            <div>
-              <styles.Time>{moment(event.time).format('h:mm A')}</styles.Time> -{' '}
-              <styles.Time>
-                {moment(event.time).add(event.duration, 's').format('h:mm A')}
-              </styles.Time>
-            </div>
-          </td>
-          <td>
-            <Link href={`events/invited/${event.id}`}>
-              <a className="btn btn-outline-primary">
-                <FaExpandArrowsAlt size="1.5rem" />
-              </a>
-            </Link>
-          </td>
-        </tr>
-      );
+      return <Event event={event} key={event.id} />;
     }
 
     return null;
@@ -62,11 +30,12 @@ export default function InvitedEvents({
   return (
     <Container fluid>
       <Row>
-        <Table>
+        <Table hover>
           <thead style={{ fontSize: '0.9rem' }}>
             <tr>
+              <styles.ExpandHeading />
               <styles.Heading>Name</styles.Heading>
-              <styles.Heading>Timings</styles.Heading>
+              <styles.TimeHeading>Timings</styles.TimeHeading>
               <styles.Heading />
             </tr>
           </thead>

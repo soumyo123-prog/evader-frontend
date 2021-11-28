@@ -8,7 +8,7 @@ export default function EventOverviewDetails({
   fireId,
 }: PropsWithChildren<{ name: string; fireId: string; description: string }>) {
   return (
-    <styles.OverviewDetailsContainer>
+    <styles.Container>
       <styles.PictureContainer>
         <img
           src={`https://avatars.dicebear.com/api/jdenticon/${fireId}.svg`}
@@ -17,6 +17,6 @@ export default function EventOverviewDetails({
       </styles.PictureContainer>
       <styles.Name>{name}</styles.Name>
       <styles.Description>{description}</styles.Description>
-    </styles.OverviewDetailsContainer>
+    </styles.Container>
   );
 }

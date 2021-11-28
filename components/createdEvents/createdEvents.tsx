@@ -35,7 +35,7 @@ export default function CreatedEvents({
   return (
     <Container fluid>
       <Row data-testid="created-events-container">
-        <Table>
+        <Table hover>
           <thead style={{ fontSize: '0.9rem' }}>
             <tr>
               <styles.ExpandHeading />

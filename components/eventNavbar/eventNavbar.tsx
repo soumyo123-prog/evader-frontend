@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import loadable from '@loadable/component';
 
+import Button from '@mui/material/Button';
+
 import * as styles from './styles';
 
-const EventNavbarActive = loadable(() => import('./eventNavbarActive'));
-const EventNavbarHamburger = loadable(() => import('./eventNavbarHamburger'));
 const EventNavbarExpanded = loadable(() => import('./eventNavbarExpanded'));
 
 export default function EventNavbar({
@@ -26,13 +26,13 @@ export default function EventNavbar({
   return (
     <>
       <styles.EventNavbarContainer>
-        <ul>
-          <EventNavbarActive active={active} />
-          <EventNavbarHamburger
-            expand={expand}
-            expandToggleHandler={expandToggleHandler}
-          />
-        </ul>
+        <Button
+          onClick={expandToggleHandler}
+          fullWidth
+          style={{ height: '50px' }}
+        >
+          <styles.Active>{active}</styles.Active>
+        </Button>
         <EventNavbarExpanded
           changeActive={changeActive}
           expand={expand}

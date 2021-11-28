@@ -9,7 +9,7 @@ export default function EventOverviewInvitedBy({
   const email = invitedBy.split(' : ')[1];
 
   return (
-    <styles.Creator>
+    <styles.Container>
       <h5>Invited By :</h5>
       <styles.PictureContainer>
         <img
@@ -19,6 +19,6 @@ export default function EventOverviewInvitedBy({
       </styles.PictureContainer>
       <styles.Name>{name}</styles.Name>
       <p className={['card-text'].join(' ')}>{email}</p>
-    </styles.Creator>
+    </styles.Container>
   );
 }

@@ -35,7 +35,7 @@ export default function EventOverviewStatus({
   };
 
   return (
-    <styles.Status>
+    <styles.Container>
       <styles.CurrentStatus>
         <strong> Status : </strong>
         {invitationStatus}
@@ -63,6 +63,6 @@ export default function EventOverviewStatus({
           Declined
         </Button>
       </styles.ModifyContainer>
-    </styles.Status>
+    </styles.Container>
   );
 }

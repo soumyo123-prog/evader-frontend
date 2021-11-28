@@ -13,7 +13,7 @@ export default function EventNavbarExpandedItem({
   return (
     <div>
       <a
-        className={['btn btn-primary'].join(' ')}
+        className={['btn btn-dark'].join(' ')}
         role="button"
         onClick={() => changeActive(field)}
       >

@@ -17,7 +17,8 @@ const AddGuestForm = loadable(() => import('./addGuestForm'));
 
 export default function Guests({
   eventId,
-}: PropsWithChildren<{ eventId: string }>) {
+  creator,
+}: PropsWithChildren<{ eventId: string; creator: boolean }>) {
   const { guests, error } = useFetchGuests(eventId);
   const [drawer, setDrawer] = React.useState(false);
 
@@ -50,17 +51,19 @@ export default function Guests({
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Button onClick={() => toggleDrawer(true)}>Add Guest</Button>
-          <Drawer
-            anchor="top"
-            open={drawer}
-            onClose={() => toggleDrawer(false)}
-          >
-            <AddGuestForm id={eventId} />
-          </Drawer>
-        </Row>
+      <Container fluid style={{ padding: '15px' }}>
+        {creator && (
+          <Row>
+            <Button onClick={() => toggleDrawer(true)}>Add Guest</Button>
+            <Drawer
+              anchor="top"
+              open={drawer}
+              onClose={() => toggleDrawer(false)}
+            >
+              <AddGuestForm id={eventId} />
+            </Drawer>
+          </Row>
+        )}
         <Row>{guestCards}</Row>
       </Container>
       <ToastContainer

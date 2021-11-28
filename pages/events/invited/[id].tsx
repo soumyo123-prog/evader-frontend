@@ -40,7 +40,7 @@ export default function InvitedEventPage() {
         </Head>
         <Wrapper>
           <Sidebar />
-          <MainContentWrapper>
+          <MainContentWrapper color="#e6e6e6">
             <EventNavbar
               fields={fields}
               active={active}
@@ -49,7 +49,9 @@ export default function InvitedEventPage() {
             {active === 'overview' ? (
               <EventOverview fetchedEvent={event} />
             ) : null}
-            {active === 'guests' ? <Guests eventId={id} /> : null}
+            {active === 'guests' ? (
+              <Guests eventId={id} creator={Boolean(event.invitedBy)} />
+            ) : null}
           </MainContentWrapper>
         </Wrapper>
       </>

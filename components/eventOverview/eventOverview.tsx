@@ -7,7 +7,8 @@ import { EventType } from '../../types/types';
 import * as styles from './styles';
 
 const EventOverviewDetails = loadable(() => import('./eventOverviewDetails'));
-const EventOverviewTable = loadable(() => import('./eventOverviewTable'));
+const EventOverviewLocation = loadable(() => import('./eventOverviewLocation'));
+const EventOverviewDate = loadable(() => import('./eventOverviewDate'));
 const EventOverviewInvitedBy = loadable(
   () => import('./eventOverviewInvitedBy')
 );
@@ -17,7 +18,7 @@ export default function EventOverview({
   fetchedEvent,
 }: PropsWithChildren<{ fetchedEvent: EventType }>) {
   return (
-    <Container fluid>
+    <Container fluid style={{ padding: '15px' }}>
       <Row>
         <styles.Column xs="12">
           <EventOverviewDetails
@@ -40,8 +41,11 @@ export default function EventOverview({
             </styles.Column>
           </>
         ) : null}
-        <styles.Column xs="12">
-          <EventOverviewTable
+        <styles.Column xs="12" sm="6">
+          <EventOverviewLocation venue={fetchedEvent.venue} />
+        </styles.Column>
+        <styles.Column xs="12" sm="6">
+          <EventOverviewDate
             venue={fetchedEvent.venue}
             time={fetchedEvent.time}
             name={fetchedEvent.name}

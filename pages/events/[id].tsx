@@ -50,14 +50,16 @@ export default function EventPage() {
         </Head>
         <Wrapper>
           <Sidebar />
-          <MainContentWrapper>
+          <MainContentWrapper color="#e6e6e6">
             <EventNavbar
               fields={fields}
               active={active}
               changeActive={changeActiveHandler}
             />
             {active === 'overview' && <EventOverview fetchedEvent={event} />}
-            {active === 'guests' && <Guests eventId={id} />}
+            {active === 'guests' && (
+              <Guests eventId={id} creator={Boolean(event.invitedBy)} />
+            )}
             {active === 'expenditure' && <Expenditure id={id} />}
             {active === 'event settings' && upcoming && (
               <EventSettings id={id} fetchedEvent={event} />
