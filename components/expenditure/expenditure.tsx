@@ -4,16 +4,16 @@ import React, { PropsWithChildren } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { useExpenditureFetcher } from '../../services/expenditures-fetcher-service';
-import AddExpenditureButton from '../addExpenditureButton/addExpenditureButton';
+import AddExpenditureButton from '../add-expenditure-button/add-expenditure-button';
 
 import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddExpenditureForm = loadable(
-  () => import('../addExpenditureForm/addExpenditureForm')
+  () => import('../add-expenditure-form/add-expenditure-form')
 );
 const ExpenditureTable = loadable(
-  () => import('../expenditureTable/expenditureTable')
+  () => import('../expenditure-table/expenditure-table')
 );
 
 export default function Expenditure({ id }: PropsWithChildren<{ id: string }>) {

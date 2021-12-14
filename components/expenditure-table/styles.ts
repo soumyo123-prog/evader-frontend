@@ -5,6 +5,7 @@ import * as colors from '../../global/colors';
 export const TableHeader = styled.th`
   text-align: center;
   vertical-align: middle;
+  font-size: 0.9rem;
 `;
 
 export const TableData = styled.td`
@@ -13,11 +14,11 @@ export const TableData = styled.td`
 `;
 
 export const Name = styled.div`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: black;
 
   @media (max-width: 575px) {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `;
 

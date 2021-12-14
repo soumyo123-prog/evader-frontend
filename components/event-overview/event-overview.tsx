@@ -6,13 +6,15 @@ import { EventType } from '../../types/types';
 
 import * as styles from './styles';
 
-const EventOverviewDetails = loadable(() => import('./eventOverviewDetails'));
-const EventOverviewLocation = loadable(() => import('./eventOverviewLocation'));
-const EventOverviewDate = loadable(() => import('./eventOverviewDate'));
-const EventOverviewInvitedBy = loadable(
-  () => import('./eventOverviewInvitedBy')
+const EventOverviewDetails = loadable(() => import('./event-overview-details'));
+const EventOverviewLocation = loadable(
+  () => import('./event-overview-location')
 );
-const EventOverviewStatus = loadable(() => import('./eventOverviewStatus'));
+const EventOverviewDate = loadable(() => import('./event-overview-date'));
+const EventOverviewInvitedBy = loadable(
+  () => import('./event-overview-invited-by')
+);
+const EventOverviewStatus = loadable(() => import('./event-overview-status'));
 
 export default function EventOverview({
   fetchedEvent,

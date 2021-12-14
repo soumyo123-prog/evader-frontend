@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import { Container, Row, Table } from 'reactstrap';
 
-import Event from './eventTableRow';
+import Event from './event-table-row';
 import useInvitedEventsFetcher from '../../services/fetch-invited-events-service';
-import NotFound from '../notFound/notFound';
+import NotFound from '../not-found/not-found';
 
 import * as styles from './styles';
 

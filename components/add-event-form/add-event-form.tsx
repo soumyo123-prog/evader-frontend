@@ -16,18 +16,18 @@ import AddEventService from '../../services/add-event-service';
 import EventEmitterService from '../../services/event-emitter-service';
 
 import 'react-toastify/dist/ReactToastify.css';
-import DateField from './dateField';
-import TimeField from './timeField';
 
-const NameField = loadable(() => import('./nameField'));
-const DescriptionField = loadable(() => import('./descriptionField'));
-const VenueField = loadable(() => import('./venueField'));
+const NameField = loadable(() => import('./name'));
+const DescriptionField = loadable(() => import('./description'));
+const VenueField = loadable(() => import('./venue'));
+const DateField = loadable(() => import('./date'));
+const TimeField = loadable(() => import('./time'));
 const Duration = loadable(async () => {
-  const { DurationField } = await import('./durationField');
+  const { DurationField } = await import('./duration');
   return DurationField;
 });
 const Unit = loadable(async () => {
-  const { UnitField } = await import('./durationField');
+  const { UnitField } = await import('./duration');
   return UnitField;
 });
 

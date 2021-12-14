@@ -6,21 +6,21 @@ import Sidebar from '../../components/sidebar/sidebar';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
 import Wrapper from '../../utils/sidebar-content-wrapper';
-import EventsNavbar from '../../components/eventsNavbar/eventsNavbar';
+import EventsNavbar from '../../components/events-navbar/events-navbar';
 import { useAuth } from '../../context/auth';
 import { useSidebar } from '../../context/sidebar';
 
 const AddEventButton = loadable(
-  () => import('../../components/addButton/addButton')
+  () => import('../../components/add-event-button/add-event-button')
 );
 const AddEventForm = loadable(
-  () => import('../../components/addEventForm/addEventForm')
+  () => import('../../components/add-event-form/add-event-form')
 );
 const CreatedEvents = loadable(
-  () => import('../../components/createdEvents/createdEvents')
+  () => import('../../components/created-events/created-events')
 );
 const InvitedEvents = loadable(
-  () => import('../../components/invitedEvents/invitedEvents')
+  () => import('../../components/invited-events/invited-events')
 );
 
 const EventsPage = () => {

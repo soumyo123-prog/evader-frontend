@@ -3,6 +3,7 @@ import axios from '../context/axios';
 interface eventModifications {
   name: string;
   description: string;
+  venue: string;
   time: Date;
 }
 

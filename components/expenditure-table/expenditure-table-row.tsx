@@ -13,6 +13,7 @@ import * as styles from './styles';
 export default function ExpenditureTableRow({
   data,
 }: PropsWithChildren<{ data: ExpenditureType }>) {
+  const [expand, setExpand] = React.useState(false);
   const { token } = useAuth();
 
   const deleteExpenditureHandler = async () => {

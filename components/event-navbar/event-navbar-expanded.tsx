@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { PropsWithChildren } from 'react';
-import EventNavbarExpandedItem from './eventNavbarExpandedItem';
+import EventNavbarExpandedItem from './event-navbar-expanded-item';
 
 import * as styles from './styles';
 

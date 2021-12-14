@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import { Container, Row, Table } from 'reactstrap';
 
 import { useEventsFetcher } from '../../services/events-fetcher-service';
-import InlineSpinner from '../spinner/inlineSpinner';
-import NotFound from '../notFound/notFound';
-import Event from './eventTableRow';
+import InlineSpinner from '../spinner/inline-spinner';
+import NotFound from '../not-found/not-found';
+import Event from './event-table-row';
 
 import * as styles from './styles';
 

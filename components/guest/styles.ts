@@ -50,7 +50,7 @@ export const Footer = styled(CardFooter)`
   align-items: center;
 `;
 
-export const StatusText = styled.h5<StatusProps>`
+export const StatusText = styled.h6<StatusProps>`
   text-transform: uppercase;
   ${(props) => {
     switch (props.status) {

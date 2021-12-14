@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { CardBody } from 'reactstrap';
 
-import { InvitationStatus } from '../eventOverview/eventOverviewStatus';
+import { InvitationStatus } from '../event-overview/event-overview-status';
 
 import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
@@ -50,7 +50,7 @@ export default function Guest({
           <RiDeleteBin6Fill size="1.5rem" />
         </styles.DeleteButton>
         <CardBody>
-          <styles.Title tag="h5">{name}</styles.Title>
+          <styles.Title tag="h6">{name}</styles.Title>
           <styles.Text>{email}</styles.Text>
         </CardBody>
         <styles.Footer>

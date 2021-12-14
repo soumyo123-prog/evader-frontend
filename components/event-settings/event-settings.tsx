@@ -17,10 +17,11 @@ import SaveEventSettingsService from '../../services/save-event-settings-service
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const NameField = loadable(() => import('./nameField'));
-const DescriptionField = loadable(() => import('./descriptionField'));
-const DateField = loadable(() => import('./dateField'));
-const TimeField = loadable(() => import('./timeField'));
+const NameField = loadable(() => import('./name'));
+const DescriptionField = loadable(() => import('./description'));
+const VenueField = loadable(() => import('./venue'));
+const DateField = loadable(() => import('./date'));
+const TimeField = loadable(() => import('./time'));
 
 export default function EventSettings({
   id,
@@ -31,6 +32,7 @@ export default function EventSettings({
   const [description, setDescription] = React.useState(
     fetchedEvent.description
   );
+  const [venue, setVenue] = React.useState(fetchedEvent.venue);
   const [dateTime, setDateTime] = React.useState(moment(fetchedEvent.time));
 
   const { token } = useAuth();
@@ -48,6 +50,7 @@ export default function EventSettings({
     const modifiedData = {
       name,
       description,
+      venue,
       time: dateTime.toDate(),
     };
 
@@ -84,6 +87,9 @@ export default function EventSettings({
               </Grid>
               <Grid item xs={12}>
                 <DescriptionField desc={description} setDesc={setDescription} />
+              </Grid>
+              <Grid item xs={12}>
+                <VenueField venue={venue} setVenue={setVenue} />
               </Grid>
               <Grid item xs={12}>
                 <DateField date={dateTime} setDate={setDateTime} />

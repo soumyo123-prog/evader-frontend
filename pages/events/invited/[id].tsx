@@ -11,10 +11,10 @@ import { useAuth } from '../../../context/auth';
 import useEventInvitedFetcher from '../../../services/event-invited-fetcher';
 
 const EventOverview = loadable(
-  () => import('../../../components/eventOverview/eventOverview')
+  () => import('../../../components/event-overview/event-overview')
 );
 const EventNavbar = loadable(
-  () => import('../../../components/eventNavbar/eventNavbar')
+  () => import('../../../components/event-navbar/event-navbar')
 );
 const Guests = loadable(() => import('../../../components/guests/guests'));
 
@@ -50,7 +50,7 @@ export default function InvitedEventPage() {
               <EventOverview fetchedEvent={event} />
             ) : null}
             {active === 'guests' ? (
-              <Guests eventId={id} creator={Boolean(event.invitedBy)} />
+              <Guests eventId={id} creator={false} />
             ) : null}
           </MainContentWrapper>
         </Wrapper>

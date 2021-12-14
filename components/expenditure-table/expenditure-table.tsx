@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 
 import { ExpenditureType } from '../../types/types';
 import totalExpenditure from '../../utils/total-expenditure';
-import ExpenditureTableRow from './expenditureTableRow';
+import ExpenditureTableRow from './expenditure-table-row';
 
 import * as styles from './styles';
 

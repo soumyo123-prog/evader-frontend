@@ -15,10 +15,10 @@ import EventEmitterService from '../../services/event-emitter-service';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const NameField = loadable(() => import('./nameField'));
-const OrganizationField = loadable(() => import('./organizationField'));
-const UnitPriceField = loadable(() => import('./unitPriceField'));
-const QuantityField = loadable(() => import('./quantityField'));
+const NameField = loadable(() => import('./name'));
+const OrganizationField = loadable(() => import('./organization'));
+const UnitPriceField = loadable(() => import('./unit-price'));
+const QuantityField = loadable(() => import('./quantity'));
 
 export default function AddExpenditureForm({
   id,

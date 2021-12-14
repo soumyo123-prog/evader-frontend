@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 import * as styles from './styles';
 
-const EventNavbarExpanded = loadable(() => import('./eventNavbarExpanded'));
+const EventNavbarExpanded = loadable(() => import('./event-navbar-expanded'));
 
 export default function EventNavbar({
   active,

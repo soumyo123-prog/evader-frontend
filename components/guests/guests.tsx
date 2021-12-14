@@ -13,7 +13,7 @@ import * as styles from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Guest = loadable(() => import('../guest/guest'));
-const AddGuestForm = loadable(() => import('./addGuestForm'));
+const AddGuestForm = loadable(() => import('./add-guest-form'));
 
 export default function Guests({
   eventId,
@@ -51,7 +51,7 @@ export default function Guests({
 
   return (
     <>
-      <Container fluid style={{ padding: '15px' }}>
+      <Container fluid>
         {creator && (
           <Row>
             <Button onClick={() => toggleDrawer(true)}>Add Guest</Button>

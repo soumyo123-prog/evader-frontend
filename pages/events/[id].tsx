@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Head from 'next/head';
 
-import EventSettings from '../../components/eventSettings/eventSettings';
+import EventSettings from '../../components/event-settings/event-settings';
 import Sidebar from '../../components/sidebar/sidebar';
 import MainContentWrapper from '../../utils/main-content-wrapper';
 import Redirect from '../../utils/redirector';
@@ -12,10 +12,10 @@ import { useAuth } from '../../context/auth';
 import useEventFetcher from '../../services/event-fetcher-service';
 
 const EventNavbar = loadable(
-  () => import('../../components/eventNavbar/eventNavbar')
+  () => import('../../components/event-navbar/event-navbar')
 );
 const EventOverview = loadable(
-  () => import('../../components/eventOverview/eventOverview')
+  () => import('../../components/event-overview/event-overview')
 );
 const Expenditure = loadable(
   () => import('../../components/expenditure/expenditure')
@@ -50,16 +50,14 @@ export default function EventPage() {
         </Head>
         <Wrapper>
           <Sidebar />
-          <MainContentWrapper color="#e6e6e6">
+          <MainContentWrapper>
             <EventNavbar
               fields={fields}
               active={active}
               changeActive={changeActiveHandler}
             />
             {active === 'overview' && <EventOverview fetchedEvent={event} />}
-            {active === 'guests' && (
-              <Guests eventId={id} creator={Boolean(event.invitedBy)} />
-            )}
+            {active === 'guests' && <Guests eventId={id} creator />}
             {active === 'expenditure' && <Expenditure id={id} />}
             {active === 'event settings' && upcoming && (
               <EventSettings id={id} fetchedEvent={event} />

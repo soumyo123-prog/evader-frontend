@@ -11,8 +11,10 @@ import Sidebar from '../components/sidebar/sidebar';
 import Spinner from '../components/spinner/spinner';
 import MainContentWrapper from '../utils/main-content-wrapper';
 
-const IsNotAuth = loadable(() => import('../components/home/isNotAuth'));
-const IsAuth = loadable(() => import('../components/home/isAuth'));
+const IsNotAuth = loadable(
+  () => import('../components/home/not-authenticated')
+);
+const IsAuth = loadable(() => import('../components/home/authenticated'));
 
 const Home = () => {
   const { loading, token, setBackendUser } = useAuth();
